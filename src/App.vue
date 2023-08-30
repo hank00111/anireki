@@ -1,11 +1,21 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+import { onMounted } from 'vue';
+
+onMounted(() => {
+  // if (store.drakState) {
+  //   document.documentElement.setAttribute('data-theme', 'dark')
+  // } else {
+  //   document.documentElement.setAttribute('data-theme', 'light')
+  // }
+  document.title = 'Home - Anireki';
+  //userControll.initUser()
+  // userControll.getsUser(0)
+  //Promise.all([ ]);
+})
 </script>
 
 <template>
-  <div>
-  </div>
-  <HelloWorld msg="Vite + Vue" />
+  <router-view />
 </template>
 
 <style scoped>
@@ -15,9 +25,11 @@ import HelloWorld from './components/HelloWorld.vue'
   will-change: filter;
   transition: filter 300ms;
 }
+
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
+
 .logo.vue:hover {
   filter: drop-shadow(0 0 2em #42b883aa);
 }
