@@ -15,13 +15,9 @@ const routes = [
     meta: { title: "觀看紀錄 - Anireki" },
   },
   {
-    path: "/404",
-    name: "404",
+    path: "/:pathMatch(.*)*",
+    name: "404  ",
     component: NotFound,
-  },
-  {
-    path: "/:pathMatch(.*)",
-    redirect: "/404",
   },
 ];
 
