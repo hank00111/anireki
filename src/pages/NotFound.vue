@@ -1,5 +1,8 @@
 <script setup lang="ts">
-
+import { onMounted } from 'vue';
+onMounted(() => {
+    document.title = '404 - Anireki';
+})
 </script>
 
 <template>
