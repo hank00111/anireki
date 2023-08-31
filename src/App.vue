@@ -1,16 +1,16 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
+import { useDrakModeStore } from './stores/drakMode'
+
+const drakMode = useDrakModeStore();
 
 onMounted(() => {
-  // if (store.drakState) {
-  //   document.documentElement.setAttribute('data-theme', 'dark')
-  // } else {
-  //   document.documentElement.setAttribute('data-theme', 'light')
-  // }
+  if (drakMode.drakState) {
+    document.documentElement.setAttribute('data-theme', 'dark')
+  } else {
+    document.documentElement.setAttribute('data-theme', 'light')
+  }
   document.title = 'Home - Anireki';
-  //userControll.initUser()
-  // userControll.getsUser(0)
-  //Promise.all([ ]);
 })
 </script>
 
