@@ -5,16 +5,15 @@ import Sidebar from '../components/Sidebar.vue'
 
 
 onMounted(() => {
-    document.title = 'Home - Anireki';
+    document.title = 'History - Anireki';
 })
 </script>
 
 <template>
     <Sidebar></Sidebar>
-
     <div class="main">
-        <!-- <Header></Header> -->
-        <div class="content">123</div>
+        <Header></Header>
+        <div class="content">456</div>
     </div>
 </template>
 
