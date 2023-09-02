@@ -1,6 +1,6 @@
 import axios from "axios";
 import { defineStore } from "pinia";
-axios.defaults.baseURL = "https://a2.anireki.com/v2/";
+axios.defaults.baseURL = "https://a2.anireki.com";
 axios.defaults.withCredentials = true;
 //a1.anireki.com/v2/
 
@@ -14,7 +14,7 @@ export const useUserControl = defineStore("login", {
   actions: {
     async testPost() {
       try {
-        let res = await axios.get("https://a2.anireki.com/");
+        let res = await axios.get("/");
         console.log(res);
         // let reas = await axios.post("test", { withCredentials: true });
         // console.log(reas);
