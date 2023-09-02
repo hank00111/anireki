@@ -1,12 +1,14 @@
 <script setup lang="ts">
 //import { watch, ref } from 'vue';
 import { useDrakModeStore } from '../stores/drakMode'
-const store = useDrakModeStore();
+import { useUserControl } from '../stores/userControl'
+const darkMode = useDrakModeStore();
+const userControl = useUserControl();
 
 
 const SwichDarkMode = () => {
-    store.SwichDarkMode();
-    if (store.drakState) {
+    darkMode.SwichDarkMode();
+    if (darkMode.drakState) {
         document.documentElement.setAttribute('data-theme', 'dark')
     } else {
         document.documentElement.setAttribute('data-theme', 'light')
@@ -38,16 +40,18 @@ const SwichDarkMode = () => {
                     <span>觀看紀錄</span>
                 </router-link>
             </li>
+            <li>
+                <span @click="userControl.testPost">POST</span>
+            </li>
 
         </ul>
 
         <div class="sidebar-switch-darkmode">
             <input class="swift-btn_toggle" type="checkbox" id="lightSwitch" @click="SwichDarkMode"
-                v-bind:checked="store.drakState">
+                v-bind:checked="darkMode.drakState">
             <label for="lightSwitch"></label>
         </div>
     </nav>
 </template>
 
-<style leng="scss" scoped>
-</style>
+<style leng="scss" scoped></style>
