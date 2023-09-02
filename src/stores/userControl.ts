@@ -13,10 +13,10 @@ export const useUserControl = defineStore("login", {
   actions: {
     async testPost() {
       try {
-        let res = await axios.post("https://a2.anireki.com/", { withCredentials: true });
+        let res = await axios.get("https://a2.anireki.com/", { withCredentials: true });
         console.log(res);
-        let reas = await axios.post("test", { withCredentials: true });
-        console.log(reas);
+        // let reas = await axios.post("test", { withCredentials: true });
+        // console.log(reas);
       } catch (error) {}
     },
   },
