@@ -1,6 +1,5 @@
 import axios from "axios";
 import { defineStore } from "pinia";
-
 axios.defaults.baseURL = "https://a2.anireki.com/v2/";
 //a1.anireki.com/v2/
 // axios.defaults.withCredentials = true;
