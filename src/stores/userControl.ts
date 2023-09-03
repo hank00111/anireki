@@ -16,9 +16,9 @@ export const useUserControl = defineStore("login", {
         if (this.name.length === 0) {
           let res = await axios.post("/auth/user");
           if (res.status === 200) {
-            this.isLogin = true;
-            this.name = res.data.name;
-            this.picture = res.data.picture;
+            // this.isLogin = true;
+            // this.name = res.data.name;
+            // this.picture = res.data.picture;
           } else if (res.status === 204 && src === 1) {
             window.location.href = "https://a2.anireki.com/v2/auth/google";
           }
