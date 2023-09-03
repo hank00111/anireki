@@ -12,20 +12,21 @@ export const useUserControl = defineStore("login", {
   }),
   actions: {
     async getUser(src: number) {
-      try {
-        if (this.name.length === 0) {
-          let res = await axios.post("/user", { withCredentials: true });
-          if (res.status === 200) {
-            this.isLogin = true;
-            this.name = res.data.name;
-            this.picture = res.data.picture;
-          } else if (res.status === 204 && src === 1) {
-            window.location.href = "https://a2.anireki.com/v2/auth/google";
-          }
-        }
-      } catch (error) {
-        console.log(error);
-      }
+      window.location.href = "https://a2.anireki.com/v2/auth/google";
+      // try {
+      //   if (this.name.length === 0) {
+      //     let res = await axios.post("/user", { withCredentials: true });
+      //     if (res.status === 200) {
+      //       this.isLogin = true;
+      //       this.name = res.data.name;
+      //       this.picture = res.data.picture;
+      //     } else if (res.status === 204 && src === 1) {
+      //       window.location.href = "https://a2.anireki.com/v2/auth/google";
+      //     }
+      //   }
+      // } catch (error) {
+      //   console.log(error);
+      // }
     },
     async logout() {
       try {
