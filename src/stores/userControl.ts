@@ -13,6 +13,7 @@ export const useUserControl = defineStore("login", {
   actions: {
     async getUser(src: number) {
       window.location.href = "https://a2.anireki.com/v2/auth/google";
+      console.log(src)
       // try {
       //   if (this.name.length === 0) {
       //     let res = await axios.post("/user", { withCredentials: true });
