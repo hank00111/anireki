@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
 import Sidebar from '../components/Sidebar.vue'
-// import Header from '../components/Header.vue'
+import Header from '../components/Header.vue'
 
 
 onMounted(() => {
@@ -13,7 +13,7 @@ onMounted(() => {
     <Sidebar></Sidebar>
 
     <div class="main">
-        <!-- <Header></Header> -->
+        <Header></Header>
         <div class="content">123</div>
     </div>
 </template>

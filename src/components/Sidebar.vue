@@ -1,9 +1,7 @@
 <script setup lang="ts">
 //import { watch, ref } from 'vue';
 import { useDrakModeStore } from '../stores/drakMode'
-import { useUserControl } from '../stores/userControl'
 const darkMode = useDrakModeStore();
-const userControl = useUserControl();
 
 
 const SwichDarkMode = () => {
@@ -39,9 +37,6 @@ const SwichDarkMode = () => {
                     </svg>
                     <span>觀看紀錄</span>
                 </router-link>
-            </li>
-            <li>
-                <span @click="userControl.testPost">POST</span>
             </li>
 
         </ul>

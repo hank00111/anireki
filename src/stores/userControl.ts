@@ -1,9 +1,8 @@
 import axios from "axios";
 import { defineStore } from "pinia";
-axios.defaults.baseURL = "https://a2.anireki.com";
+axios.defaults.baseURL = "https://a2.anireki.com/v2";
 axios.defaults.withCredentials = true;
 //a1.anireki.com/v2/
-
 
 export const useUserControl = defineStore("login", {
   state: () => ({
@@ -12,11 +11,32 @@ export const useUserControl = defineStore("login", {
     picture: "",
   }),
   actions: {
-    async testPost() {
+    async getUser(src: number) {
       try {
-        let res = await axios.post("/v2/test");
-        console.log(res);
-      } catch (error) {}
+        if (this.name.length === 0) {
+          let res = await axios.post("/user", { withCredentials: true });
+          if (res.status === 200) {
+            this.isLogin = true;
+            this.name = res.data.name;
+            this.picture = res.data.picture;
+          } else if (res.status === 204 && src === 1) {
+            window.location.href = "https://a2.anireki.com/v2/auth/google";
+          }
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async logout() {
+      try {
+        await axios.post("/logout", { withCredentials: true });
+        this.isLogin = false;
+        this.name = "";
+        this.picture = "";
+        console.log("clear", this.name);
+      } catch (error) {
+        console.log(error);
+      }
     },
   },
   //   actions: {
