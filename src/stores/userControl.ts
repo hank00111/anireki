@@ -14,7 +14,7 @@ export const useUserControl = defineStore("login", {
     async getUser(src: number) {
       try {
         if (this.name.length === 0) {
-          let res = await axios.post("/user", { withCredentials: true });
+          let res = await axios.post("/auth/user");
           if (res.status === 200) {
             this.isLogin = true;
             this.name = res.data.name;
