@@ -20,7 +20,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
     async getCurrentSeason() {
       try {
         let res = await axios.get("/works/season/2023-summer");
-        // this.animeData = res.data;
+        this.animeData = res.data;
         console.log(res.data);
       } catch (error) {
         console.log(error);
