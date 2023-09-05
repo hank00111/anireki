@@ -23,12 +23,13 @@ onMounted(() => {
         <div class="content">
             <h1>2023 夏季新番</h1>
             <div class="home-info">
-                <div class="works">
+
+                <div v-for="data in animeWorks.animeData" class="works">
                     <div class="works-img">
                         <img src="https://a1.anireki.com/v1/1.jpg" alt="horimiya">
                     </div>
                     <div class="works-info">
-                        <p>ホリミヤ -piece-</p>
+                        <p>{{ data.title }}</p>
                     </div>
                 </div>
                 <!-- <div class="works">
