@@ -9,4 +9,4 @@ onMounted(() => {
     <div>404</div>
 </template>
 
-<style leng="scss"></style>
+<style lang="scss"></style>

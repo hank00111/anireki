@@ -16,7 +16,7 @@ const SwichDarkMode = () => {
 </script>
 
 <template>
-    <nav class="sidebar">
+    <div class="sidebar">
         <div class="sidebar-logo">
         </div>
         <ul class="sidebar-ul">
@@ -46,7 +46,7 @@ const SwichDarkMode = () => {
                 v-bind:checked="darkMode.drakState">
             <label for="lightSwitch"></label>
         </div>
-    </nav>
+    </div>
 </template>
 
-<style leng="scss" scoped></style>
+<style lang="scss" scoped></style>

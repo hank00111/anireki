@@ -49,4 +49,4 @@ const userLogout = () => {
     </div>
 </template>
 
-<style leng="scss"></style>
+<style lang="scss"></style>
