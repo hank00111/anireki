@@ -11,7 +11,7 @@ onMounted(() => {
     document.title = 'Home - Anireki';
     animeWorks.getCurrentSeason()
     //;
-    console.log(animeWorks.animeData)
+    // console.log(animeWorks.animeData)
 })
 </script>
 
@@ -31,94 +31,69 @@ onMounted(() => {
                         <p>ホリミヤ -piece-</p>
                     </div>
                 </div>
-                <div class="works">
-                    <div class="works-img">
-                        <img src="https://a1.anireki.com/v1/1.jpg" alt="horimiya">
-                    </div>
-                    <div class="works-info">
-                        <p>ホリミヤ -piece-</p>
-                    </div>
-                </div>
-                <div class="works">
-                    <div class="works-img">
-                        <img src="https://a1.anireki.com/v1/1.jpg" alt="horimiya">
-                    </div>
-                    <div class="works-info">
-                        <p>ホリミヤ -piece-</p>
-                    </div>
-                </div>
-                <div class="works">
-                    <div class="works-img">
-                        <img src="https://a1.anireki.com/v1/1.jpg" alt="horimiya">
-                    </div>
-                    <div class="works-info">
-                        <p>ホリミヤ -piece-</p>
-                    </div>
-                </div>
-                <div class="works">
-                    <div class="works-img">
-                        <img src="https://a1.anireki.com/v1/1.jpg" alt="horimiya">
-                    </div>
-                    <div class="works-info">
-                        <p>ホリミヤ -piece-</p>
-                    </div>
-                </div>
-                <div class="works">
-                    <div class="works-img">
-                        <img src="https://a1.anireki.com/v1/1.jpg" alt="horimiya">
-                    </div>
-                    <div class="works-info">
-                        <p>ホリミヤ -piece-</p>
-                    </div>
-                </div>
-                <div class="works">
-                    <div class="works-img">
-                        <img src="https://a1.anireki.com/v1/1.jpg" alt="horimiya">
-                    </div>
-                    <div class="works-info">
-                        <p>ホリミヤ -piece-</p>
-                    </div>
-                </div>
-                <div class="works">
-                    <div class="works-img">
-                        <img src="https://a1.anireki.com/v1/1.jpg" alt="horimiya">
-                    </div>
-                    <div class="works-info">
-                        <p>ホリミヤ -piece-</p>
-                    </div>
-                </div>
-                <div class="works">
-                    <div class="works-img">
-                        <img src="https://a1.anireki.com/v1/1.jpg" alt="horimiya">
-                    </div>
-                    <div class="works-info">
-                        <p>ホリミヤ -piece-</p>
-                    </div>
-                </div>
-
                 <!-- <div class="works">
-                    <img src="https://a1.anireki.com/v1/1.jpg" alt="horimiya">
-                    <p>ホリミヤ -piece-</p>
-                </div> -->
-                <!-- <div class="works">
-                    <img src="https://a1.anireki.com/v1/1.jpg" alt="horimiya">
-                    <p>ホリミヤ -piece-</p>
+                    <div class="works-img">
+                        <img src="https://a1.anireki.com/v1/1.jpg" alt="horimiya">
+                    </div>
+                    <div class="works-info">
+                        <p>ホリミヤ -piece-</p>
+                    </div>
                 </div>
                 <div class="works">
-                    <img src="https://a1.anireki.com/v1/1.jpg" alt="horimiya">
-                    <p>ホリミヤ -piece-</p>
+                    <div class="works-img">
+                        <img src="https://a1.anireki.com/v1/1.jpg" alt="horimiya">
+                    </div>
+                    <div class="works-info">
+                        <p>ホリミヤ -piece-</p>
+                    </div>
                 </div>
                 <div class="works">
-                    <img src="https://a1.anireki.com/v1/1.jpg" alt="horimiya">
-                    <p>ホリミヤ -piece-</p>
+                    <div class="works-img">
+                        <img src="https://a1.anireki.com/v1/1.jpg" alt="horimiya">
+                    </div>
+                    <div class="works-info">
+                        <p>ホリミヤ -piece-</p>
+                    </div>
                 </div>
                 <div class="works">
-                    <img src="https://a1.anireki.com/v1/1.jpg" alt="horimiya">
-                    <p>ホリミヤ -piece-</p>
+                    <div class="works-img">
+                        <img src="https://a1.anireki.com/v1/1.jpg" alt="horimiya">
+                    </div>
+                    <div class="works-info">
+                        <p>ホリミヤ -piece-</p>
+                    </div>
                 </div>
                 <div class="works">
-                    <img src="https://a1.anireki.com/v1/1.jpg" alt="horimiya">
-                    <p>ホリミヤ -piece-</p>
+                    <div class="works-img">
+                        <img src="https://a1.anireki.com/v1/1.jpg" alt="horimiya">
+                    </div>
+                    <div class="works-info">
+                        <p>ホリミヤ -piece-</p>
+                    </div>
+                </div>
+                <div class="works">
+                    <div class="works-img">
+                        <img src="https://a1.anireki.com/v1/1.jpg" alt="horimiya">
+                    </div>
+                    <div class="works-info">
+                        <p>ホリミヤ -piece-</p>
+                    </div>
+                </div>
+                <div class="works">
+                    <div class="works-img">
+                        <img src="https://a1.anireki.com/v1/1.jpg" alt="horimiya">
+                    </div>
+                    <div class="works-info">
+                        <p>ホリミヤ -piece-</p>
+                    </div>
+                </div>
+                <div class="works">
+                    <div class="works-img">
+                        <img src="https://a1.anireki.com/v1/1.jpg" alt="horimiya">
+                    </div>
+                    <div class="works-info">
+                        <p>ホリミヤ -piece-</p>
+                    </div>
                 </div> -->
             </div>
         </div>
