@@ -23,79 +23,14 @@ onMounted(() => {
         <div class="content">
             <h1>2023 夏季新番</h1>
             <div class="home-info">
-
                 <div v-for="data in animeWorks.animeData" class="works">
                     <div class="works-img">
-                        <img src="https://a1.anireki.com/v1/1.jpg" alt="horimiya">
+                        <img src={{ data.images_url }} alt="{{ data.title_jp }}">
                     </div>
                     <div class="works-info">
                         <p>{{ data.title }}</p>
                     </div>
                 </div>
-                <!-- <div class="works">
-                    <div class="works-img">
-                        <img src="https://a1.anireki.com/v1/1.jpg" alt="horimiya">
-                    </div>
-                    <div class="works-info">
-                        <p>ホリミヤ -piece-</p>
-                    </div>
-                </div>
-                <div class="works">
-                    <div class="works-img">
-                        <img src="https://a1.anireki.com/v1/1.jpg" alt="horimiya">
-                    </div>
-                    <div class="works-info">
-                        <p>ホリミヤ -piece-</p>
-                    </div>
-                </div>
-                <div class="works">
-                    <div class="works-img">
-                        <img src="https://a1.anireki.com/v1/1.jpg" alt="horimiya">
-                    </div>
-                    <div class="works-info">
-                        <p>ホリミヤ -piece-</p>
-                    </div>
-                </div>
-                <div class="works">
-                    <div class="works-img">
-                        <img src="https://a1.anireki.com/v1/1.jpg" alt="horimiya">
-                    </div>
-                    <div class="works-info">
-                        <p>ホリミヤ -piece-</p>
-                    </div>
-                </div>
-                <div class="works">
-                    <div class="works-img">
-                        <img src="https://a1.anireki.com/v1/1.jpg" alt="horimiya">
-                    </div>
-                    <div class="works-info">
-                        <p>ホリミヤ -piece-</p>
-                    </div>
-                </div>
-                <div class="works">
-                    <div class="works-img">
-                        <img src="https://a1.anireki.com/v1/1.jpg" alt="horimiya">
-                    </div>
-                    <div class="works-info">
-                        <p>ホリミヤ -piece-</p>
-                    </div>
-                </div>
-                <div class="works">
-                    <div class="works-img">
-                        <img src="https://a1.anireki.com/v1/1.jpg" alt="horimiya">
-                    </div>
-                    <div class="works-info">
-                        <p>ホリミヤ -piece-</p>
-                    </div>
-                </div>
-                <div class="works">
-                    <div class="works-img">
-                        <img src="https://a1.anireki.com/v1/1.jpg" alt="horimiya">
-                    </div>
-                    <div class="works-info">
-                        <p>ホリミヤ -piece-</p>
-                    </div>
-                </div> -->
             </div>
         </div>
     </div>
@@ -108,7 +43,7 @@ onMounted(() => {
     display: grid;
     flex-wrap: wrap;
     grid-auto-rows: auto;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-columns: repeat(var(--grid-container-columns), minmax(0, 1fr));
     // grid-template-columns: repeat(3, 1fr);
 
     .works {

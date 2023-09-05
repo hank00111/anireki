@@ -19,6 +19,7 @@ body {
   --main-background-color: #e0e0e0;
   --sidebar-li-text-color: #1d50a2;
   --text-default-color: #111927;
+  --grid-container-columns: 6;
 }
 //dark
 html[data-theme="dark"] {
@@ -318,8 +319,44 @@ li {
   position: inherit;
   overflow-y: scroll;
 
-  > h1 { 
+  > h1 {
     padding: 12px;
     margin: 0;
+  }
+}
+
+@media only screen and (min-width: 55em) and (max-width: 87.49em) {
+  .home-info {
+    --grid-container-columns: 5;
+  }
+}
+
+@media (min-width: 55em) and (max-width: 79.99em) {
+  .home-info {
+    --grid-container-columns: 4;
+  }
+}
+
+@media only screen and (min-width: 28em) and (max-width: 54.99em) {
+  .home-info {
+    --grid-container-columns: 2;
+  }
+}
+
+@media (min-width: 37.5em) and (max-width: 54.99em) {
+  .home-info {
+    --grid-container-columns: 3;
+  }
+}
+
+@media (min-width: 28em) and (max-width: 42.49em) {
+  .home-info {
+    --grid-container-columns: 2;
+  }
+}
+
+@media (max-width: 27.99em) {
+  .home-info {
+    --grid-container-columns: 2;
   }
 }
