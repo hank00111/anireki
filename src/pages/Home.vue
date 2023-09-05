@@ -25,7 +25,7 @@ onMounted(() => {
             <div class="home-info">
                 <div v-for="data in animeWorks.animeData" class="works">
                     <div class="works-img">
-                        <img src={{ data.images_url }} alt="{{ data.title_jp }}">
+                        <img src="{{ data.images_url }}" alt="{{ data.title_jp }}">
                     </div>
                     <div class="works-info">
                         <p>{{ data.title }}</p>
