@@ -14,7 +14,7 @@ export const useUserControl = defineStore("login", {
     async getUser(src: number) {
       try {
         if (this.name.length === 0) {
-          let res = await axios.post("/auth/user");
+          let res = await axios.get("/auth/user");
           if (res.status === 200) {
             this.isLogin = true;
             this.name = res.data.name;
@@ -27,13 +27,24 @@ export const useUserControl = defineStore("login", {
         console.log(error);
       }
     },
+    async getConsole() {
+      try {
+        let res = await axios.get("/auth/console");
+        if (res.status === 200) {
+          return true;
+        } else {
+          return false;
+        }
+      } catch (error) {
+        return false;
+      }
+    },
     async logout() {
       try {
-        await axios.post("/logout");
-        this.isLogin = false;
+        await axios.post("/auth/logout");
         this.name = "";
         this.picture = "";
-        // console.log("clear", this.name);
+        this.isLogin = false;
       } catch (error) {
         console.log(error);
       }
@@ -41,5 +52,3 @@ export const useUserControl = defineStore("login", {
   },
   // persist: true,
 });
-
-
