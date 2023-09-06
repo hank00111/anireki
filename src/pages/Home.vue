@@ -5,14 +5,10 @@ import Header from '../components/Header.vue'
 import { useAnimeWorks } from '../stores/animeWorks'
 
 const animeWorks = useAnimeWorks();
-const logout = () => {
-    animeWorks.getCurrentSeason();
-}
-
 // current season
 onMounted(async () => {
     document.title = 'Home - Anireki';
-    logout();
+    animeWorks.getCurrentSeason();
 })
 </script>
 
