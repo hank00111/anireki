@@ -8,7 +8,7 @@ const animeWorks = useAnimeWorks();
 const logout = () => {
     animeWorks.getCurrentSeason();
 }
-animeWorks.getCurrentSeason();
+
 // current season
 onMounted(async () => {
     document.title = 'Home - Anireki';
@@ -24,9 +24,10 @@ onMounted(async () => {
         <div class="content">
             <h1>2023 夏季新番</h1>
             <div class="home-info">
-                <div v-for="data in animeWorks.animeData" class="works">
+                <div v-for="data in    animeWorks.animeData   " class="works">
                     <div class="works-img">
-                        <img :src="data.images_url" :alt="data.title_jp">
+                        <img :src="data.images_url" :alt="data.title_jp"
+                            onerror="this.onerror=null; this.style='visibility:hidden;'">
                     </div>
                     <div>
                         <p class="works-info">{{ data.title }}</p>
@@ -89,7 +90,6 @@ onMounted(async () => {
             transition-duration: 400ms;
             transform: scale(1.05);
             filter: drop-shadow(0 0 0.75rem black);
-
         }
     }
 }
