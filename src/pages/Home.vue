@@ -9,12 +9,11 @@ const animeWorks = useAnimeWorks();
 // current season
 onMounted(async () => {
     document.title = 'Home - Anireki';
-    await animeWorks.getCurrentSeason();
     // console.log(animeWorks.animeData)
 })
 
 onBeforeMount(async () => {
-    // await animeWorks.getCurrentSeason()
+    await animeWorks.getCurrentSeason();
 })
 </script>
 
@@ -50,9 +49,6 @@ onBeforeMount(async () => {
     // grid-template-columns: repeat(3, 1fr);
 
     .works {
-        // align-content: center;
-        // position: inherit;
-        // padding: 5px;
         display: flex;
         flex-direction: column;
         border-radius: 7px;
@@ -62,9 +58,16 @@ onBeforeMount(async () => {
         transition: all 0.2s;
 
         .works-img {
+            min-height: 100%;
+            min-width: 100%;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
 
-            // filter: blur(8px);
+
             >img {
+                min-height: 100%;
+                min-width: 100%;
                 width: 100%;
                 height: 100%;
             }
