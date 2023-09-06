@@ -4,7 +4,6 @@ import History from "../pages/History.vue";
 import Console from "../pages/Console.vue";
 import NotFound from "../pages/NotFound.vue";
 import { useUserControl } from "../stores/userControl";
-import { useAnimeWorks } from "../stores/animeWorks";
 
 const routes = [
   {
