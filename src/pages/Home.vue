@@ -9,11 +9,10 @@ const animeWorks = useAnimeWorks();
 // current season
 onMounted(async () => {
     document.title = 'Home - Anireki';
-    // console.log(animeWorks.animeData)
+    await animeWorks.getCurrentSeason();
 })
 
 onBeforeMount(async () => {
-    await animeWorks.getCurrentSeason();
 })
 </script>
 
@@ -58,16 +57,10 @@ onBeforeMount(async () => {
         transition: all 0.2s;
 
         .works-img {
-            min-height: 100%;
-            min-width: 100%;
             width: 100%;
             height: 100%;
             overflow: hidden;
-
-
             >img {
-                min-height: 100%;
-                min-width: 100%;
                 width: 100%;
                 height: 100%;
             }
