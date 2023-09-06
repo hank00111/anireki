@@ -36,7 +36,7 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach(async (to, from) => {
+router.beforeEach(async (to) => {
   if (to.name === "console") {
     const userControll = useUserControl();
     const isAd = await userControll.getConsole();
