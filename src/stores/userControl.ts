@@ -42,9 +42,9 @@ export const useUserControl = defineStore("login", {
     logout() {
       try {
         axios.post("/auth/logout");
-        // this.name = "";
-        // this.picture = "";
-        // this.isLogin = false;
+        this.name = "";
+        this.picture = "";
+        this.isLogin = false;
       } catch (error) {
         console.log(error);
       }
