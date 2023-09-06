@@ -34,7 +34,7 @@ onMounted(() => {
 
                 <div class="works">
                     <div class="works-img">
-                        <img src="https://p2.anireki.com/img/1.jpg" alt="a">
+                        <img src="https://p2.anireki.com/1.jpg" alt="a">
                     </div>
                     <div class="works-info">
                         <p></p>
