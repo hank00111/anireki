@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted } from 'vue';
+import { onMounted, onBeforeMount } from 'vue';
 import Sidebar from '../components/Sidebar.vue'
 import Header from '../components/Header.vue'
 import { useAnimeWorks } from '../stores/animeWorks'
@@ -9,9 +9,12 @@ const animeWorks = useAnimeWorks();
 // current season
 onMounted(() => {
     document.title = 'Home - Anireki';
-    animeWorks.getCurrentSeason()
     //;
     // console.log(animeWorks.animeData)
+})
+
+onBeforeMount(() => {
+    animeWorks.getCurrentSeason()
 })
 </script>
 
