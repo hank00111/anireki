@@ -39,7 +39,9 @@ const router = createRouter({
 
 router.beforeEach(async (to) => {
   const animeWorks = useAnimeWorks();
-  await animeWorks.getCurrentSeason();
+  if (to.name === "home") {
+    await animeWorks.getCurrentSeason();
+  }
   if (to.name === "console") {
     const userControll = useUserControl();
     const isAd = await userControll.getConsole();
