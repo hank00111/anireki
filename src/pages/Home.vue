@@ -26,8 +26,7 @@ onMounted(async () => {
             <div class="home-info">
                 <div v-for="data in    animeWorks.animeData   " class="works">
                     <div class="works-img">
-                        <img :src="data.images_url" :alt="data.title_jp"
-                            onerror="this.onerror=null; this.style='visibility:hidden;'">
+                        <img v-lazy="data.images_url" :alt="data.title_jp">
                     </div>
                     <div>
                         <p class="works-info">{{ data.title }}</p>
