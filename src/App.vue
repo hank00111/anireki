@@ -2,9 +2,11 @@
 import { onMounted } from 'vue';
 import { useDrakModeStore } from './stores/drakMode'
 import { useUserControl } from './stores/userControl'
+import { useAnimeWorks } from './stores/animeWorks'
 
 const drakMode = useDrakModeStore();
 const userControll = useUserControl();
+const animeWorks = useAnimeWorks();
 
 onMounted(() => {
   if (drakMode.drakState) {
@@ -14,6 +16,8 @@ onMounted(() => {
   }
   document.title = 'Home - Anireki';
   userControll.getUser(0);
+  
+  animeWorks.getCurrentSeason();
 })
 </script>
 
