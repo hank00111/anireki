@@ -31,16 +31,6 @@ onMounted(() => {
                         <p>{{ data.title }}</p>
                     </div>
                 </div>
-
-                <div class="works">
-                    <div class="works-img">
-                        <img src="https://p2.anireki.com/1.jpg" alt="a">
-                    </div>
-                    <div class="works-info">
-                        <p></p>
-                    </div>
-                </div>
-
             </div>
         </div>
     </div>
