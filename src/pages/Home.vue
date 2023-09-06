@@ -7,14 +7,14 @@ import { useAnimeWorks } from '../stores/animeWorks'
 const animeWorks = useAnimeWorks();
 
 // current season
-onMounted(() => {
+onMounted(async () => {
     document.title = 'Home - Anireki';
-    //;
+    await animeWorks.getCurrentSeason();
     // console.log(animeWorks.animeData)
 })
 
-onBeforeMount(() => {
-    animeWorks.getCurrentSeason()
+onBeforeMount(async () => {
+    // await animeWorks.getCurrentSeason()
 })
 </script>
 
