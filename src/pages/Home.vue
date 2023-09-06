@@ -5,10 +5,14 @@ import Header from '../components/Header.vue'
 import { useAnimeWorks } from '../stores/animeWorks'
 
 const animeWorks = useAnimeWorks();
-
+const logout = () => {
+    animeWorks.getCurrentSeason();
+}
+animeWorks.getCurrentSeason();
 // current season
 onMounted(async () => {
     document.title = 'Home - Anireki';
+    logout()
 })
 
 
@@ -26,8 +30,8 @@ onMounted(async () => {
                     <div class="works-img">
                         <img :src="data.images_url" :alt="data.title_jp">
                     </div>
-                    <div class="works-info">
-                        <p>{{ data.title }}</p>
+                    <div>
+                        <p class="works-info">{{ data.title }}</p>
                     </div>
                 </div>
             </div>
@@ -58,6 +62,7 @@ onMounted(async () => {
             width: 100%;
             height: 100%;
             overflow: hidden;
+
             >img {
                 width: 100%;
                 height: 100%;
@@ -65,13 +70,11 @@ onMounted(async () => {
         }
 
         .works-info {
-
-            >p {
-                padding: 4px;
-                margin: 0;
-                font-weight: 700;
-                font-size: 18px;
-            }
+            padding: 4px;
+            margin: 0;
+            font-weight: 700;
+            display: inline-block;
+            white-space: nowrap;
         }
 
         &:hover {
