@@ -4,6 +4,7 @@ import History from "../pages/History.vue";
 import Console from "../pages/Console.vue";
 import NotFound from "../pages/NotFound.vue";
 import { useUserControl } from "../stores/userControl";
+import { useAnimeWorks } from "../stores/animeWorks";
 
 const routes = [
   {
@@ -37,6 +38,8 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to) => {
+  const animeWorks = useAnimeWorks();
+  await animeWorks.getCurrentSeason();
   if (to.name === "console") {
     const userControll = useUserControl();
     const isAd = await userControll.getConsole();

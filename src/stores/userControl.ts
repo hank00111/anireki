@@ -41,7 +41,7 @@ export const useUserControl = defineStore("login", {
     },
     async logout() {
       try {
-        await axios.get("/auth/logout");
+        await axios.post("/auth/logout");
         this.name = "";
         this.picture = "";
         this.isLogin = false;
