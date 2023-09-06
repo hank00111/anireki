@@ -12,10 +12,8 @@ animeWorks.getCurrentSeason();
 // current season
 onMounted(async () => {
     document.title = 'Home - Anireki';
-    logout()
+    logout();
 })
-
-
 </script>
 
 <template>
@@ -34,6 +32,14 @@ onMounted(async () => {
                         <p class="works-info">{{ data.title }}</p>
                     </div>
                 </div>
+                <!-- <div class="works">
+                    <div class="works-img">
+                        <img src="https://p2.anireki.com/1.jpg" alt="data.title_jp">
+                    </div>
+                    <div>
+                        <p class="works-info">堀與宮村 -piece-</p>
+                    </div>
+                </div> -->
             </div>
         </div>
     </div>
@@ -66,6 +72,7 @@ onMounted(async () => {
             >img {
                 width: 100%;
                 height: 100%;
+                aspect-ratio: 225 / 325;
             }
         }
 
@@ -73,7 +80,6 @@ onMounted(async () => {
             padding: 4px;
             margin: 0;
             font-weight: 700;
-            display: inline-block;
             white-space: nowrap;
         }
 
