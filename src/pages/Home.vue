@@ -8,7 +8,7 @@ const animeWorks = useAnimeWorks();
 // current season
 onMounted(async () => {
     document.title = 'Home - Anireki';
-    animeWorks.getCurrentSeason();
+    // animeWorks.getCurrentSeason();
 })
 onBeforeMount(async () => {
     animeWorks.getCurrentSeason();
