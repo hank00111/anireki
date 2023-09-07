@@ -26,7 +26,7 @@ onBeforeMount(async () => {
                 <div v-for="data in animeWorks.animeData" class="works-card">
                     <div class="works-images" :style="{ backgroundImage: `url(${data.images_url})` }">
                     </div>
-                    <div class="works-contex">
+                    <div class="works-context">
                         <p>{{ data.title }}</p>
                     </div>
                 </div>
@@ -68,9 +68,6 @@ onBeforeMount(async () => {
             padding-bottom: 141.5%;
             background-size: 100% 100%;
             background-position: center;
-            -webkit-transition: all 0.3s cubic-bezier(0, 0, 0.2, 1);
-            -o-transition: all 0.3s cubic-bezier(0, 0, 0.2, 1);
-            transition: all 0.3s cubic-bezier(0, 0, 0.2, 1);
             background-color: #6b6363;
         }
 
@@ -80,7 +77,7 @@ onBeforeMount(async () => {
                 padding: 4px;
                 font-weight: 700;
                 color: #eee;
-                // white-space: nowrap;
+                white-space: nowrap;
             }
         }
 
