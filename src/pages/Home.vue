@@ -21,23 +21,24 @@ onBeforeMount(async () => {
     <div class="main">
         <Header></Header>
         <div class="content">
-            <h1>2023 夏季新番</h1>
+            <div class="home-title">2023 夏季新番</div>
             <div class="home-info">
-                <!-- <div v-for="data in animeWorks.animeData" class="works">
-                    <div class="works-img">
-                        <img v-lazy="data.images_url" :alt="data.title_jp">
-                    </div>
-                    <div>
-                        <p class="works-info">{{ data.title }}</p>
-                    </div>
-                </div> -->
                 <div v-for="data in animeWorks.animeData" class="works-card">
-                    <div class="images" :style="{ backgroundImage: `url(${data.images_url})` }">
+                    <div class="works-images" :style="{ backgroundImage: `url(${data.images_url})` }">
                     </div>
-                    <div>
-                        <p class="works-info">{{ data.title }}</p>
+                    <div class="works-contex">
+                        <p>{{ data.title }}</p>
                     </div>
                 </div>
+                <!-- <div class="works-card">
+                    <div class="works-images" :style="{ backgroundImage: `url(${data.images_url})` }">
+                    </div>
+                    <div class="works-images" :style="{ backgroundImage: `url(https://p2.anireki.com/2.jpg)` }">
+                    </div>
+                    <div class="works-context">
+                        <p>幻日夜羽 -鏡中暉光-</p>
+                    </div>
+                </div> -->
             </div>
         </div>
     </div>
@@ -46,65 +47,49 @@ onBeforeMount(async () => {
 <style scoped lang="scss" >
 .home-info {
     gap: 8px;
-    padding: 12px;
+    padding: 12px 12px 12px 15px;
     display: grid;
     flex-wrap: wrap;
     grid-auto-rows: auto;
     grid-template-columns: repeat(var(--grid-container-columns), minmax(0, 1fr));
     // grid-template-columns: repeat(3, 1fr);
 
-    .works {
-        display: flex;
-        flex-direction: column;
-        border-radius: 7px;
+    .works-card {
+        display: inline-block;
+        border-radius: 8px;
         overflow: hidden;
         user-select: none;
         background-color: hsla(0, 0%, 100%, 0.19);
         transition: all 0.2s;
 
-        .works-img {
-            width: 100%;
-            height: 100%;
+        .works-images {
+            height: 0;
             overflow: hidden;
-
-            >img {
-                width: 100%;
-                height: 100%;
-                aspect-ratio: 225 / 325;
-            }
+            padding-bottom: 141.5%;
+            background-size: 100% 100%;
+            background-position: center;
+            -webkit-transition: all 0.3s cubic-bezier(0, 0, 0.2, 1);
+            -o-transition: all 0.3s cubic-bezier(0, 0, 0.2, 1);
+            transition: all 0.3s cubic-bezier(0, 0, 0.2, 1);
+            background-color: #6b6363;
         }
 
-        .works-info {
-            padding: 4px;
-            margin: 0;
-            font-weight: 700;
-            white-space: nowrap;
+        .works-context {
+            >p {
+                margin: 0;
+                padding: 4px;
+                font-weight: 700;
+                color: #eee;
+                // white-space: nowrap;
+            }
         }
 
         &:hover {
             z-index: 2;
-            background-color: hsl(0, 10%, 20%);
+            background-color: hsl(345, 17%, 36%);
             transition-duration: 400ms;
             transform: scale(1.05);
             filter: drop-shadow(0 0 0.75rem black);
-        }
-    }
-
-    .works-card {
-        display: inline-block;
-
-        .images {
-            height: 0;
-            overflow: hidden;
-            padding-bottom: 141.4%;
-            background-size: cover;
-            background-position: center;
-            border-radius: 10px;
-            position: relative;
-            -webkit-transition: all 0.3s cubic-bezier(0, 0, 0.2, 1);
-            -o-transition: all 0.3s cubic-bezier(0, 0, 0.2, 1);
-            transition: all 0.3s cubic-bezier(0, 0, 0.2, 1);
-            background-color: #eee;
         }
     }
 }

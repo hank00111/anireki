@@ -19,7 +19,7 @@ body {
   --main-background-color: #e0e0e0;
   --sidebar-li-text-color: #1d50a2;
   --text-default-color: #111927;
-  --grid-container-columns: 6;
+  --grid-container-columns: 5;
 }
 //dark
 html[data-theme="dark"] {
@@ -197,6 +197,7 @@ li {
   width: 100%;
   padding: 8px 8px 0px 6px;
   border-radius: 5px;
+  min-width: 500px;
 }
 
 .header {
@@ -319,9 +320,12 @@ li {
   position: inherit;
   overflow-y: scroll;
 
-  > h1 {
-    padding: 12px;
-    margin: 0;
+  .home-title {
+    margin-left: 18px;
+    font-weight: bold;
+    font-size: 2.5em;
+    line-height: normal;
+    color: #fff;
   }
 }
 
@@ -333,7 +337,7 @@ li {
 
 @media (min-width: 55em) and (max-width: 79.99em) {
   .home-info {
-    --grid-container-columns: 4;
+    --grid-container-columns: 3;
   }
 }
 
@@ -345,7 +349,7 @@ li {
 
 @media (min-width: 37.5em) and (max-width: 54.99em) {
   .home-info {
-    --grid-container-columns: 3;
+    --grid-container-columns: 2;
   }
 }
 
