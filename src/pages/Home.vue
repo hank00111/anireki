@@ -32,7 +32,7 @@ onBeforeMount(async () => {
                     </div>
                 </div> -->
                 <div v-for="data in animeWorks.animeData" class="works-card">
-                    <div class="images" style="background-image: url({{data.images_url}});">
+                    <div class="images" :style="{ backgroundImage: `url(${data.images_url})` }">
                     </div>
                     <div>
                         <p class="works-info">{{ data.title }}</p>
