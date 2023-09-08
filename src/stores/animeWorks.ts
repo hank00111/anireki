@@ -30,7 +30,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
     async addWorks() {
       try {
         await axios.post("/works/console/add", {
-          firstName: 'Fred',
+          data: 'Fred',
           lastName: 'Flintstone'
         })
         .then(function (response) {
