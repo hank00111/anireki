@@ -26,7 +26,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
       data: "Fred",
       lastName: "Flintstone",
     },
-    // drakState: false,
+    worksCount: "",
   }),
   actions: {
     async getCurrentSeason() {
@@ -40,30 +40,31 @@ export const useAnimeWorks = defineStore("animeWorks", {
     },
     async addWorks() {
       try {
-        // let baa = JSON.stringify(this.testdat);
         await axios
           .post("/works/console/add", this.testdat)
           .then(function (response) {
-            let a = {
-              data: "Fred",
-              lastName: "Flintstone",
-            };
-            let b = JSON.stringify(a);
-            console.log(b);
-            let c = LZString.compressToUTF16(b);
-            console.log(c);
-            console.log(LZString.decompressFromUTF16(c));
-            console.log(JSON.parse(LZString.decompressFromUTF16(c)));
+            // let b = JSON.stringify(a);
+            // console.log(b);
+            // let c = LZString.compressToUTF16(b);
+            // console.log(c);
+            // console.log(LZString.decompressFromUTF16(c));
+            // console.log(JSON.parse(LZString.decompressFromUTF16(c)));
             console.log(response);
-            // console.log(
-            //   JSON.parse(LZString.decompressFromUTF16(response.data))
-            // );
           })
           .catch(function (error) {
             console.log(error);
           });
         // this.animeData = res.data;
         // console.log(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async getWorksCount() {
+      try {
+        let res = await axios.get("/works/console/workscount");
+        console.log(LZString.decompressFromUTF16(res.data))
+        // this.animeData = res.data;
       } catch (error) {
         console.log(error);
       }
