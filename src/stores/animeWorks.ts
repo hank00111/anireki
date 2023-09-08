@@ -34,8 +34,9 @@ export const useAnimeWorks = defineStore("animeWorks", {
     },
     async addWorks() {
       try {
+        let baa = JSON.stringify(this.testdat);
         await axios
-          .post("/works/console/add", JSON.stringify(this.testdat))
+          .post("/works/console/add", baa)
           .then(function (response) {
             let a = {
               data: "Fred",
