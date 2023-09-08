@@ -36,8 +36,8 @@ export const useAnimeWorks = defineStore("animeWorks", {
             lastName: "Flintstone",
           })
           .then(function (response) {
-            console.log(response);
-            console.log(LZString.decompressFromUTF16(response.data));
+            // console.log(response);
+            console.log(JSON.parse(LZString.decompressFromUTF16(response.data)));
           })
           .catch(function (error) {
             console.log(error);
