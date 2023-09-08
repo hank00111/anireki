@@ -40,7 +40,7 @@ onMounted(() => {
                 <div class="card">
                     <div class="card-item">
                         <p>ID</p>
-                        <input type="text" :value="animeWorks.worksCount + 1" :placeholder="animeWorks.worksCount + 1"
+                        <input type="text" :placeholder="animeWorks.worksCount"
                             readonly="true">
                     </div>
                     <div class="card-item">
