@@ -29,7 +29,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
     },
     async addWorks() {
       try {
-        await axios.post("/works/season/console/add", {
+        await axios.post("/works/console/add", {
           firstName: 'Fred',
           lastName: 'Flintstone'
         })
