@@ -3,6 +3,7 @@ import Home from "../pages/Home.vue";
 import History from "../pages/History.vue";
 import Console from "../pages/Console.vue";
 import NotFound from "../pages/NotFound.vue";
+import AddWorks from "../pages/AddWorks.vue";
 import { useUserControl } from "../stores/userControl";
 
 const routes = [
@@ -22,7 +23,13 @@ const routes = [
     path: "/console",
     name: "console",
     component: Console,
-    meta: { title: "觀看紀錄 - Anireki", requiresAuth: true },
+    meta: { title: "Console - Anireki", requiresAuth: true },
+  },
+  {
+    path: "/console/addworks",
+    name: "addworks",
+    component: AddWorks,
+    meta: { title: "AddWorks - Anireki", requiresAuth: true },
   },
   {
     path: "/:pathMatch(.*)*",
@@ -37,13 +44,13 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to) => {
-  if (to.name === "console") {
-    const userControll = useUserControl();
-    const isAd = await userControll.getConsole();
-    if (!isAd && to.meta.requiresAuth) {
-      console.log("error");
-      return { name: "home" };
-    }
-  }
+  // if (to.name === "console") {
+  //   const userControll = useUserControl();
+  //   const isAd = await userControll.getConsole();
+  //   if (!isAd && to.meta.requiresAuth) {
+  //     console.log("error");
+  //     return { name: "home" };
+  //   }
+  // }
 });
 export default router;

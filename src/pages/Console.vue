@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
-import Sidebar from '../components/Sidebar.vue'
+import ConsoleSidebar from '../components/ConsoleSidebar.vue'
 import Header from '../components/Header.vue'
 
 
@@ -10,10 +10,10 @@ onMounted(() => {
 </script>
 
 <template>
-    <Sidebar></Sidebar>
+    <ConsoleSidebar></ConsoleSidebar>
     <div class="main">
-        <Header></Header>
-        <div class="content">Console</div>
+        <Header class="console-header"></Header>
+        <div class="content console-content">活動</div>
     </div>
 </template>
 

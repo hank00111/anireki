@@ -45,6 +45,14 @@ onBeforeMount(async () => {
 </template>
 
 <style scoped lang="scss" >
+.home-title {
+    margin-left: 18px;
+    font-weight: bold;
+    font-size: 2.5em;
+    line-height: normal;
+    color: #fff;
+}
+
 .home-info {
     gap: 8px;
     padding: 12px 12px 12px 15px;

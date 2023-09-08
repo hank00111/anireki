@@ -16,18 +16,23 @@ body {
 :root {
   --background-default-color: #f6f7f8;
   --sidebar-background-color: #e0e0e0;
+  --console-sidebar-background-color: #b9b9b9;
   --main-background-color: #e0e0e0;
   --sidebar-li-text-color: #1d50a2;
   --text-default-color: #111927;
+  --console-text-default-color: #111927;
   --grid-container-columns: 5;
 }
 //dark
 html[data-theme="dark"] {
   --background-default-color: #00050d;
   --sidebar-background-color: #1c1e22;
+  --console-sidebar-background-color: #111111;
+  --console-main-background-color: #111111;
   --main-background-color: #1c1e22;
   --sidebar-li-text-color: #fff;
   --text-default-color: #c9c9c4;
+  --console-text-default-color: #e8eaed;
 }
 
 body {
@@ -191,6 +196,11 @@ li {
   }
 }
 
+.console {
+  background-color: var(--console-sidebar-background-color);
+  
+}
+
 .main {
   display: flex;
   flex-direction: column;
@@ -311,6 +321,10 @@ li {
   }
 }
 
+.console-header {
+  background-color: var(--console-sidebar-background-color);
+}
+
 .content {
   width: 100%;
   height: 100%;
@@ -319,14 +333,10 @@ li {
   border-radius: 0px 0px 5px 5px;
   position: inherit;
   overflow-y: scroll;
+}
 
-  .home-title {
-    margin-left: 18px;
-    font-weight: bold;
-    font-size: 2.5em;
-    line-height: normal;
-    color: #fff;
-  }
+.console-content {
+  background: var(--console-main-background-color);
 }
 
 @media only screen and (min-width: 55em) and (max-width: 87.49em) {
@@ -337,7 +347,7 @@ li {
 
 @media (min-width: 55em) and (max-width: 79.99em) {
   .home-info {
-    --grid-container-columns: 3;
+    --grid-container-columns: 4;
   }
 }
 
