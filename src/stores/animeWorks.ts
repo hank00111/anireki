@@ -5,11 +5,11 @@ axios.defaults.baseURL = "https://a2.anireki.com/v2";
 // axios.defaults.baseURL = "http://localhost:5000/v2";
 axios.defaults.withCredentials = true;
 
-const jsonConfig = {
-  headers: {
-    "Content-Type": "application/json",
-  },
-};
+// const jsonConfig = {
+//   headers: {
+//     "Content-Type": "application/json",
+//   },
+// };
 
 export const useAnimeWorks = defineStore("animeWorks", {
   state: () => ({
