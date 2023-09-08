@@ -32,6 +32,7 @@ onBeforeMount(() => {
 
 onMounted(() => {
     document.title = 'Console - Anireki';
+    animeWorks.getWorksCount();
 })
 </script>
 
