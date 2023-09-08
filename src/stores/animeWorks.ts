@@ -1,4 +1,5 @@
 import axios from "axios";
+import LZString from "lz-string";
 import { defineStore } from "pinia";
 axios.defaults.baseURL = "https://a2.anireki.com/v2";
 // axios.defaults.baseURL = "http://localhost:5000/v2";
@@ -29,16 +30,18 @@ export const useAnimeWorks = defineStore("animeWorks", {
     },
     async addWorks() {
       try {
-        await axios.post("/works/console/add", {
-          data: 'Fred',
-          lastName: 'Flintstone'
-        })
-        .then(function (response) {
-          console.log(response);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+        await axios
+          .post("/works/console/add", {
+            data: "Fred",
+            lastName: "Flintstone",
+          })
+          .then(function (response) {
+            console.log(response);
+            console.log(LZString.decompressFromUTF16(response.data));
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
         // this.animeData = res.data;
         // console.log(res.data);
       } catch (error) {
