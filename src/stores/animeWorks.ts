@@ -16,6 +16,10 @@ export const useAnimeWorks = defineStore("animeWorks", {
         images_url: "",
       },
     ],
+    testdat: {
+      data: "Fred",
+      lastName: "Flintstone",
+    },
     // drakState: false,
   }),
   actions: {
@@ -31,10 +35,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
     async addWorks() {
       try {
         await axios
-          .post("/works/console/add", {
-            data: "Fred",
-            lastName: "Flintstone",
-          })
+          .post("/works/console/add", JSON.stringify(this.testdat))
           .then(function (response) {
             let a = {
               data: "Fred",
