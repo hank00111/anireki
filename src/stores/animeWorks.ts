@@ -46,7 +46,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
             console.log(c);
             console.log(LZString.decompressFromUTF16(c));
             console.log(JSON.parse(LZString.decompressFromUTF16(c)));
-            // console.log(response);
+            console.log(response);
             // console.log(
             //   JSON.parse(LZString.decompressFromUTF16(response.data))
             // );
