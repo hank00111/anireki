@@ -36,12 +36,11 @@ onMounted(() => {
     <div class="main">
         <Header class="console-header"></Header>
         <div class="content console-content">
-            <div class="console-container">
+            <div v-if="animeWorks.isLoaded" class="console-container">
                 <div class="card">
                     <div class="card-item">
                         <p>ID</p>
-                        <input type="text" :placeholder="animeWorks.worksCount"
-                            readonly="true">
+                        <input type="text" :placeholder="animeWorks.worksCount" readonly="true">
                     </div>
                     <div class="card-item">
                         <p>年份</p>
@@ -83,6 +82,7 @@ onMounted(() => {
     margin-right: auto;
     margin-left: auto;
     max-width: 80%;
+    transition: 0.2s;
 
     .card {
         // background-color: #2e2f31;

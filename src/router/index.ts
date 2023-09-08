@@ -44,7 +44,7 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to) => {
-  if (to.name === "console") {
+  if (to.name === "console" || to.name === "addworks") {
     const userControll = useUserControl();
     const isAd = await userControll.getConsole();
     if (!isAd && to.meta.requiresAuth) {

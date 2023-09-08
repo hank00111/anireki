@@ -27,6 +27,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
       lastName: "Flintstone",
     },
     worksCount: "",
+    isLoaded: false,
   }),
   actions: {
     async getCurrentSeason() {
@@ -64,6 +65,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
       try {
         let res = await axios.get("/works/console/workscount");
         this.worksCount = LZString.decompressFromUTF16(res.data);
+        this.isLoaded = true;
       } catch (error) {
         console.log(error);
       }
