@@ -63,8 +63,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
     async getWorksCount() {
       try {
         let res = await axios.get("/works/console/workscount");
-        console.log(LZString.decompressFromUTF16(res.data))
-        // this.animeData = res.data;
+        this.worksCount = LZString.decompressFromUTF16(res.data);
       } catch (error) {
         console.log(error);
       }

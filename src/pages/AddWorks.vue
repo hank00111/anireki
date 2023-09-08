@@ -19,20 +19,15 @@ const yearsArray = ref<string[]>(
 )
 
 const thisSeason = ref<number>(Math.ceil((new Date().getMonth() + 1) / 3))
-// const season = reactive<object[]>([
-//     { spring: '春季' },
-//     { summer: '夏季' },
-//     { autumn: '秋季' },
-//     { winter: '冬季' }])
 const season = reactive<seasonModel>({ 1: '春季', 2: '夏季', 3: '秋季', 4: '冬季', })
 
 onBeforeMount(() => {
-
+    animeWorks.getWorksCount();
 })
 
 onMounted(() => {
     document.title = 'Console - Anireki';
-    animeWorks.getWorksCount();
+
 })
 </script>
 
@@ -45,7 +40,8 @@ onMounted(() => {
                 <div class="card">
                     <div class="card-item">
                         <p>ID</p>
-                        <input type="text">
+                        <input type="text" :value="animeWorks.worksCount + 1" :placeholder="animeWorks.worksCount + 1"
+                            readonly="true">
                     </div>
                     <div class="card-item">
                         <p>年份</p>
