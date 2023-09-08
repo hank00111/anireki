@@ -5,6 +5,12 @@ axios.defaults.baseURL = "https://a2.anireki.com/v2";
 // axios.defaults.baseURL = "http://localhost:5000/v2";
 axios.defaults.withCredentials = true;
 
+const jsonConfig = {
+  headers: {
+    "Content-Type": "application/json",
+  },
+};
+
 export const useAnimeWorks = defineStore("animeWorks", {
   state: () => ({
     animeData: [
@@ -36,7 +42,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
       try {
         // let baa = JSON.stringify(this.testdat);
         await axios
-          .post("/works/console/add", "baa")
+          .post("/works/console/add", this.testdat)
           .then(function (response) {
             let a = {
               data: "Fred",
