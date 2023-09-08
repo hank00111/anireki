@@ -36,42 +36,43 @@ onMounted(() => {
     <div class="main">
         <Header class="console-header"></Header>
         <div class="content console-content">
-            <div v-if="animeWorks.isLoaded" class="console-container">
-                <div class="card">
-                    <div class="card-item">
-                        <p>ID</p>
-                        <input type="text" :placeholder="animeWorks.worksCount" readonly="true">
+            <Transition>
+                <div v-if="animeWorks.isLoaded" class="console-container">
+                    <div class="card">
+                        <div class="card-item">
+                            <p>ID</p>
+                            <input type="text" :placeholder="animeWorks.worksCount" readonly="true">
+                        </div>
+                        <div class="card-item">
+                            <p>年份</p>
+                            <select v-model="thisYear">
+                                <option v-for="year in yearsArray" :value="year" :key="year">{{ year }}</option>
+                            </select>
+                        </div>
+                        <div class="card-item">
+                            <p>季度</p>
+                            <select v-model="season[thisSeason]">
+                                <option v-for="(value, index) in season" :value="value" :key="index">{{ value }}</option>
+                            </select>
+                        </div>
+                        <div class="card-item">
+                            <p>動畫名稱</p>
+                            <input type="text">
+                        </div>
+                        <div class="card-item">
+                            <p>日文名稱</p>
+                            <input type="text">
+                        </div>
+                        <div class="card-item">
+                            <p>主視覺圖</p>
+                            <input type="text">
+                        </div>
+                        <div class="card-item">
+                            <button @click="animeWorks.addWorks">新增</button>
+                        </div>
                     </div>
-                    <div class="card-item">
-                        <p>年份</p>
-                        <select v-model="thisYear">
-                            <option v-for="year in yearsArray" :value="year" :key="year">{{ year }}</option>
-                        </select>
-                    </div>
-                    <div class="card-item">
-                        <p>季度</p>
-                        <select v-model="season[thisSeason]">
-                            <option v-for="(value, index) in season" :value="value" :key="index">{{ value }}</option>
-                        </select>
-                    </div>
-                    <div class="card-item">
-                        <p>動畫名稱</p>
-                        <input type="text">
-                    </div>
-                    <div class="card-item">
-                        <p>日文名稱</p>
-                        <input type="text">
-                    </div>
-                    <div class="card-item">
-                        <p>主視覺圖</p>
-                        <input type="text">
-                    </div>
-                    <div class="card-item">
-                        <button @click="animeWorks.addWorks">新增</button>
-                    </div>
-
                 </div>
-            </div>
+            </Transition>
         </div>
     </div>
 </template>
@@ -166,33 +167,4 @@ onMounted(() => {
     }
 
 }
-
-// .add-form {
-//     display: flex;
-//     width: 100%;
-//     height: 5%;
-//     color: var(--console-text-default-color);
-//     font-size: 1.6em;
-//     align-items: center;
-
-//     >p {
-//         width: 120px;
-//     }
-
-//     >input {
-//         border: 0;
-//         border-radius: 2px;
-//         color: #000;
-//         font-size: 18px;
-//         line-height: 20px;
-//         margin-left: 10px;
-//         max-width: 100%;
-//         padding: 8px;
-//         vertical-align: middle;
-//         width: 400px;
-//         max-height: 36px;
-//         background-color: #e9ecef;
-
-//     }
-// }
 </style>

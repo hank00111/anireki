@@ -198,7 +198,6 @@ li {
 
 .console {
   background-color: var(--console-sidebar-background-color);
-  
 }
 
 .main {
@@ -337,6 +336,14 @@ li {
 
 .console-content {
   background: var(--console-main-background-color);
+}
+
+.v-enter-active {
+  transition: opacity 0.5s;
+}
+
+.v-enter-from {
+  opacity: 0;
 }
 
 @media only screen and (min-width: 55em) and (max-width: 87.49em) {
