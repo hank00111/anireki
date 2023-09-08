@@ -31,13 +31,25 @@ export const useAnimeWorks = defineStore("animeWorks", {
     async addWorks() {
       try {
         await axios
-          .post("/works/console/add", JSON.stringify({
+          .post("/works/console/add", {
             data: "Fred",
             lastName: "Flintstone",
-          }))
+          })
           .then(function (response) {
+            let a = {
+              data: "Fred",
+              lastName: "Flintstone",
+            };
+            let b = JSON.stringify(a);
+            console.log(b);
+            let c = LZString.compressToUTF16(b);
+            console.log(c);
+            console.log(LZString.decompressFromUTF16(c));
+            console.log(JSON.parse(LZString.decompressFromUTF16(c)));
             // console.log(response);
-            console.log(JSON.parse(LZString.decompressFromUTF16(response.data)));
+            // console.log(
+            //   JSON.parse(LZString.decompressFromUTF16(response.data))
+            // );
           })
           .catch(function (error) {
             console.log(error);
