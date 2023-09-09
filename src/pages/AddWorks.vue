@@ -29,11 +29,13 @@ const seaSon = reactive<seasonModel>({ 1: '春季', 2: '夏季', 3: '秋季', 4:
 const sendData = () => {
     if (animeWorks.worksCount.length >= 1 && refTitle_jp.value.length >= 1) {
         let data = {
-            id: animeWorks.worksCount,
-            year: thisYear.value,
-            season_id: thisSeason.value,
-            title: refTitle.value,
-            title_jp: refTitle_jp.value,
+            works: {
+                id: animeWorks.worksCount,
+                year: thisYear.value,
+                season_id: thisSeason.value,
+                title: refTitle.value,
+                title_jp: refTitle_jp.value,
+            },
             image: refImages.value
         }
         animeWorks.addWorks(data);
