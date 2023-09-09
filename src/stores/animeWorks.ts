@@ -22,12 +22,8 @@ export const useAnimeWorks = defineStore("animeWorks", {
         images_url: "",
       },
     ],
-    testdat: {
-      data: "Fred",
-      lastName: "Flintstone",
-    },
     worksCount: "",
-    isLoaded: false,
+    isLoaded: true,
   }),
   actions: {
     async getCurrentSeason() {
@@ -39,10 +35,10 @@ export const useAnimeWorks = defineStore("animeWorks", {
         console.log(error);
       }
     },
-    async addWorks() {
+    async addWorks(data: object) {
       try {
         await axios
-          .post("/works/console/add", this.testdat)
+          .post("/console/add", data)
           .then(function (response) {
             // let b = JSON.stringify(a);
             // console.log(b);
@@ -56,16 +52,16 @@ export const useAnimeWorks = defineStore("animeWorks", {
             console.log(error);
           });
         // this.animeData = res.data;
-        // console.log(res.data);
+        console.log(data);
       } catch (error) {
         console.log(error);
       }
     },
     async getWorksCount() {
       try {
-        let res = await axios.get("/works/console/workscount");        
+        let res = await axios.get("/console/workscount");
         this.worksCount = LZString.decompressFromUTF16(res.data);
-        this.isLoaded = true
+        this.isLoaded = true;
       } catch (error) {
         console.log(error);
       }

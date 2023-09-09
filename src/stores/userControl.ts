@@ -24,7 +24,7 @@ export const useUserControl = defineStore("login", {
           }
         }
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     },
     async getConsole() {
@@ -46,7 +46,7 @@ export const useUserControl = defineStore("login", {
         this.picture = "";
         this.isLogin = false;
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     },
   },

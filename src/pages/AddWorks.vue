@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Header from '../components/Header.vue'
 import ConsoleSidebar from '../components/ConsoleSidebar.vue'
-import { ref, reactive, onMounted, onBeforeMount } from 'vue';
+import { ref, reactive, onMounted, onBeforeMount, watchEffect, watch } from 'vue';
 import { useAnimeWorks } from '../stores/animeWorks'
 
 const animeWorks = useAnimeWorks();
@@ -10,6 +10,11 @@ interface seasonModel {
     [key: string]: any;
     [index: number]: any;
 }
+const refTitle = ref<string>("")
+const refTitle_jp = ref<string>("")
+const refImages = ref<any>()
+const refImagesUrl = ref<any>()
+const refImageLoad = ref<boolean>(false)
 
 const startYear = ref<string>('1996')
 const thisYear = ref<number>(new Date().getFullYear())
@@ -19,7 +24,27 @@ const yearsArray = ref<string[]>(
 )
 
 const thisSeason = ref<number>(Math.ceil((new Date().getMonth() + 1) / 3))
-const season = reactive<seasonModel>({ 1: '春季', 2: '夏季', 3: '秋季', 4: '冬季', })
+const seaSon = reactive<seasonModel>({ 1: '春季', 2: '夏季', 3: '秋季', 4: '冬季', })
+
+const sendData = () => {
+    if (animeWorks.worksCount.length >= 1 && refTitle_jp.value.length >= 1) {
+        let data = {
+            id: animeWorks.worksCount,
+            year: thisYear.value,
+            season_id: thisSeason.value,
+            title: refTitle.value,
+            title_jp: refTitle_jp.value,
+            image: refImages.value
+        }
+        animeWorks.addWorks(data);
+    } else {
+        console.log("ID ERROR")
+    }
+}
+const imageSel = (e: any) => {
+    refImages.value = e.target.files[0];
+    console.log(e.target.files[0])
+}
 
 onBeforeMount(() => {
     animeWorks.getWorksCount();
@@ -27,7 +52,20 @@ onBeforeMount(() => {
 
 onMounted(() => {
     document.title = 'Console - Anireki';
+})
 
+watch(refImages, (refImages) => {
+    let fileReader = new FileReader();
+    refImageLoad.value = false;
+    fileReader.readAsDataURL(refImages)
+    fileReader.addEventListener('load', () => {
+        refImagesUrl.value = fileReader.result
+        refImageLoad.value = true;
+    })
+})
+watchEffect(() => {
+    // console.log(thisYear.value)
+    // console.log(seaSon[thisSeason.value])
 })
 </script>
 
@@ -51,8 +89,8 @@ onMounted(() => {
                         </div>
                         <div class="card-item">
                             <p>季度</p>
-                            <select v-model="season[thisSeason]">
-                                <option v-for="(value, index) in season" :value="value" :key="index">{{ value }}</option>
+                            <select v-model="seaSon[thisSeason]">
+                                <option v-for="(value, index) in seaSon" :value="value" :key="index">{{ value }}</option>
                             </select>
                         </div>
                         <div class="card-item">
@@ -65,10 +103,14 @@ onMounted(() => {
                         </div>
                         <div class="card-item">
                             <p>主視覺圖</p>
-                            <input type="text">
+                            <input class="card-item-imageUp" type="file" :multiple="true" v-on:change="imageSel">
                         </div>
+                        <Transition>
+                            <div v-if="refImageLoad" class="card-image"
+                                :style="{ backgroundImage: `url(${refImagesUrl})` }"></div>
+                        </Transition>
                         <div class="card-item">
-                            <button @click="animeWorks.addWorks">新增</button>
+                            <button @click="sendData">新增</button>
                         </div>
                     </div>
                 </div>
@@ -97,7 +139,7 @@ onMounted(() => {
 
             >p {
                 margin: 0;
-                font-size: 1.4em;
+                font-size: 1.3em;
                 font-weight: 600;
             }
 
@@ -142,7 +184,7 @@ onMounted(() => {
                 border: 2px solid #57595d;
                 border-radius: 10px;
                 color: #ffffff;
-                font-size: 1.4em;
+                font-size: 1.2em;
                 margin-top: 10px;
                 margin-bottom: 20px;
                 padding: 12px;
@@ -151,7 +193,7 @@ onMounted(() => {
                 background-image: url(../assets/sel.svg);
                 background-repeat: no-repeat;
                 background-position: right 0.45em center;
-                background-size: 32px 32px;
+                background-size: 28px 28px;
                 appearance: none;
 
                 &:focus {
@@ -161,8 +203,50 @@ onMounted(() => {
                 &:hover {
                     border: 2px solid #91ddf9;
                 }
-
             }
+
+            .card-item-imageUp {
+                border: 0;
+                padding: 0;
+                font-size: 20px;
+                background-color: #111111;
+                margin-bottom: 25px;
+                font-size: 1.2em;
+                width: 50%;
+
+                &:focus {
+                    border: 0;
+                }
+
+                &:hover {
+                    border: 0;
+                }
+
+                &::file-selector-button {
+                    cursor: pointer;
+                    border: 1px solid rgba(0, 0, 0, 0.16);
+                    border-radius: 10px;
+                    padding: 2px 10px;
+                    font-weight: 600;
+                    transition: 200ms;
+                    margin-right: 10px;
+                }
+
+                &::file-selector-button:hover {
+                    background-color: #bbbcbd;
+                }
+            }
+        }
+
+        .card-image {
+            height: 0;
+            overflow: hidden;
+            padding-bottom: 141.5%;
+            background-size: cover;
+            background-position: center;
+            background-color: #6b6363;
+            background-repeat: no-repeat;
+            margin-bottom: 25px;
         }
     }
 
