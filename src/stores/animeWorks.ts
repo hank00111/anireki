@@ -10,6 +10,11 @@ axios.defaults.withCredentials = true;
 //     "Content-Type": "application/json",
 //   },
 // };
+const worksConfig = {
+  headers: {
+    "Content-Type": "multipart/form-data",
+  },
+};
 
 export const useAnimeWorks = defineStore("animeWorks", {
   state: () => ({
@@ -38,7 +43,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
     async addWorks(data: object) {
       try {
         await axios
-          .post("/console/add", data)
+          .post("/console/add", data, worksConfig)
           .then(function (response) {
             // let b = JSON.stringify(a);
             // console.log(b);
