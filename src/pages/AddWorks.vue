@@ -95,11 +95,11 @@ watchEffect(() => {
                         </div>
                         <div class="card-item">
                             <p>動畫名稱</p>
-                            <input type="text">
+                            <input type="text" v-model="refTitle">
                         </div>
                         <div class="card-item">
                             <p>日文名稱</p>
-                            <input type="text">
+                            <input type="text" v-model="refTitle_jp">
                         </div>
                         <div class="card-item">
                             <p>主視覺圖</p>
