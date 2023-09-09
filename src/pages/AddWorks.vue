@@ -38,12 +38,12 @@ const sendData = () => {
         }
         animeWorks.addWorks(data);
     } else {
-        console.log("ID ERROR")
+        console.log(`SEND ERROR ${animeWorks.worksCount} ${refTitle_jp.value}`)
     }
 }
 const imageSel = (e: any) => {
     refImages.value = e.target.files[0];
-    console.log(e.target.files[0])
+    // console.log(e.target.files[0])
 }
 
 onBeforeMount(() => {
