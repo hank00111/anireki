@@ -1,6 +1,5 @@
 import axios from "axios";
 import LZString from "lz-string";
-import { useRouter } from "vue-router";
 import { defineStore } from "pinia";
 axios.defaults.baseURL = "https://a2.anireki.com/v2";
 // axios.defaults.baseURL = "http://localhost:5000/v2";
@@ -11,7 +10,6 @@ axios.defaults.withCredentials = true;
 //     "Content-Type": "application/json",
 //   },
 // };
-const router = useRouter();
 const worksConfig = {
   headers: {
     "Content-Type": "multipart/form-data",
@@ -57,9 +55,6 @@ export const useAnimeWorks = defineStore("animeWorks", {
             // console.log(JSON.parse(LZString.decompressFromUTF16(c)));
             if (res.status === 200) {
               this.sendStatus = false;
-              setTimeout(() => {
-                router.push("/console");
-              }, 200);
             }
             // console.log(res);
           })
