@@ -30,9 +30,7 @@ onBeforeMount(async () => {
                         <p>{{ data.title }}</p>
                     </div>
                 </div>
-                <!-- <div class="works-card">
-                    <div class="works-images" :style="{ backgroundImage: `url(${data.images_url})` }">
-                    </div>
+                <!-- <div class="works-card">  
                     <div class="works-images" :style="{ backgroundImage: `url(https://p2.anireki.com/2.jpg)` }">
                     </div>
                     <div class="works-context">
@@ -73,7 +71,7 @@ onBeforeMount(async () => {
         .works-images {
             height: 0;
             overflow: hidden;
-            padding-bottom: 141.5%;
+            padding-bottom: 140%;
             background-size: 100% 100%;
             background-position: center;
             background-color: #6b6363;

@@ -7,8 +7,8 @@ import { useAnimeWorks } from '../stores/animeWorks'
 const animeWorks = useAnimeWorks();
 
 interface seasonModel {
-    [key: string]: any;
-    [index: number]: any;
+    [key: number]: any;
+    [value: string]: any;
 }
 const refTitle = ref<string>("")
 const refTitle_jp = ref<string>("")
@@ -23,8 +23,10 @@ const yearsArray = ref<string[]>(
     [...new Array(+endYear.value - +startYear.value)].map((_, i) => (+startYear.value + i).toString()).reverse()
 )
 
-const thisSeason = ref<number>(Math.ceil((new Date().getMonth() + 1) / 3))
-const seaSon = reactive<seasonModel>({ 1: '春季', 2: '夏季', 3: '秋季', 4: '冬季', })
+
+const seaSon = reactive<seasonModel>({ 1: '春季', 2: '夏季', 3: '秋季', 4: '冬季' })
+const thisSeason = ref<string>(seaSon[Math.ceil((new Date().getMonth() + 1) / 3)])
+const refSeason = ref<number>(5)
 
 const sendData = () => {
     if (animeWorks.worksCount.length >= 1 && refTitle_jp.value.length >= 1) {
@@ -32,7 +34,7 @@ const sendData = () => {
             works: {
                 id: animeWorks.worksCount,
                 year: thisYear.value,
-                season_id: thisSeason.value,
+                season_id: refSeason.value,
                 title: refTitle.value,
                 title_jp: refTitle_jp.value,
             },
@@ -65,9 +67,13 @@ watch(refImages, (refImages) => {
         refImageLoad.value = true;
     })
 })
+watch(thisSeason, (thisSeason) => {
+    refSeason.value = parseInt(Object.keys(seaSon).find(key => seaSon[key] === thisSeason) || '5')
+})
 watchEffect(() => {
-    // console.log(thisYear.value)
+    // console.log(thisSeason.value)
     // console.log(seaSon[thisSeason.value])
+    // console.log(refSeason.value)
 })
 </script>
 
@@ -91,8 +97,8 @@ watchEffect(() => {
                         </div>
                         <div class="card-item">
                             <p>季度</p>
-                            <select v-model="seaSon[thisSeason]">
-                                <option v-for="(value, index) in seaSon" :value="value" :key="index">{{ value }}</option>
+                            <select v-model="thisSeason">
+                                <option v-for="value in seaSon" :value="value">{{ value }}</option>
                             </select>
                         </div>
                         <div class="card-item">

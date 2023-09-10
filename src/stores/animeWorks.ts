@@ -28,7 +28,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
       },
     ],
     worksCount: "",
-    isLoaded: false,
+    isLoaded: true,
   }),
   actions: {
     async getCurrentSeason() {
