@@ -4,8 +4,10 @@ import Loading from '../components/Loading.vue'
 import ConsoleSidebar from '../components/ConsoleSidebar.vue'
 import { ref, reactive, onMounted, onBeforeMount, watchEffect, watch } from 'vue';
 import { useAnimeWorks } from '../stores/animeWorks'
+import { useRouter } from 'vue-router';
 
 const animeWorks = useAnimeWorks();
+const router = useRouter();
 
 interface seasonModel {
     [key: number]: any;
@@ -47,6 +49,7 @@ const sendData = () => {
             image: refImages.value
         }
         animeWorks.addWorks(data);
+        router.push('/console')
     } else {
         console.log(`SEND ERROR ${animeWorks.worksCount} ${refTitle_jp.value}`)
     }
