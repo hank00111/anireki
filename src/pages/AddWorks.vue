@@ -48,8 +48,8 @@ const sendData = () => {
             },
             image: refImages.value
         }
-        animeWorks.addWorks(data).then((res) => {
-            console.log(res)
+        animeWorks.addWorks(data).then(() => {
+            console.log(animeWorks.sendCode)
             // router.push('/console')
         });
 

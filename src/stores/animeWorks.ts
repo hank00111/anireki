@@ -30,6 +30,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
     worksCount: "",
     isLoaded: false,
     sendStatus: false,
+    sendCode: 0,
   }),
   actions: {
     async getCurrentSeason() {
@@ -55,14 +56,13 @@ export const useAnimeWorks = defineStore("animeWorks", {
             // console.log(JSON.parse(LZString.decompressFromUTF16(c)));
             if (res.status === 200) {
               this.sendStatus = false;
-            } else if (res.status === 409) {
-              //Server error
+              this.sendCode = 0;
             }
           })
           .catch((error) => {
+            this.sendCode = 1;
             this.sendStatus = false;
             console.log(`addWorks-1 ${error}`);
-            return "ERR";
           });
       } catch (error) {
         this.sendStatus = false;
