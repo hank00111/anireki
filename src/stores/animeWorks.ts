@@ -29,6 +29,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
     ],
     worksCount: "",
     isLoaded: false,
+    sendStatus: false,
   }),
   actions: {
     async getCurrentSeason() {
@@ -42,24 +43,27 @@ export const useAnimeWorks = defineStore("animeWorks", {
     },
     async addWorks(data: object) {
       try {
+        this.sendStatus = true;
         await axios
           .post("/console/add", data, worksConfig)
-          .then(function (response) {
+          .then((res) => {
             // let b = JSON.stringify(a);
             // console.log(b);
             // let c = LZString.compressToUTF16(b);
             // console.log(c);
             // console.log(LZString.decompressFromUTF16(c));
             // console.log(JSON.parse(LZString.decompressFromUTF16(c)));
-            console.log(response);
+            if (res.status === 200) {
+              this.sendStatus = false;
+            }
+            console.log(res);
           })
-          .catch(function (error) {
-            console.log(error);
+          .catch((error) => {
+            this.sendStatus = false;
+            console.log(`addWorks-1 ${error}`);
           });
-        // this.animeData = res.data;
-        console.log(data);
       } catch (error) {
-        console.log(error);
+        console.log(`addWorks-2 ${error}`);
       }
     },
     async getWorksCount() {

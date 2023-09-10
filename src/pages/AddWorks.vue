@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Header from '../components/Header.vue'
+import Loading from '../components/Loading.vue'
 import ConsoleSidebar from '../components/ConsoleSidebar.vue'
 import { ref, reactive, onMounted, onBeforeMount, watchEffect, watch } from 'vue';
 import { useAnimeWorks } from '../stores/animeWorks'
@@ -23,10 +24,15 @@ const yearsArray = ref<string[]>(
     [...new Array(+endYear.value - +startYear.value)].map((_, i) => (+startYear.value + i).toString()).reverse()
 )
 
-
 const seaSon = reactive<seasonModel>({ 1: '春季', 2: '夏季', 3: '秋季', 4: '冬季' })
 const thisSeason = ref<string>(seaSon[Math.ceil((new Date().getMonth() + 1) / 3)])
 const refSeason = ref<number>(5)
+// const dataStaus = ref<boolean>(false)
+
+const imageSel = (e: any) => {
+    refImages.value = e.target.files[0];
+}
+
 
 const sendData = () => {
     if (animeWorks.worksCount.length >= 1 && refTitle_jp.value.length >= 1) {
@@ -41,13 +47,10 @@ const sendData = () => {
             image: refImages.value
         }
         animeWorks.addWorks(data);
+        console.log(animeWorks.dataStatus)
     } else {
         console.log(`SEND ERROR ${animeWorks.worksCount} ${refTitle_jp.value}`)
     }
-}
-const imageSel = (e: any) => {
-    refImages.value = e.target.files[0];
-    // console.log(e.target.files[0])
 }
 
 onBeforeMount(() => {
@@ -71,13 +74,17 @@ watch(thisSeason, (thisSeason) => {
     refSeason.value = parseInt(Object.keys(seaSon).find(key => seaSon[key] === thisSeason) || '5')
 })
 watchEffect(() => {
-    // console.log(thisSeason.value)
-    // console.log(seaSon[thisSeason.value])
-    // console.log(refSeason.value)
+    console.log(animeWorks.dataStatus)
+    // if (dataStaus.value) {
+    //     setTimeout(() => {
+    //         dataStaus.value = !dataStaus.value
+    //     }, 4000)
+    // }
 })
 </script>
 
 <template>
+    <Loading :console-show="animeWorks.dataStatus" :show="animeWorks.dataStatus" />
     <ConsoleSidebar></ConsoleSidebar>
     <div class="main">
         <Header class="console-header"></Header>
