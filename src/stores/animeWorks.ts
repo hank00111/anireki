@@ -56,13 +56,13 @@ export const useAnimeWorks = defineStore("animeWorks", {
             if (res.status === 200) {
               this.sendStatus = false;
             }
-            // console.log(res);
           })
           .catch((error) => {
             this.sendStatus = false;
             console.log(`addWorks-1 ${error}`);
           });
       } catch (error) {
+        this.sendStatus = false;
         console.log(`addWorks-2 ${error}`);
       }
     },
