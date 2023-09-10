@@ -58,7 +58,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
             if (res.status === 200) {
               this.sendStatus = false;
               setTimeout(() => {
-                router.push({ name: "console" });
+                router.push("/console");
               }, 200);
             }
             // console.log(res);

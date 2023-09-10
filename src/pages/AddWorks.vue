@@ -26,7 +26,7 @@ const yearsArray = ref<string[]>(
 
 const seaSon = reactive<seasonModel>({ 1: '春季', 2: '夏季', 3: '秋季', 4: '冬季' })
 const thisSeason = ref<string>(seaSon[Math.ceil((new Date().getMonth() + 1) / 3)])
-const refSeason = ref<number>(5)
+const refSeason = ref<number>(Math.ceil((new Date().getMonth() + 1) / 3))
 // const dataStaus = ref<boolean>(false)
 
 const imageSel = (e: any) => {
