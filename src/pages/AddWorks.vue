@@ -48,8 +48,10 @@ const sendData = () => {
             },
             image: refImages.value
         }
-        animeWorks.addWorks(data);
-        router.push('/console')
+        animeWorks.addWorks(data).then(() => {
+            router.push('/console')
+        });
+
     } else {
         console.log(`SEND ERROR ${animeWorks.worksCount} ${refTitle_jp.value}`)
     }
