@@ -47,7 +47,6 @@ const sendData = () => {
             image: refImages.value
         }
         animeWorks.addWorks(data);
-        console.log(animeWorks.sendStatus)
     } else {
         console.log(`SEND ERROR ${animeWorks.worksCount} ${refTitle_jp.value}`)
     }
@@ -74,7 +73,7 @@ watch(thisSeason, (thisSeason) => {
     refSeason.value = parseInt(Object.keys(seaSon).find(key => seaSon[key] === thisSeason) || '5')
 })
 watchEffect(() => {
-    console.log(animeWorks.sendStatus)
+    // console.log(animeWorks.sendStatus)
     // if (dataStaus.value) {
     //     setTimeout(() => {
     //         dataStaus.value = !dataStaus.value

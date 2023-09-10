@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-const props = defineProps({
+defineProps({
     show: Boolean,
     consoleShow: Boolean
 })
 const consoleLoad = ref<string>('console-loading ')
-console.log(props)
+// console.log(props)
 
 </script>
 
