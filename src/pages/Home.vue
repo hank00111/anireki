@@ -28,20 +28,20 @@ watchEffect(() => {
         <div class="content">
             <div class="home-title">2023 夏季新番</div>
             <div class="home-info">
-                <div v-for="data in animeWorks.animeData" class="works-card">
+                <!-- <div v-for="data in animeWorks.animeData" class="works-card">
                     <div class="works-images" :style="{ backgroundImage: `url(${data.images_url})` }">
                     </div>
                     <div class="works-context">
                         <p>{{ data.title }}</p>
                     </div>
-                </div>
-                <!-- <div class="works-card">  
+                </div> -->
+                <div class="works-card">
                     <div class="works-images" :style="{ backgroundImage: `url(https://p2.anireki.com/2.jpg)` }">
                     </div>
                     <div class="works-context">
                         <p>幻日夜羽 -鏡中暉光-</p>
                     </div>
-                </div> -->
+                </div>
             </div>
         </div>
     </div>
@@ -71,8 +71,8 @@ watchEffect(() => {
         overflow: hidden;
         user-select: none;
         background-color: hsla(0, 0%, 100%, 0.19);
-        transition: all 0.2s;
-
+        transition: all 0.24s;
+        // will-change: transform;
         .works-images {
             height: 0;
             overflow: hidden;
@@ -89,14 +89,15 @@ watchEffect(() => {
                 font-weight: 700;
                 color: #eee;
                 white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
             }
         }
 
         &:hover {
             z-index: 2;
+            transform: scale(1.05);            
             background-color: hsl(345, 17%, 36%);
-            transition-duration: 400ms;
-            transform: scale(1.05);
             filter: drop-shadow(0 0 0.75rem black);
         }
     }

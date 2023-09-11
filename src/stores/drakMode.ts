@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 
 export const useDrakModeStore = defineStore("drakMode", {
   state: () => ({
-    drakState: false,
+    drakState: true,
   }),
   actions: {
     SwichDarkMode() {

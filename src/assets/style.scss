@@ -6,10 +6,10 @@
 
 html,
 body {
-  font-family: YakuHanJP, "Teko", "Noto Sans JP", -apple-system,
-    BlinkMacSystemFont, "Helvetica Neue", "游ゴシック", YuGothic,
+  font-family: "Noto Sans JP", -apple-system, "Helvetica Neue", "游ゴシック", YuGothic,
     "ヒラギノ角ゴ ProN W3", Hiragino Kaku Gothic ProN, Arial, "メイリオ", Meiryo,
     sans-serif;
+  // font: "Microsoft JhengHei", "Noto Sans JP", sans-serif;
   margin: 0;
 }
 //light
@@ -38,13 +38,14 @@ html[data-theme="dark"] {
 body {
   background: var(--background-default-color);
   color: var(--text-default-color);
-  font: 1rem "37DE7F", "Helvetica Neue", "Helvetica", "Microsoft JhengHei",
-    "Arial", sans-serif;
+  // font: 1rem "Helvetica Neue", "Helvetica", "Microsoft JhengHei",
+  //   "Arial", "Roboto", sans-serif;
+
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-weight: 400;
-  letter-spacing: 0.5px;
-  line-height: 1.6rem;
+  // font-weight: 400;
+  letter-spacing: 0.8px;
+  // line-height: 1em;
 }
 
 *,
@@ -170,7 +171,6 @@ li {
     > label:after {
       content: "";
       position: absolute;
-      top: 4px;
       left: 6px;
       transition: cubic-bezier(0.72, 0.01, 0.45, 1) 320ms;
       width: 18px;

@@ -51,9 +51,10 @@ const sendData = () => {
         animeWorks.addWorks(data).then(() => {
             if (animeWorks.sendCode === 0) {
                 router.push('/console')
+            } else {
+
             }
         });
-
     } else {
         console.log(`SEND ERROR ${animeWorks.worksCount} ${refTitle_jp.value}`)
     }
@@ -127,14 +128,17 @@ watchEffect(() => {
                             <input class="card-item-imageUp" type="file" :multiple="true" v-on:change="imageSel">
                         </div>
                         <Transition>
-                            <div v-if="refImageLoad" class="card-image"
-                                :style="{ backgroundImage: `url(${refImagesUrl})` }"></div>
+                            <div v-if="refImages" class="card-image">
+                                <img :src="refImagesUrl" alt="1">
+                            </div>
+                            <div v-else></div>
                         </Transition>
                         <div class="card-item">
                             <button @click="sendData">新增</button>
                         </div>
                     </div>
                 </div>
+                <div v-else></div>
             </Transition>
         </div>
     </div>
@@ -142,6 +146,7 @@ watchEffect(() => {
 
 <style lang="scss">
 .console-container {
+    height: 100%;
     width: 100%;
     margin-right: auto;
     margin-left: auto;
@@ -260,14 +265,11 @@ watchEffect(() => {
         }
 
         .card-image {
-            height: 0;
-            overflow: hidden;
-            padding-bottom: 141.5%;
-            background-size: cover;
-            background-position: center;
-            background-color: #6b6363;
-            background-repeat: no-repeat;
             margin-bottom: 25px;
+
+            >img {
+                width: 100%;
+            }
         }
     }
 
