@@ -4,10 +4,10 @@ import Loading from '../components/Loading.vue'
 import ConsoleSidebar from '../components/ConsoleSidebar.vue'
 import { ref, reactive, onMounted, onBeforeMount, watchEffect, watch } from 'vue';
 import { useAnimeWorks } from '../stores/animeWorks'
-// import { useRouter } from 'vue-router';
+import { useRouter } from 'vue-router';
 
 const animeWorks = useAnimeWorks();
-// const router = useRouter();
+const router = useRouter();
 
 interface seasonModel {
     [key: number]: any;
@@ -29,7 +29,6 @@ const yearsArray = ref<string[]>(
 const seaSon = reactive<seasonModel>({ 1: '春季', 2: '夏季', 3: '秋季', 4: '冬季' })
 const thisSeason = ref<string>(seaSon[Math.ceil((new Date().getMonth() + 1) / 3)])
 const refSeason = ref<number>(Math.ceil((new Date().getMonth() + 1) / 3))
-// const dataStaus = ref<boolean>(false)
 
 const imageSel = (e: any) => {
     refImages.value = e.target.files[0];
@@ -50,7 +49,7 @@ const sendData = () => {
         }
         animeWorks.addWorks(data).then(() => {
             if (animeWorks.sendCode === 0) {
-                // router.push('/console')
+                router.push('/console')
             } else {
 
             }

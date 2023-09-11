@@ -32,7 +32,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
     sendStatus: false,
     sendCode: 0,
     infoStatus: false,
-    infoMsg: "123",
+    infoMsg: "",
   }),
   actions: {
     async getCurrentSeason() {
@@ -56,16 +56,13 @@ export const useAnimeWorks = defineStore("animeWorks", {
             // console.log(c);
             // console.log(LZString.decompressFromUTF16(c));
             // console.log(JSON.parse(LZString.decompressFromUTF16(c)));
-            const d = LZString.decompressFromUTF16(res.data);
-            const b = JSON.parse(d);
-            console.log(JSON.parse(d));
-            console.log(b.Code);
-            // console.log(d.Code);
             if (res.status === 200) {
-              // this.infoStatus = true;
+              const d = JSON.parse(LZString.decompressFromUTF16(res.data));
+              this.sendCode = d.Code;
               this.sendStatus = false;
-              // this.sendCode = res.data.Code;
-              // this.infoMsg = res.data.Msg;
+              this.infoMsg = d.Msg;
+              this.infoStatus = true;
+              this.isLoaded = false;
             }
           })
           .catch((error) => {
