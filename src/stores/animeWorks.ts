@@ -56,9 +56,9 @@ export const useAnimeWorks = defineStore("animeWorks", {
             // console.log(c);
             // console.log(LZString.decompressFromUTF16(c));
             // console.log(JSON.parse(LZString.decompressFromUTF16(c)));
-            const d = JSON.parse(LZString.decompressFromUTF16(res.data));
+            const d = LZString.decompressFromUTF16(res.data);
             console.log(d);
-            console.log(d.Code);
+            // console.log(d.Code);
             if (res.status === 200) {
               // this.infoStatus = true;
               this.sendStatus = false;

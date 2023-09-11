@@ -28,20 +28,20 @@ watchEffect(() => {
         <div class="content">
             <div class="home-title">2023 夏季新番</div>
             <div class="home-info">
-                <!-- <div v-for="data in animeWorks.animeData" class="works-card">
+                <div v-for="data in animeWorks.animeData" class="works-card">
                     <div class="works-images" :style="{ backgroundImage: `url(${data.images_url})` }">
                     </div>
                     <div class="works-context">
                         <p>{{ data.title }}</p>
                     </div>
-                </div> -->
-                <div class="works-card">
+                </div>
+                <!-- <div class="works-card">
                     <div class="works-images" :style="{ backgroundImage: `url(https://p2.anireki.com/2.jpg)` }">
                     </div>
                     <div class="works-context">
                         <p>幻日夜羽 -鏡中暉光-</p>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
