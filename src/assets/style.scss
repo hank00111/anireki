@@ -12,6 +12,7 @@ body {
   // font: "Microsoft JhengHei", "Noto Sans JP", sans-serif;
   margin: 0;
 }
+
 //light
 :root {
   --background-default-color: #f6f7f8;
@@ -23,12 +24,13 @@ body {
   --console-text-default-color: #111927;
   --grid-container-columns: 5;
 }
+
 //dark
 html[data-theme="dark"] {
   --background-default-color: #00050d;
   --sidebar-background-color: #1c1e22;
-  --console-sidebar-background-color: #111111;
-  --console-main-background-color: #111111;
+  --console-sidebar-background-color: #232932;
+  --console-main-background-color: #232932;
   --main-background-color: #1c1e22;
   --sidebar-li-text-color: #fff;
   --text-default-color: #c9c9c4;
@@ -40,12 +42,9 @@ body {
   color: var(--text-default-color);
   // font: 1rem "Helvetica Neue", "Helvetica", "Microsoft JhengHei",
   //   "Arial", "Roboto", sans-serif;
-
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  // font-weight: 400;
   letter-spacing: 0.8px;
-  // line-height: 1em;
 }
 
 *,
@@ -58,11 +57,16 @@ body {
   background-clip: padding-box;
   background-color: rgba(128, 128, 128, 0.5);
   border: 2px solid transparent;
+  
 }
 
 ::-webkit-scrollbar {
   height: 0.8rem;
   width: 0.8rem;
+}
+
+::-webkit-scrollbar-track-piece {
+  // background: transparent;
 }
 
 ol,
@@ -96,8 +100,9 @@ li {
     flex-basis: 85%;
     margin: 0;
     padding: 8px 12px;
+
     // padding: 8px 12px;
-    > li {
+    >li {
       user-select: none;
       padding: 8px 8px;
 
@@ -113,14 +118,15 @@ li {
         transition: 0.3s;
         color: var(--text-default-color);
         text-decoration: none;
-        > span {
+
+        >span {
           box-sizing: border-box;
           font-size: 18px;
           font-weight: 700;
         }
       }
 
-      > a {
+      >a {
         -webkit-box-align: center;
         -ms-flex-align: center;
         align-items: center;
@@ -130,13 +136,15 @@ li {
         gap: 5px;
         height: 40px;
         transition: 0.3s;
-        > span {
+
+        >span {
           box-sizing: border-box;
           font-size: 18px;
           font-weight: 700;
         }
       }
-      > a:hover {
+
+      >a:hover {
         text-decoration: none;
         cursor: pointer;
         color: var(--sidebar-li-text-color);
@@ -147,10 +155,11 @@ li {
   .sidebar-switch-darkmode {
     margin: 0px auto;
 
-    > input[type="checkbox"] {
+    >input[type="checkbox"] {
       display: none;
     }
-    > label {
+
+    >label {
       position: relative;
       display: flex;
       justify-content: center;
@@ -168,7 +177,8 @@ li {
       cursor: pointer;
       background-image: url(./sun.svg);
     }
-    > label:after {
+
+    >label:after {
       content: "";
       position: absolute;
       left: 6px;
@@ -179,12 +189,13 @@ li {
       background-color: #b7b1a9;
     }
 
-    > input:checked + label:after {
+    >input:checked+label:after {
       left: calc(100% - 5px);
       transform: translateX(-100%);
       background-color: #0c2d33;
     }
-    > input:checked + label {
+
+    >input:checked+label {
       background-color: #18448e;
       border-color: #21606d;
       background-image: url(./moon.svg);
@@ -222,7 +233,7 @@ li {
     margin-left: auto;
 
     .userLogin {
-      > button {
+      >button {
         background-color: #e2e2e2;
         font-size: 18px;
         font-weight: 700;
@@ -233,7 +244,7 @@ li {
         cursor: pointer;
         transition: 0.3s;
 
-        > span {
+        >span {
           display: flex;
           height: 48px;
           align-items: center;
@@ -241,13 +252,14 @@ li {
           padding-inline: 28px;
         }
       }
-      > button:hover {
+
+      >button:hover {
         background-color: #fff;
       }
     }
 
     .userLoggedin {
-      > button {
+      >button {
         display: flex;
         align-items: center;
         background: none;
@@ -255,7 +267,8 @@ li {
         outline: none;
         width: 46px;
         height: 46px;
-        > img {
+
+        >img {
           border-radius: 50%;
           max-width: 100%;
           max-height: 100%;
@@ -274,7 +287,8 @@ li {
 
         .contextMenu {
           min-width: 196px;
-          > ul {
+
+          >ul {
             background-color: #525657;
             border-radius: 4px;
             -webkit-box-shadow: 0 16px 24px rgba(0, 0, 0, 0.3),
@@ -288,8 +302,8 @@ li {
             padding: 4px;
             margin: 0;
 
-            > li {
-              > button {
+            >li {
+              >button {
                 background: transparent;
                 border: 0;
                 border-radius: 2px;
@@ -302,13 +316,15 @@ li {
                 padding: 10px;
                 text-align: start;
                 width: 100%;
-                > span {
+
+                >span {
                   font-size: 15px;
                   font-weight: 400;
                   flex: 1;
                 }
               }
-              > button:hover {
+
+              >button:hover {
                 background: #787a7b;
                 color: #fff;
               }

@@ -2,12 +2,14 @@
 import { watchEffect, onMounted, onBeforeMount } from 'vue';
 import Header from '../components/Header.vue'
 import Sidebar from '../components/Sidebar.vue'
-// import Loading from '../components/Loading.vue'
+import WorksCard from '../components/WorksCard.vue';
 import { useAnimeWorks } from '../stores/animeWorks'
-// const showModal = ref(false)
-const animeWorks = useAnimeWorks();
 
-// current season
+//
+const animeWorks = useAnimeWorks();
+const rightEventClose = (e: { preventDefault: () => void; }) => {
+    e.preventDefault();
+}
 onMounted(() => {
     document.title = 'Home - Anireki';
 })
@@ -18,32 +20,25 @@ onBeforeMount(async () => {
 watchEffect(() => {
 
 })
-// <Loading :show="showModal" />
 </script>
 
 <template>
-    <Sidebar></Sidebar>
-    <div class="main">
+    <Sidebar @click.right="rightEventClose($event)"></Sidebar>
+    <div class="main" @click.right="rightEventClose($event)">
         <Header></Header>
         <div class="content">
-            <div class="home-title">2023 夏季新番</div>
-            <div class="home-info">
-                <div v-for="data in animeWorks.animeData" class="works-card">
-                    <div class="works-images" :style="{ backgroundImage: `url(${data.images_url})` }">
-                    </div>
-                    <div class="works-context">
-                        <p>{{ data.title }}</p>
-                    </div>
-                </div>
-                <!-- <div class="works-card">
+            <div class="home-title">2023年7月新番</div>
+            <WorksCard :is-home="true"></WorksCard>
+            <!-- <div class="home-info">
+                <div class="works-card">
                     <div class="works-images" :style="{ backgroundImage: `url(https://p2.anireki.com/2.jpg)` }">
                     </div>
                     <div class="works-context">
                         <p>幻日夜羽 -鏡中暉光-</p>
                     </div>
-                </div> -->
-            </div>
-        </div>
+                </div>
+            </div> -->
+        </div>        
     </div>
 </template>
 
@@ -54,6 +49,7 @@ watchEffect(() => {
     font-size: 2.5em;
     line-height: normal;
     color: #fff;
+    user-select: none;
 }
 
 .home-info {
@@ -72,6 +68,7 @@ watchEffect(() => {
         user-select: none;
         background-color: hsla(0, 0%, 100%, 0.19);
         transition: all 0.24s;
+
         // will-change: transform;
         .works-images {
             height: 0;
@@ -85,7 +82,7 @@ watchEffect(() => {
         .works-context {
             >p {
                 margin: 0;
-                padding: 4px;
+                padding: 6px;
                 font-weight: 700;
                 color: #eee;
                 white-space: nowrap;
@@ -96,7 +93,7 @@ watchEffect(() => {
 
         &:hover {
             z-index: 2;
-            transform: scale(1.05);            
+            transform: scale(1.05);
             background-color: hsl(345, 17%, 36%);
             filter: drop-shadow(0 0 0.75rem black);
         }

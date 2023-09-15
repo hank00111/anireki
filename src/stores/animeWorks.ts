@@ -2,7 +2,6 @@ import axios from "axios";
 import LZString from "lz-string";
 import { defineStore } from "pinia";
 axios.defaults.baseURL = "https://a2.anireki.com/v2";
-// axios.defaults.baseURL = "http://localhost:5000/v2";
 axios.defaults.withCredentials = true;
 
 // const jsonConfig = {
@@ -15,24 +14,50 @@ const worksConfig = {
     "Content-Type": "multipart/form-data",
   },
 };
+// { id: "1", watchDate: "2023.09.10" },
+// { id: "2", watchDate: "2023.09.11" },
+interface historyDataModel {
+  id: string;
+  watchDate: string;
+};
+
+interface watchDataModel {
+  id: string;
+  title: string,
+  title_jp: string,
+  watchDate: string;
+  images_url: string;
+};
 
 export const useAnimeWorks = defineStore("animeWorks", {
   state: () => ({
     animeData: [
       {
-        id: "",
-        title: "",
-        title_jp: "",
+        id: "2",
+        title: "幻日夜羽 -鏡中暉光-",
+        title_jp: "幻日のヨハネ",
         season: "",
-        images_url: "",
+        images_url: "https://p2.anireki.com/2.jpg",
+      },
+      {
+        id: "1",
+        title: "堀與宮村 -piece-",
+        title_jp: "ホリミヤ -piece-",
+        season: "",
+        images_url: "https://p2.anireki.com/1.jpg",
       },
     ],
+    historyData: [] as historyDataModel[],
+    watchData: [] as watchDataModel[],
     worksCount: "",
     isLoaded: false,
     sendStatus: false,
     sendCode: 0,
     infoStatus: false,
     infoMsg: "",
+    watchYear: new Date().getFullYear(),
+    watchMonth: new Date().getMonth() + 1,
+    watchDay: new Date().getDate(),
   }),
   actions: {
     async getCurrentSeason() {
@@ -43,6 +68,77 @@ export const useAnimeWorks = defineStore("animeWorks", {
       } catch (error) {
         console.log(error);
       }
+    },
+    async getWorksCount() {
+      try {
+        let res = await axios.get("/console/workscount");
+        this.worksCount = LZString.decompressFromUTF16(res.data);
+        this.isLoaded = true;
+      } catch (error) {
+        console.log(error);
+      }
+      // setTimeout(() => (this.isLoaded = true), 2000);
+    },
+    async getWatchHistory() {
+      //animeData find historyData
+      // let index = 0;
+      // const findC = this.animeData.find((item) => {
+      //   console.log(item);
+      //   item.id === "1";
+      // });
+      // const find = this.historyData.find(
+      //   (item) => item.id === this.animeData[0].id
+      // );
+      // Object.keys(this.animeData).forEach(([key], index) => {
+      //   console.log(index, this.animeData[index].id, key);
+      // });
+
+      for (const [hKey, hValue] of Object.entries(this.historyData)) {
+        const matchingAnime = this.animeData.find(
+          (anime) => anime.id === hValue.id
+        );
+        console.log(hKey);
+        if (matchingAnime) {
+          // const index = this.animeData.indexOf(matchingAnime);
+          const wData = {
+            id: matchingAnime.id,
+            title: matchingAnime.title,
+            title_jp: matchingAnime.title_jp,
+            watchDate: hValue.watchDate,
+            images_url: matchingAnime.images_url,
+          };
+          this.watchData.push(wData);
+        }
+      }
+
+      // Object.keys(this.historyData).forEach(([hKey], hIndex) => {
+      //   Object.keys(this.animeData).forEach(([key], index) => {
+      //     if (this.historyData[hIndex].id === this.animeData[index].id) {
+      //       console.log(index, this.animeData[index].id, key);
+      //     }
+      //   });
+      // });
+      // console.log(index, this.historyData[index].id, key);
+      // let wData = {
+      //   id: this.animeData[index].id,
+      //   watchDate: "2023.09.10",
+      //   images_url: this.animeData[index].images_url,
+      // };
+      // this.watchDate.push(wData);
+      // Object.keys(this.animeData).forEach((key) => {
+      //   // name Bobby Hadz 0
+      //   // country Chile 1
+      //   console.log(key);
+      // });
+      // console.log(this.animeData);
+      // try {
+      //   let res = await axios.get("/console/workscount");
+      //   this.worksCount = LZString.decompressFromUTF16(res.data);
+      //   this.isLoaded = true;
+      // } catch (error) {
+      //   console.log(error);
+      // }
+      // setTimeout(() => (this.isLoaded = true), 2000);
     },
     async addWorks(data: object) {
       try {
@@ -76,15 +172,32 @@ export const useAnimeWorks = defineStore("animeWorks", {
         console.log(`addWorks-2 ${error}`);
       }
     },
-    async getWorksCount() {
-      try {
-        let res = await axios.get("/console/workscount");
-        this.worksCount = LZString.decompressFromUTF16(res.data);
-        this.isLoaded = true;
-      } catch (error) {
-        console.log(error);
-      }
-      // setTimeout(() => (this.isLoaded = true), 2000);
+    async addWatchHistory(worksId: string) {
+      const addData = {
+        id: worksId,
+        watchDate: `${this.watchYear}.${(this.watchMonth > 10 ? "0" + this.watchMonth : this.watchMonth)}.${this.watchDay}`
+      };
+
+      await axios
+        .post("/console/addWatchHistory", addData, worksConfig)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((error) => {
+          console.log(`addWorks-1 ${error}`);
+        });
+      //setp1. add watch history to firebase
+      //setp2. response historyData
+      //setp3. change dailog status
+      //setp3. watchData push historyData and animeData
+      //setp4. redenr watchData in history page
+      // const find = this.animeData.find((item) => item.id === worksId);
+
+      // console.log(`${addData} ${addData.watchDate}`);
+      // console.log("" + this.watchDay);
+      this.watchYear = new Date().getFullYear();
+      this.watchMonth = new Date().getMonth() + 1;
+      this.watchDay = new Date().getDate();
     },
   },
   //   persist: true,

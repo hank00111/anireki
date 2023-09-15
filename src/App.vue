@@ -9,7 +9,7 @@ onMounted(() => {
   if (drakMode.drakState) {
     document.documentElement.setAttribute('data-theme', 'dark')
   } else {
-    document.documentElement.setAttribute('data-theme', 'light')
+    document.documentElement.setAttribute('data-theme', 'dark')
   }
   document.title = 'Home - Anireki';
   userControll.getUser(0);
