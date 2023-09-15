@@ -9,6 +9,7 @@ axios.defaults.withCredentials = true;
 //     "Content-Type": "application/json",
 //   },
 // };
+
 const worksConfig = {
   headers: {
     "Content-Type": "multipart/form-data",
@@ -145,14 +146,12 @@ export const useAnimeWorks = defineStore("animeWorks", {
             // console.log(c);
             // console.log(LZString.decompressFromUTF16(c));
             // console.log(JSON.parse(LZString.decompressFromUTF16(c)));
-            if (res.status === 200) {
-              const d = JSON.parse(LZString.decompressFromUTF16(res.data));
-              this.sendCode = d.Code;
-              this.sendStatus = false;
-              this.infoMsg = d.Msg;
-              this.infoStatus = true;
-              this.isLoaded = false;
-            }
+            const d = JSON.parse(LZString.decompressFromUTF16(res.data));
+            this.sendCode = d.Code;
+            this.sendStatus = false;
+            this.infoMsg = d.Msg;
+            this.infoStatus = true;
+            this.isLoaded = false;
           })
           .catch((error) => {
             this.sendCode = 1;
@@ -172,9 +171,10 @@ export const useAnimeWorks = defineStore("animeWorks", {
       };
 
       await axios
-        .post("/console/addwatchistory", addData, worksConfig)
+        .post("/console/addwatchistory", addData)
         .then((res) => {
-          console.log(res);
+          const d = JSON.parse(LZString.decompressFromUTF16(res.data));
+          console.log(d);
         })
         .catch((error) => {
           console.log(`addWorks-1 ${error}`);
