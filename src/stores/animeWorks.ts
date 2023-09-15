@@ -30,7 +30,7 @@ interface watchDataModel {
   watchDate: string;
   images_url: string;
 };
-const userControll = useUserControl();
+
 export const useAnimeWorks = defineStore("animeWorks", {
   state: () => ({
     animeData: [
@@ -53,6 +53,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
     watchYear: new Date().getFullYear(),
     watchMonth: new Date().getMonth() + 1,
     watchDay: new Date().getDate(),
+    userControll: useUserControl(),
   }),
   actions: {
     async getCurrentSeason() {
@@ -166,8 +167,8 @@ export const useAnimeWorks = defineStore("animeWorks", {
       }
     },
     async addWatchHistory(worksId: string) {
-      console.log(userControll.name);
-      if (userControll.name.length < 1) {
+      console.log(this.userControll.name);
+      if (this.userControll.name.length < 1) {
         console.log("error");
       } else {
         const addData = {
