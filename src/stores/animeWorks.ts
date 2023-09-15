@@ -1,6 +1,7 @@
 import axios from "axios";
 import LZString from "lz-string";
 import { defineStore } from "pinia";
+import { useUserControl } from "./userControl";
 axios.defaults.baseURL = "https://a2.anireki.com/v2";
 axios.defaults.withCredentials = true;
 
@@ -29,7 +30,7 @@ interface watchDataModel {
   watchDate: string;
   images_url: string;
 };
-
+const userControll = useUserControl();
 export const useAnimeWorks = defineStore("animeWorks", {
   state: () => ({
     animeData: [
@@ -165,31 +166,36 @@ export const useAnimeWorks = defineStore("animeWorks", {
       }
     },
     async addWatchHistory(worksId: string) {
-      const addData = {
-        id: worksId,
-        watchDate: `${this.watchYear}.${(this.watchMonth > 10 ? "0" + this.watchMonth : this.watchMonth)}.${this.watchDay}`
-      };
-      await axios
-        .post("/works/addwatchistory", addData)
-        .then((res) => {
-          const d = JSON.parse(LZString.decompressFromUTF16(res.data));
-          console.log(d);
-        })
-        .catch((error) => {
-          console.log(`addWorks-1 ${error}`);
-        });
-      //setp1. add watch history to firebase
-      //setp2. response historyData
-      //setp3. change dailog status
-      //setp3. watchData push historyData and animeData
-      //setp4. redenr watchData in history page
-      // const find = this.animeData.find((item) => item.id === worksId);
+      console.log(userControll.name);
+      if (userControll.name.length < 1) {
+        console.log("error");
+      } else {
+        const addData = {
+          id: worksId,
+          watchDate: `${this.watchYear}.${(this.watchMonth > 10 ? "0" + this.watchMonth : this.watchMonth)}.${this.watchDay}`
+        };
+        await axios
+          .post("/works/addwatchistory", addData)
+          .then((res) => {
+            const d = JSON.parse(LZString.decompressFromUTF16(res.data));
+            console.log(d);
+          })
+          .catch((error) => {
+            console.log(`addWorks-1 ${error}`);
+          });
+        //setp1. add watch history to firebase
+        //setp2. response historyData
+        //setp3. change dailog status
+        //setp3. watchData push historyData and animeData
+        //setp4. redenr watchData in history page
+        // const find = this.animeData.find((item) => item.id === worksId);
 
-      // console.log(`${addData} ${addData.watchDate}`);
-      // console.log("" + this.watchDay);
-      this.watchYear = new Date().getFullYear();
-      this.watchMonth = new Date().getMonth() + 1;
-      this.watchDay = new Date().getDate();
+        // console.log(`${addData} ${addData.watchDate}`);
+        // console.log("" + this.watchDay);
+        this.watchYear = new Date().getFullYear();
+        this.watchMonth = new Date().getMonth() + 1;
+        this.watchDay = new Date().getDate();
+      }
     },
   },
   //   persist: true,
