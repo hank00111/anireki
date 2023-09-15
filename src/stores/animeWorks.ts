@@ -39,13 +39,6 @@ export const useAnimeWorks = defineStore("animeWorks", {
         season: "",
         images_url: "https://p2.anireki.com/2.jpg",
       },
-      {
-        id: "1",
-        title: "堀與宮村 -piece-",
-        title_jp: "ホリミヤ -piece-",
-        season: "",
-        images_url: "https://p2.anireki.com/1.jpg",
-      },
     ],
     historyData: [] as historyDataModel[],
     watchData: [] as watchDataModel[],
@@ -179,7 +172,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
       };
 
       await axios
-        .post("/console/addWatchHistory", addData, worksConfig)
+        .post("/console/addwatchistory", addData, worksConfig)
         .then((res) => {
           console.log(res);
         })
