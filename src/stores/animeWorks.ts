@@ -172,10 +172,6 @@ export const useAnimeWorks = defineStore("animeWorks", {
         console.log("error");
       } else {
         const addData = {
-          worksId: worksId,
-          watchDate: `${this.watchYear}.${(this.watchMonth > 10 ? "0" + this.watchMonth : this.watchMonth)}.${this.watchDay}`
-        };
-        const addData = {
           watchData: [{
             worksID: worksId,
             watchDate: `${this.watchYear}.${(this.watchMonth > 10 ? "0" + this.watchMonth : this.watchMonth)}.${this.watchDay}`
