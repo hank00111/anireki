@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { useAnimeWorks } from '../stores/animeWorks'
-import WorksDialog from '../components/WorksDialog.vue'
+import WorksDialog from './WorksDialog.vue'
 //const props = 
 const props = defineProps({
     isHome: Boolean

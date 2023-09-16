@@ -30,7 +30,7 @@ interface watchDataModel {
   watchDate: string;
   images_url: string;
 };
-
+//https://p2.anireki.com/2.jpg
 export const useAnimeWorks = defineStore("animeWorks", {
   state: () => ({
     animeData: [
@@ -39,7 +39,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
         title: "幻日夜羽 -鏡中暉光-",
         title_jp: "幻日のヨハネ",
         season: "",
-        images_url: "https://p2.anireki.com/2.jpg",
+        images_url: "",
       },
     ],
     historyData: [] as historyDataModel[],
@@ -167,8 +167,8 @@ export const useAnimeWorks = defineStore("animeWorks", {
       }
     },
     async addWatchHistory(worksId: string) {
-      console.log(this.userControll.name);
       if (this.userControll.name.length < 1) {
+        //請先登入
         console.log("error");
       } else {
         const addData = {

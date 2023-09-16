@@ -1,21 +1,25 @@
 <script setup lang="ts">
 import { ref, onMounted, watchEffect } from 'vue';
 import { useAnimeWorks } from '../stores/animeWorks'
-import DateSel from '../components/DateSel.vue'
+import { useUserControl } from '../stores/userControl';
+import DateSel from './DateSel.vue'
 
 const props = defineProps({
     diaLogShow: Boolean,
     worksID: String
 })
 const animeWorks = useAnimeWorks();
+const userControll = useUserControl();
 const showAnime = ref();
 const dateShow = ref(false);
 
 
 const dateOpen = () => {
     dateShow.value = !dateShow.value;
+    // dateShow.value = !dateShow.value;
 }
 const addToWatchHistory = () => {
+
     dateShow.value = !dateShow.value;
     if (props.worksID) {
         animeWorks.addWatchHistory(props.worksID);
@@ -27,6 +31,8 @@ watchEffect(() => {
             (anime) => anime.id === props.worksID);
         // console.log(showAnime.value)
         // console.log("123 " + props.diaLogShow)
+    } else {
+        dateShow.value = false;
     }
 })
 onMounted(() => {
@@ -35,7 +41,7 @@ onMounted(() => {
 })
 //v-on:click="diaLogSwitch"
 </script>
-
+    <!-- userControll.isLogin -->
 <template>
     <Transition name="works-dialog">
         <div class="wokrs-dialog-mask" v-if="props.diaLogShow">
@@ -43,13 +49,22 @@ onMounted(() => {
             <div class="wokrs-dialog-container">
                 <Transition name="works-dialog">
                     <div v-if="dateShow" class="works-dialog-date-container">
-                        <div class="works-dialog-date">
-                            <p>日期選擇</p>
-                            <div class="works-dialog-date-context">
-                                <DateSel />
+                        <div v-if="userControll.isLogin" class="wokrs-dialog-date-ch">
+                            <div class="works-dialog-date">
+                                <p>日期選擇</p>
+                                <div class="works-dialog-date-context">
+                                    <DateSel />
+                                </div>
+                                <div class="works-dialog-date-bt">
+                                    <button @click="addToWatchHistory">確定</button>
+                                </div>
                             </div>
-                            <div class="works-dialog-date-bt">
-                                <button @click="addToWatchHistory">確定</button>
+                        </div>
+                        <div v-else class="wokrs-dialog-date-ch">
+                            <div class="wokrs-dialog-login">
+                                <a href="https://a2.anireki.com/v2/auth/google">
+                                    請先登入
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -190,6 +205,37 @@ onMounted(() => {
         justify-content: center;
         z-index: 3000;
         backdrop-filter: blur(5px);
+
+        .wokrs-dialog-date-ch {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .wokrs-dialog-login {
+            color: #fff;
+            width: 120px;
+            height: 50px;
+            background: hsla(0, 0%, 100%, .2);
+            user-select: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            border-radius: 5px;
+
+            >a {
+                font-size: 1.2em;
+                display: block;
+                width: 100%;
+                color: #fff;
+                line-height: 50px;
+                text-decoration: none;
+            }
+        }
 
         .works-dialog-date {
             position: relative;
