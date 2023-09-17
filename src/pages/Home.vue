@@ -14,9 +14,9 @@ onMounted(() => {
     document.title = 'Home - Anireki';
 
 })
-onBeforeMount(async () => {
-    await animeWorks.getCurrentSeason();
-    await animeWorks.getWatchHistory();
+onBeforeMount(() => {
+    animeWorks.getCurrentSeason();
+    animeWorks.getWatchHistory();
 })
 
 watchEffect(() => {
