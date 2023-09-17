@@ -10,12 +10,12 @@ const animeWorks = useAnimeWorks();
 const rightEventClose = (e: { preventDefault: () => void; }) => {
     e.preventDefault();
 }
-onMounted(() => {
+onMounted(async () => {
     document.title = 'Home - Anireki';
+    await animeWorks.getWatchHistory();
 })
 onBeforeMount(async () => {
     await animeWorks.getCurrentSeason();
-    await animeWorks.getWatchHistory();
 })
 
 watchEffect(() => {
