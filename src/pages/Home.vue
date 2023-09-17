@@ -15,6 +15,7 @@ onMounted(() => {
 })
 onBeforeMount(async () => {
     await animeWorks.getCurrentSeason();
+    await animeWorks.getWatchHistory();
 })
 
 watchEffect(() => {
