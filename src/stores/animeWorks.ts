@@ -79,8 +79,8 @@ export const useAnimeWorks = defineStore("animeWorks", {
       try {
         await axios.get("/works/getwatchistory")
           .then((res) => {
-            const d = JSON.parse(LZString.decompressFromUTF16(res.data));
-            console.log(d);
+            // const d = JSON.parse(LZString.decompressFromUTF16(res.data));
+            console.log(res.data);
           }).catch((error) => {
             console.log(error);
           });
