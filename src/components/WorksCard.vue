@@ -60,7 +60,6 @@ onMounted(() => {
     flex-wrap: wrap;
     grid-auto-rows: auto;
     grid-template-columns: repeat(var(--grid-container-columns), minmax(0, 1fr));
-    // grid-template-columns: repeat(3, 1fr);
 
     .home-works-card {
         border-radius: 8px;

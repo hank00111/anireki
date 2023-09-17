@@ -12,6 +12,7 @@ const animeWorks = useAnimeWorks();
 const userControll = useUserControl();
 const showAnime = ref();
 const dateShow = ref(false);
+const Viewed = ref(false);
 
 
 const dateOpen = () => {
@@ -19,7 +20,6 @@ const dateOpen = () => {
     // dateShow.value = !dateShow.value;
 }
 const addToWatchHistory = () => {
-
     dateShow.value = !dateShow.value;
     if (props.worksID) {
         animeWorks.addWatchHistory(props.worksID);
@@ -27,10 +27,10 @@ const addToWatchHistory = () => {
 }
 watchEffect(() => {
     if (props.diaLogShow) {
-        showAnime.value = animeWorks.animeData.find(
-            (anime) => anime.id === props.worksID);
-        // console.log(showAnime.value)
-        // console.log("123 " + props.diaLogShow)
+        showAnime.value = animeWorks.animeData.find((anime) => anime.id === props.worksID);
+        if (props.worksID) {
+            Viewed.value = animeWorks.checkWatchHistory(props.worksID)
+        }
     } else {
         dateShow.value = false;
     }
@@ -39,9 +39,8 @@ onMounted(() => {
     // animeWorks.getWatchHistory()
     // refDialog.value = props.diaLogShow
 })
-//v-on:click="diaLogSwitch"
 </script>
-    <!-- userControll.isLogin -->
+
 <template>
     <Transition name="works-dialog">
         <div class="wokrs-dialog-mask" v-if="props.diaLogShow">
@@ -80,7 +79,7 @@ onMounted(() => {
                     <div class="works-dialog-info-title_jp"> {{ showAnime.title_jp }}</div>
                     <div class="works-dialog-info-context"></div>
                     <div class="works-dialog-control-bt">
-                        <button v-if="true" @click="dateOpen">新增至觀看紀錄</button>
+                        <button v-if="Viewed" @click="dateOpen">新增至觀看紀錄</button>
                         <button v-else class="works-dialog-control-bt-delete" @click="dateOpen">刪除觀看紀錄</button>
                     </div>
                 </div>

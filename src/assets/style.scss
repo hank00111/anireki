@@ -57,7 +57,7 @@ body {
   background-clip: padding-box;
   background-color: rgba(128, 128, 128, 0.5);
   border: 2px solid transparent;
-  
+
 }
 
 ::-webkit-scrollbar {
@@ -363,37 +363,37 @@ li {
 }
 
 @media only screen and (min-width: 55em) and (max-width: 87.49em) {
-  .home-info {
+  .home-card {
     --grid-container-columns: 5;
   }
 }
 
 @media (min-width: 55em) and (max-width: 79.99em) {
-  .home-info {
+  .home-card {
     --grid-container-columns: 4;
   }
 }
 
 @media only screen and (min-width: 28em) and (max-width: 54.99em) {
-  .home-info {
+  .home-card {
     --grid-container-columns: 2;
   }
 }
 
 @media (min-width: 37.5em) and (max-width: 54.99em) {
-  .home-info {
+  .home-card {
     --grid-container-columns: 2;
   }
 }
 
 @media (min-width: 28em) and (max-width: 42.49em) {
-  .home-info {
+  .home-card {
     --grid-container-columns: 2;
   }
 }
 
 @media (max-width: 27.99em) {
-  .home-info {
+  .home-card {
     --grid-container-columns: 2;
   }
 }

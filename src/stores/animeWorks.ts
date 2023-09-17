@@ -19,7 +19,7 @@ const worksConfig = {
 // { id: "1", watchDate: "2023.09.10" },
 // { id: "2", watchDate: "2023.09.11" },
 interface historyDataModel {
-  id: string;
+  worksID: string;
   watchDate: string;
 };
 
@@ -77,18 +77,13 @@ export const useAnimeWorks = defineStore("animeWorks", {
     },
     async getWatchHistory() {
       try {
-        // let res = await axios.get("/works/getwatchistory");
-        // console.log(res);
         await axios.get("/user/getwatchistory")
           .then((res) => {
-            const d = JSON.parse(LZString.decompressFromUTF16(res.data));
-            console.log(d);
+            this.historyData = JSON.parse(LZString.decompressFromUTF16(res.data));
+            // console.log(d);
           }).catch((error) => {
             console.log(error);
           });
-
-        // this.worksCount = LZString.decompressFromUTF16(res.data);
-        // this.isLoaded = true;
       } catch (error) {
         console.log(error);
       }
@@ -216,6 +211,14 @@ export const useAnimeWorks = defineStore("animeWorks", {
         this.watchDay = new Date().getDate();
       }
     },
+    checkWatchHistory(worksId: string) {
+      const find = this.historyData.find((item) => item.worksID === worksId);
+      if (find) {
+        return true;
+      } else {
+        return false;
+      }
+    }
   },
   //   persist: true,
 });
