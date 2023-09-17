@@ -77,7 +77,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
     },
     async getWatchHistory() {
       try {
-        let res = await axios.get("/works/error");
+        let res = await axios.get("/works/getwatchistory");
         console.log(res);
         // await axios.get("/works/getwatchistory")
         //   .then((res) => {
