@@ -79,7 +79,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
       try {
         // let res = await axios.get("/works/getwatchistory");
         // console.log(res);
-        await axios.get("/works/getwatchistory")
+        await axios.get("/user/getwatchistory")
           .then((res) => {
             // const d = JSON.parse(LZString.decompressFromUTF16(res.data));
             console.log(res);
@@ -194,7 +194,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
           }]
         };
         await axios
-          .post("/works/addwatchistory", addData)
+          .post("/user/addwatchistory", addData)
           .then((res) => {
             const d = JSON.parse(LZString.decompressFromUTF16(res.data));
             console.log(d);
