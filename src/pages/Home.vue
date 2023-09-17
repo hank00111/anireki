@@ -12,7 +12,7 @@ const rightEventClose = (e: { preventDefault: () => void; }) => {
 }
 onMounted(async () => {
     document.title = 'Home - Anireki';
-    await animeWorks.getWatchHistory();
+    // await animeWorks.getWatchHistory();
 })
 onBeforeMount(async () => {
     await animeWorks.getCurrentSeason();
