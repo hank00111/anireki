@@ -77,13 +77,15 @@ export const useAnimeWorks = defineStore("animeWorks", {
     },
     async getWatchHistory() {
       try {
-        await axios.get("/works/getwatchistory")
-          .then((res) => {
-            // const d = JSON.parse(LZString.decompressFromUTF16(res.data));
-            console.log(res);
-          }).catch((error) => {
-            console.log(error);
-          });
+        let res = await axios.get("/works/season/2023-summer");
+        console.log(res);
+        // await axios.get("/works/getwatchistory")
+        //   .then((res) => {
+        //     // const d = JSON.parse(LZString.decompressFromUTF16(res.data));
+        //     console.log(res);
+        //   }).catch((error) => {
+        //     console.log(error);
+        //   });
 
         // this.worksCount = LZString.decompressFromUTF16(res.data);
         // this.isLoaded = true;
