@@ -3,10 +3,10 @@ import { watchEffect, onMounted, onBeforeMount } from 'vue';
 import Header from '../components/Header.vue'
 import Sidebar from '../components/Sidebar.vue'
 import WorksCard from '../components/WorksCard.vue';
-import { useAnimeWorks } from '../stores/animeWorks'
+// import { useAnimeWorks } from '../stores/animeWorks'
 
 //
-const animeWorks = useAnimeWorks();
+// const animeWorks = useAnimeWorks();
 const rightEventClose = (e: { preventDefault: () => void; }) => {
     e.preventDefault();
 }
