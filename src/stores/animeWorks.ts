@@ -36,9 +36,9 @@ export const useAnimeWorks = defineStore("animeWorks", {
   state: () => ({
     animeData: [
       {
-        id: "2",
-        title: "幻日夜羽 -鏡中暉光-",
-        title_jp: "幻日のヨハネ",
+        id: "1",
+        title: "",
+        title_jp: "",
         season: "",
         images_url: "https://p2.anireki.com/2.jpg",
       },

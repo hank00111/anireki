@@ -241,6 +241,10 @@ watchEffect(() => {
             background: #232932;
             filter: drop-shadow(0 0em 0.8em black);
 
+            >p {
+                margin-top: 10px;
+            }
+
             .works-dialog-delete-bt {
                 display: flex;
                 align-items: center;
@@ -251,9 +255,9 @@ watchEffect(() => {
                     color: #fff;
                     border: 0;
                     padding: 0;
-                    width: 100px;
-                    height: 46px;
-                    font-size: 1.15em;
+                    width: 96px;
+                    height: 44px;
+                    font-size: 1.1em;
                     font-weight: 600;
                     border-radius: 10px;
                     background: hsla(0, 0%, 100%, .2);
