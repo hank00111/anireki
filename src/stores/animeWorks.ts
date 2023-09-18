@@ -100,6 +100,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
                 this.watchData.push(wData);
               }
             }
+
           }).catch((error) => {
             console.log(error);
           });
@@ -176,8 +177,26 @@ export const useAnimeWorks = defineStore("animeWorks", {
         console.log(worksId);
         await axios.delete("/user/watchistory", { data: { worksID: worksId } })
           .then((res) => {
-            const a = JSON.parse(LZString.decompressFromUTF16(res.data));
-            console.log(a);
+            this.watchData = [];
+            this.historyData = JSON.parse(LZString.decompressFromUTF16(res.data));
+
+            for (const [_, hValue] of Object.entries(this.historyData)) {
+              const matchingAnime = this.animeData.find(
+                (anime) => anime.id === hValue.worksID
+              );
+              if (matchingAnime) {
+                // const index = this.animeData.indexOf(matchingAnime);
+                const wData = {
+                  worksID: matchingAnime.id,
+                  title: matchingAnime.title,
+                  title_jp: matchingAnime.title_jp,
+                  season: matchingAnime.season,
+                  watchDate: hValue.watchDate,
+                  images_url: matchingAnime.images_url,
+                };
+                this.watchData.push(wData);
+              }
+            }
 
           }).catch((error) => {
             console.log(error);
