@@ -12,12 +12,16 @@ const animeWorks = useAnimeWorks();
 const userControll = useUserControl();
 const showAnime = ref();
 const dateShow = ref(false);
+const deleteShow = ref(false);
 const Viewed = ref(false);
 
 
 const dateOpen = () => {
     dateShow.value = !dateShow.value;
-    // dateShow.value = !dateShow.value;
+}
+const deleteOpen = () => {
+    dateShow.value = !dateShow.value;
+    deleteShow.value = !deleteShow.value;
 }
 const addToWatchHistory = () => {
     dateShow.value = !dateShow.value;
@@ -25,6 +29,15 @@ const addToWatchHistory = () => {
         animeWorks.addWatchHistory(props.worksID);
     }
 }
+
+const deleteWatchHistory = () => {
+    dateShow.value = !dateShow.value;
+    deleteShow.value = !deleteShow.value;
+    if (props.worksID) {
+        // animeWorks.addWatchHistory(props.worksID);
+    }
+}
+
 watchEffect(() => {
     if (props.diaLogShow) {
         showAnime.value = animeWorks.animeData.find((anime) => anime.id === props.worksID);
@@ -35,6 +48,7 @@ watchEffect(() => {
         console.log(props.worksID + "" + Viewed.value);
     } else {
         dateShow.value = false;
+        deleteShow.value = false;
     }
 })
 onMounted(() => {
@@ -51,13 +65,19 @@ onMounted(() => {
                 <Transition name="works-dialog">
                     <div v-if="dateShow" class="works-dialog-date-container">
                         <div v-if="userControll.isLogin" class="wokrs-dialog-date-ch">
-                            <div class="works-dialog-date">
+                            <div v-if="!deleteShow" class="works-dialog-date">
                                 <p>日期選擇</p>
                                 <div class="works-dialog-date-context">
                                     <DateSel />
                                 </div>
                                 <div class="works-dialog-date-bt">
                                     <button @click="addToWatchHistory">確定</button>
+                                </div>
+                            </div>
+                            <div v-else class="wokrs-dialog-delete">
+                                <p>確定刪除觀看紀錄?</p>
+                                <div class="works-dialog-delete-bt">
+                                    <button @click="deleteWatchHistory">確定</button>
                                 </div>
                             </div>
                         </div>
@@ -82,7 +102,7 @@ onMounted(() => {
                     <div class="works-dialog-info-context"></div>
                     <div class="works-dialog-control-bt">
                         <button v-if="!Viewed" @click="dateOpen">新增至觀看紀錄</button>
-                        <button v-else class="works-dialog-control-bt-delete" @click="dateOpen">刪除觀看紀錄</button>
+                        <button v-else class="works-dialog-control-bt-delete" @click="deleteOpen">刪除觀看紀錄</button>
                     </div>
                 </div>
             </div>
@@ -213,6 +233,42 @@ onMounted(() => {
             display: flex;
             align-items: center;
             justify-content: center;
+        }
+
+        .wokrs-dialog-delete {
+            color: #fff;
+            font-size: 1.3em;
+
+            .works-dialog-delete-bt {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 100%;
+                padding: 0px 10px 10px 0px;
+
+                >button {
+                    color: #fff;
+                    border: 0;
+                    padding: 0;
+                    width: 120px;
+                    height: 48px;
+                    font-size: 1.15em;
+                    font-weight: 600;
+                    border-radius: 10px;
+                    background: hsla(0, 0%, 100%, .2);
+                    transition: all 0.3s;
+
+                    &:hover {
+                        background: #fff;
+                        color: #000;
+                    }
+
+                    &:active {
+                        transition: all 0.2s;
+                        transform: scale(0.9);
+                    }
+                }
+            }
         }
 
         .wokrs-dialog-login {

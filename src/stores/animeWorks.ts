@@ -84,73 +84,12 @@ export const useAnimeWorks = defineStore("animeWorks", {
             this.historyData = JSON.parse(LZString.decompressFromUTF16(res.data));
             // console.log(d);
 
-            for (const [_, hValue] of Object.entries(this.historyData)) {
-              const matchingAnime = this.animeData.find(
-                (anime) => anime.id === hValue.worksID
-              );
-              if (matchingAnime) {
-                // const index = this.animeData.indexOf(matchingAnime);
-                const wData = {
-                  worksID: matchingAnime.id,
-                  title: matchingAnime.title,
-                  title_jp: matchingAnime.title_jp,
-                  season: matchingAnime.season,
-                  watchDate: hValue.watchDate,
-                  images_url: matchingAnime.images_url,
-                };
-                this.watchData.push(wData);
-              }
-            }
-
           }).catch((error) => {
             console.log(error);
           });
       } catch (error) {
         console.log(error);
       }
-      //animeData find historyData
-      // let index = 0;
-      // const findC = this.animeData.find((item) => {
-      //   console.log(item);
-      //   item.id === "1";
-      // });
-      // const find = this.historyData.find(
-      //   (item) => item.id === this.animeData[0].id
-      // );
-      // Object.keys(this.animeData).forEach(([key], index) => {
-      //   console.log(index, this.animeData[index].id, key);
-      // });
-
-
-
-      // Object.keys(this.historyData).forEach(([hKey], hIndex) => {
-      //   Object.keys(this.animeData).forEach(([key], index) => {
-      //     if (this.historyData[hIndex].id === this.animeData[index].id) {
-      //       console.log(index, this.animeData[index].id, key);
-      //     }
-      //   });
-      // });
-      // console.log(index, this.historyData[index].id, key);
-      // let wData = {
-      //   id: this.animeData[index].id,
-      //   watchDate: "2023.09.10",
-      //   images_url: this.animeData[index].images_url,
-      // };
-      // this.watchDate.push(wData);
-      // Object.keys(this.animeData).forEach((key) => {
-      //   // name Bobby Hadz 0
-      //   // country Chile 1
-      //   console.log(key);
-      // });
-      // console.log(this.animeData);
-      // try {
-      //   let res = await axios.get("/console/workscount");
-      //   this.worksCount = LZString.decompressFromUTF16(res.data);
-      //   this.isLoaded = true;
-      // } catch (error) {
-      //   console.log(error);
-      // }
-      // setTimeout(() => (this.isLoaded = true), 2000);
     },
     async addWorks(data: object) {
       try {
@@ -214,6 +153,22 @@ export const useAnimeWorks = defineStore("animeWorks", {
         this.watchYear = new Date().getFullYear();
         this.watchMonth = new Date().getMonth() + 1;
         this.watchDay = new Date().getDate();
+      }
+    },
+    async deleteWatchHistory(worksId: string) {
+      try {
+        console.log(worksId);
+        //   await axios.post("/user/getwatchistory", { worksID: worksId })
+        //     .then((res) => {
+        //       // this.watchData = [];
+        //       // this.historyData = JSON.parse(LZString.decompressFromUTF16(res.data));
+        //       console.log(d);
+
+        //     }).catch((error) => {
+        //       console.log(error);
+        //     });
+      } catch (error) {
+        console.log(error);
       }
     },
     checkWatchHistory(worksId: string) {
