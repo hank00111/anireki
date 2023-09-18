@@ -78,7 +78,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
     },
     async getWatchHistory() {
       try {
-        await axios.get("/user/getwatchistory")
+        await axios.get("/user/watchistory")
           .then((res) => {
             this.watchData = [];
             this.historyData = JSON.parse(LZString.decompressFromUTF16(res.data));
@@ -176,7 +176,8 @@ export const useAnimeWorks = defineStore("animeWorks", {
         console.log(worksId);
         await axios.delete("/user/watchistory", { data: { worksID: worksId } })
           .then((res) => {
-            console.log(res);
+            const a = JSON.parse(LZString.decompressFromUTF16(res.data));
+            console.log(a);
 
           }).catch((error) => {
             console.log(error);

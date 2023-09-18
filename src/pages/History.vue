@@ -3,9 +3,13 @@ import { onMounted } from 'vue';
 import Header from '../components/Header.vue'
 import Sidebar from '../components/Sidebar.vue'
 import WorksCard from '../components/WorksCard.vue';
+import { useAnimeWorks } from '../stores/animeWorks'
+
+const animeWorks = useAnimeWorks();
 
 onMounted(() => {
     document.title = 'History - Anireki';
+    animeWorks.getWatchHistory();
 })
 
 </script>
