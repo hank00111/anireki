@@ -69,13 +69,13 @@ watchEffect(() => {
                                     <DateSel />
                                 </div>
                                 <div class="works-dialog-date-bt">
-                                    <button @click="addToWatchHistory">確定</button>
+                                    <button @click="addToWatchHistory(); $emit('close-dialog');">確定</button>
                                 </div>
                             </div>
                             <div v-else class="wokrs-dialog-delete">
                                 <p>確定刪除觀看紀錄?</p>
                                 <div class="works-dialog-delete-bt">
-                                    <button @click="deleteWatchHistory(); $emit('delete-Watch-History');">確定</button>
+                                    <button @click="deleteWatchHistory(); $emit('close-dialog');">確定</button>
                                 </div>
                             </div>
                         </div>

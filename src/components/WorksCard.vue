@@ -50,7 +50,7 @@ onMounted(() => {
         </div>
     </Transition>
     <WorksDialog :diaLogShow="refDialog" :worksID="refDialogID" @wokrs-dialog-close="dialogClose"
-        @delete-Watch-History="dialogClose" />
+        @close-dialog="dialogClose" />
 </template>
 
 <style lang="scss">
