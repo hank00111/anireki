@@ -34,7 +34,7 @@ const deleteWatchHistory = () => {
     dateShow.value = !dateShow.value;
     deleteShow.value = !deleteShow.value;
     if (props.worksID) {
-        // animeWorks.addWatchHistory(props.worksID);
+        animeWorks.deleteWatchHistory(props.worksID);
     }
 }
 
@@ -237,7 +237,11 @@ onMounted(() => {
 
         .wokrs-dialog-delete {
             color: #fff;
+            padding: 4px;
             font-size: 1.3em;
+            border-radius: 10px;
+            background: #232932;
+            filter: drop-shadow(0 0em 0.8em black);
 
             .works-dialog-delete-bt {
                 display: flex;
