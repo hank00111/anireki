@@ -81,7 +81,7 @@ onMounted(() => {
                     <div class="works-dialog-info-title_jp"> {{ showAnime.title_jp }}</div>
                     <div class="works-dialog-info-context"></div>
                     <div class="works-dialog-control-bt">
-                        <button v-if="Viewed" @click="dateOpen">新增至觀看紀錄</button>
+                        <button v-if="!Viewed" @click="dateOpen">新增至觀看紀錄</button>
                         <button v-else class="works-dialog-control-bt-delete" @click="dateOpen">刪除觀看紀錄</button>
                     </div>
                 </div>
