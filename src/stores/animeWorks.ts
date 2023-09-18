@@ -174,15 +174,13 @@ export const useAnimeWorks = defineStore("animeWorks", {
     async deleteWatchHistory(worksId: string) {
       try {
         console.log(worksId);
-        //   await axios.delete("/user/watchistory", { worksID: worksId })
-        //     .then((res) => {
-        //       // this.watchData = [];
-        //       // this.historyData = JSON.parse(LZString.decompressFromUTF16(res.data));
-        //       console.log(d);
+        await axios.delete("/user/watchistory", { data: { worksID: worksId } })
+          .then((res) => {
+            console.log(res);
 
-        //     }).catch((error) => {
-        //       console.log(error);
-        //     });
+          }).catch((error) => {
+            console.log(error);
+          });
       } catch (error) {
         console.log(error);
       }

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, watchEffect } from 'vue';
+import { ref, watchEffect } from 'vue';
 import { useAnimeWorks } from '../stores/animeWorks'
 import { useUserControl } from '../stores/userControl';
 import DateSel from './DateSel.vue'
@@ -41,20 +41,18 @@ const deleteWatchHistory = () => {
 watchEffect(() => {
     if (props.diaLogShow) {
         showAnime.value = animeWorks.animeData.find((anime) => anime.id === props.worksID);
-
         if (props.worksID) {
             Viewed.value = animeWorks.checkWatchHistory(props.worksID);
         }
-        console.log(props.worksID + "" + Viewed.value);
     } else {
         dateShow.value = false;
         deleteShow.value = false;
     }
 })
-onMounted(() => {
-    // animeWorks.getWatchHistory()
-    // refDialog.value = props.diaLogShow
-})
+// onMounted(() => {
+//     // animeWorks.getWatchHistory()
+//     // refDialog.value = props.diaLogShow
+// })
 </script>
 
 <template>
@@ -237,7 +235,7 @@ onMounted(() => {
 
         .wokrs-dialog-delete {
             color: #fff;
-            padding: 4px;
+            padding: 16px;
             font-size: 1.3em;
             border-radius: 10px;
             background: #232932;
@@ -248,14 +246,13 @@ onMounted(() => {
                 align-items: center;
                 justify-content: center;
                 height: 100%;
-                padding: 0px 10px 10px 0px;
 
                 >button {
                     color: #fff;
                     border: 0;
                     padding: 0;
-                    width: 120px;
-                    height: 48px;
+                    width: 100px;
+                    height: 46px;
                     font-size: 1.15em;
                     font-weight: 600;
                     border-radius: 10px;
