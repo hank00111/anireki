@@ -28,9 +28,11 @@ const addToWatchHistory = () => {
 watchEffect(() => {
     if (props.diaLogShow) {
         showAnime.value = animeWorks.animeData.find((anime) => anime.id === props.worksID);
+
         if (props.worksID) {
-            Viewed.value = animeWorks.checkWatchHistory(props.worksID)
+            Viewed.value = animeWorks.checkWatchHistory(props.worksID);
         }
+        console.log(props.worksID + "" + Viewed.value);
     } else {
         dateShow.value = false;
     }

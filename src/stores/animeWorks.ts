@@ -80,6 +80,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
       try {
         await axios.get("/user/getwatchistory")
           .then((res) => {
+            this.watchData = [];
             this.historyData = JSON.parse(LZString.decompressFromUTF16(res.data));
             // console.log(d);
 
@@ -100,7 +101,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
                 this.watchData.push(wData);
               }
             }
-            
+
           }).catch((error) => {
             console.log(error);
           });
