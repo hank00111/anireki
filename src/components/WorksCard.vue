@@ -39,7 +39,7 @@ onMounted(() => {
             </div>
         </div>
         <div v-else class="history-card">
-            <div v-for="data in animeWorks.watchData" class="history-works-card" v-on:click="dialogOpen(data.id)">
+            <div v-for="data in animeWorks.watchData" class="history-works-card" v-on:click="dialogOpen(data.worksID)">
                 <div class="history-works-images" :style="{ backgroundImage: `url(${data.images_url})` }">
                 </div>
                 <div class="history-works-context">

@@ -29,16 +29,7 @@ watchEffect(() => {
         <Header></Header>
         <div class="content">
             <div class="home-title">2023年7月新番</div>
-            <WorksCard :is-home="true" />
-            <!-- <div class="home-info">
-                <div class="works-card">
-                    <div class="works-images" :style="{ backgroundImage: `url(https://p2.anireki.com/2.jpg)` }">
-                    </div>
-                    <div class="works-context">
-                        <p>幻日夜羽 -鏡中暉光-</p>
-                    </div>
-                </div>
-            </div> -->
+            <WorksCard :is-home="true"></WorksCard>
         </div>
     </div>
 </template>

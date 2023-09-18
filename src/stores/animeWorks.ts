@@ -24,9 +24,10 @@ interface historyDataModel {
 };
 
 interface watchDataModel {
-  id: string;
+  worksID: string;
   title: string,
   title_jp: string,
+  season: string,
   watchDate: string;
   images_url: string;
 };
@@ -81,6 +82,25 @@ export const useAnimeWorks = defineStore("animeWorks", {
           .then((res) => {
             this.historyData = JSON.parse(LZString.decompressFromUTF16(res.data));
             // console.log(d);
+
+            for (const [_, hValue] of Object.entries(this.historyData)) {
+              const matchingAnime = this.animeData.find(
+                (anime) => anime.id === hValue.worksID
+              );
+              if (matchingAnime) {
+                // const index = this.animeData.indexOf(matchingAnime);
+                const wData = {
+                  worksID: matchingAnime.id,
+                  title: matchingAnime.title,
+                  title_jp: matchingAnime.title_jp,
+                  season: matchingAnime.season,
+                  watchDate: hValue.watchDate,
+                  images_url: matchingAnime.images_url,
+                };
+                this.watchData.push(wData);
+              }
+            }
+            
           }).catch((error) => {
             console.log(error);
           });
@@ -100,23 +120,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
       //   console.log(index, this.animeData[index].id, key);
       // });
 
-      // for (const [hKey, hValue] of Object.entries(this.historyData)) {
-      //   const matchingAnime = this.animeData.find(
-      //     (anime) => anime.id === hValue.id
-      //   );
-      //   console.log(hKey);
-      //   if (matchingAnime) {
-      //     // const index = this.animeData.indexOf(matchingAnime);
-      //     const wData = {
-      //       id: matchingAnime.id,
-      //       title: matchingAnime.title,
-      //       title_jp: matchingAnime.title_jp,
-      //       watchDate: hValue.watchDate,
-      //       images_url: matchingAnime.images_url,
-      //     };
-      //     this.watchData.push(wData);
-      //   }
-      // }
+
 
       // Object.keys(this.historyData).forEach(([hKey], hIndex) => {
       //   Object.keys(this.animeData).forEach(([key], index) => {
