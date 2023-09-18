@@ -24,26 +24,15 @@ onMounted(() => {
         animeWorks.getWatchHistory()
     }
 })
-
 </script>
 
 <template>
     <Transition name="works-card">
-        <!-- <div v-if="isHome" class="home-card">
+        <div v-if="isHome" class="home-card">
             <div v-for="data in animeWorks.animeData" class="home-works-card" v-on:click="dialogOpen(data.id)">
                 <div class="home-works-images" :style="{ backgroundImage: `url(${data.images_url})` }">
                 </div>
                 <div class="home-works-context">
-                    <p>{{ data.title }}</p>
-                </div>
-            </div>
-        </div> -->
-        <div v-if="isHome" class="test-card">
-            <div v-for="data in animeWorks.animeData" class="test-works-card" v-on:click="dialogOpen(data.id)">
-                <div class="test-images">
-                    <img :src='data.images_url' alt="horimiya">
-                </div>
-                <div class="test-works-context">
                     <p>{{ data.title }}</p>
                 </div>
             </div>
