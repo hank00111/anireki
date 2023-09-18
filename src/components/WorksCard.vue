@@ -29,11 +29,21 @@ onMounted(() => {
 
 <template>
     <Transition name="works-card">
-        <div v-if="isHome" class="home-card">
+        <!-- <div v-if="isHome" class="home-card">
             <div v-for="data in animeWorks.animeData" class="home-works-card" v-on:click="dialogOpen(data.id)">
                 <div class="home-works-images" :style="{ backgroundImage: `url(${data.images_url})` }">
                 </div>
                 <div class="home-works-context">
+                    <p>{{ data.title }}</p>
+                </div>
+            </div>
+        </div> -->
+        <div v-if="isHome" class="test-card">
+            <div v-for="data in animeWorks.animeData" class="test-works-card" v-on:click="dialogOpen(data.id)">
+                <div class="test-images">
+                    <img :src='data.images_url' alt="horimiya">
+                </div>
+                <div class="test-works-context">
                     <p>{{ data.title }}</p>
                 </div>
             </div>
@@ -44,7 +54,7 @@ onMounted(() => {
                 </div>
                 <div class="history-works-context">
                     <p>{{ data.title }}</p>
-                    <p>{{ data.watchDate }}</p>
+                    <p>觀看日期:{{ data.watchDate }}</p>
                 </div>
             </div>
         </div>
@@ -54,6 +64,63 @@ onMounted(() => {
 </template>
 
 <style lang="scss">
+.test-card {
+    // margin: 0 -12px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+    min-height: 215px;
+    padding: 12px 10px 12px 15px;
+
+    .test-works-card {
+        width: calc(var(--card-columns));
+        //var(--card-columns)
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        margin: 0px 4px 8px;
+        box-sizing: border-box;
+        border-radius: 8px;
+        overflow: hidden;
+        transition: all 0.22s;
+        background-color: hsla(0, 0%, 100%, 0.19);
+
+        &:hover {
+            z-index: 2;
+            transform: scale(1.06);
+            background-color: hsl(345, 17%, 36%);
+            filter: drop-shadow(0 0 0.75rem black);
+        }
+    }
+
+    .test-images {
+        position: relative;
+        padding: 0 0 140.5% 0;
+        height: 0;
+        overflow: hidden;
+
+        >img {
+            width: 100%;
+            transition-duration: 500ms;
+            transform: scale(1.01);
+        }
+    }
+
+    .test-works-context {
+        >p {
+            margin: 0;
+            padding: 6px;
+            font-weight: 700;
+            color: #eee;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+    }
+
+}
+
 .home-card {
     gap: 8px;
     padding: 12px 12px 12px 15px;

@@ -23,6 +23,7 @@ body {
   --text-default-color: #111927;
   --console-text-default-color: #111927;
   --grid-container-columns: 5;
+  --card-columns: calc(20% - 8px);
 }
 
 //dark
@@ -35,6 +36,7 @@ html[data-theme="dark"] {
   --sidebar-li-text-color: #fff;
   --text-default-color: #c9c9c4;
   --console-text-default-color: #e8eaed;
+  --card-columns: calc(20% - 8px);
 }
 
 body {
@@ -362,27 +364,39 @@ li {
   opacity: 0;
 }
 
-@media only screen and (min-width: 55em) and (max-width: 87.49em) {
-  .home-card {
-    --grid-container-columns: 5;
-  }
-}
+// @media only screen and (min-width: 55em) and (max-width: 87.49em) {
+//   .home-card {
+//     --grid-container-columns: 5;
+//   }
+//   .test-card {
+//     --card-columns: calc(25% - 8px);
+//   }
+// }
 
 @media (min-width: 55em) and (max-width: 79.99em) {
   .home-card {
     --grid-container-columns: 4;
   }
-}
-
-@media only screen and (min-width: 28em) and (max-width: 54.99em) {
-  .home-card {
-    --grid-container-columns: 2;
+  .test-card {
+    --card-columns: calc(33.3333% - 8px);
   }
 }
+
+// @media only screen and (min-width: 28em) and (max-width: 54.99em) {
+//   .home-card {
+//     --grid-container-columns: 2;
+//   }
+//   .test-card {
+//     --card-columns: calc(30% - 8px);
+//   }
+// }
 
 @media (min-width: 37.5em) and (max-width: 54.99em) {
   .home-card {
     --grid-container-columns: 2;
+  }
+  .test-card {
+    --card-columns: calc(50% - 8px);
   }
 }
 
@@ -390,10 +404,16 @@ li {
   .home-card {
     --grid-container-columns: 2;
   }
+  .test-card {
+    --card-columns: calc(44% - 8px);
+  }
 }
 
 @media (max-width: 27.99em) {
   .home-card {
     --grid-container-columns: 2;
+  }
+  .test-card {
+    --card-columns: calc(33.3333% - 8px);
   }
 }
