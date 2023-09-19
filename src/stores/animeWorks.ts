@@ -77,6 +77,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
     watchDay: new Date().getDate(),
     userControll: useUserControl(),
     seasonSel: 1,
+    seasonID: '2023-summer',
   }),
   actions: {
     async getAnimeData() {
@@ -85,7 +86,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
         const data = JSON.parse(LZString.decompressFromUTF16(res.data));
         this.animeData = data;
         this.originData = data;
-        this.getSeason('2023-summer');
+        this.getSeason(this.seasonID);
       } catch (error) {
         console.log(error);
       }

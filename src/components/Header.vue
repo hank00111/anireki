@@ -26,6 +26,7 @@ const userLogout = () => {
 const goToSeason = (index: number) => {
     selectItem.value = index;
     animeWorks.seasonSel = index;
+    animeWorks.seasonID = yearList.value[index].seasonID;
     animeWorks.getSeason(yearList.value[index].seasonID);
 }
 
@@ -40,7 +41,7 @@ const getLeft = () => {
 }
 
 onMounted(() => {
-    animeWorks.getSeason(yearList.value[animeWorks.seasonSel].seasonID);
+    // animeWorks.getSeason(yearList.value[animeWorks.seasonSel].seasonID);
 })
 watchEffect(() => {
 
