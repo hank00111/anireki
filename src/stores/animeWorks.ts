@@ -40,7 +40,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
         title: "",
         title_jp: "",
         season: "",
-        images_url: "https://p2.anireki.com/2.jpg",
+        images_url: "",
       },
     ],
     historyData: [] as historyDataModel[],
@@ -57,6 +57,14 @@ export const useAnimeWorks = defineStore("animeWorks", {
     userControll: useUserControl(),
   }),
   actions: {
+    async getAnimeData() {
+      try {
+        let res = await axios.get("/works/all");
+        this.animeData = JSON.parse(LZString.decompressFromUTF16(res.data));
+      } catch (error) {
+        console.log(error);
+      }
+    },
     async getCurrentSeason() {
       try {
         let res = await axios.get("/works/season/2023-summer");

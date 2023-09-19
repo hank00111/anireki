@@ -15,7 +15,7 @@ onMounted(() => {
 
 })
 onBeforeMount(() => {
-    animeWorks.getCurrentSeason();
+    animeWorks.getAnimeData();
 })
 
 watchEffect(() => {
@@ -26,9 +26,9 @@ watchEffect(() => {
 <template>
     <Sidebar @click.right="rightEventClose($event)"></Sidebar>
     <div class="main" @click.right="rightEventClose($event)">
-        <Header></Header>
+        <Header :is-home="true"></Header>
         <div class="content">
-            <div class="home-title">2023年7月新番</div>
+            <div class="home-title"></div>
             <WorksCard :is-home="true"></WorksCard>
         </div>
     </div>

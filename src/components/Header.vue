@@ -1,27 +1,65 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted, watchEffect } from 'vue';
 import { useUserControl } from '../stores/userControl'
+const props = defineProps({
+    isHome: Boolean
+})
 
-const showMenu = ref(false)
+const showMenu = ref(false);
+const selectItem = ref(1);
+const years = ref([
+    '2023年10月新番', '2023年7月新番',
+    '2023年4月新番', '2023年1月新番',
+    '2022年10月新番', '2022年7月新番',
+    '2022年4月新番', '2022年1月新番',
+    '2021年10月新番', '2021年7月新番',
+    '2021年4月新番', '2021年1月新番',
+    '2022年10月新番', '2022年7月新番',
+]
+)
 const userControll = useUserControl();
-
-// onMounted(() => {
-//     //document.title = 'Home - Anireki';
-// })
+const yearNav = ref<HTMLElement>();
 
 const userLogout = () => {
     showMenu.value = !showMenu
     userControll.logout();
 }
+const goToSeason = (index: number) => {
+    selectItem.value = index;
+}
+
+const getLeft = () => {
+    let left = 0;
+    left = (selectItem.value - 1) * -165;
+    if (selectItem.value <= 1) {
+        left = 0;
+    }
+    return left;
+    //console.log(selectItem.value + " " + index + " " + left);
+}
+
+onMounted(() => {
+    // console.log(yearNav.value?.getBoundingClientRect())
+})
+watchEffect(() => {
+
+})
 
 </script>
 
 <template>
     <div class="header">
-        <div class=""></div>
-        <div class=""></div>
-        <div class="userPanel">
+        <div v-if="props.isHome" class="anime-panel ">
+            <div class="all-anime">所有動畫</div>
+            <div class="year-nav" ref="yearNav">
+                <div v-for="(year, index) in years" class="year-items" :style="{ transform: `translate(${getLeft()}px,0)` }"
+                    :class="{ selected: selectItem === index }" @click="goToSeason(index)">
+                    {{ year }}
+                </div>
+            </div>
+        </div>
 
+        <div class="userPanel">
             <div v-if="userControll.name.length != 0 ? true : false" class="userLoggedin">
                 <button @click="showMenu = !showMenu">
                     <img draggable="false" :src=userControll.picture alt="">
@@ -35,18 +73,59 @@ const userLogout = () => {
                     </div>
                 </div>
             </div>
-
             <div v-else class="userLogin">
                 <button @click="userControll.getUser(1)">
                     <span>登入</span>
                 </button>
             </div>
-
-            <!-- 登入 -->
-
-
         </div>
     </div>
 </template>
 
-<style lang="scss"></style>
+<style lang="scss">
+.anime-panel {    
+    width: 88%;
+    display: flex;
+    align-items: center;
+
+    .all-anime {
+        font-size: 1.25em;
+        min-width: 100px;
+        color: #ffffff5a;
+        user-select: none;
+    }
+
+    .year-nav {
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+        width: 80%;
+        // max-width: 990px;
+        min-width: 495px;
+        height: 100%;
+
+        .year-items {
+            color: #ffffff5a;
+            font-size: 1.25em;
+            margin-left: 5px;
+            width: 160px;
+            min-width: 160px;
+            height: 100%;
+            line-height: 44px;
+            text-align: center;
+            user-select: none;
+            cursor: pointer;
+            transition: all 0.4s;
+        }
+
+        .selected {
+            color: #fff;
+            box-sizing: border-box;
+            
+            font-weight: 700;
+            border-bottom: solid 1px #39aceb;
+            transition: all 0.4s;
+        }
+    }
+}
+</style>

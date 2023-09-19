@@ -67,9 +67,9 @@ body {
   width: 0.8rem;
 }
 
-::-webkit-scrollbar-track-piece {
-  // background: transparent;
-}
+// ::-webkit-scrollbar-track-piece {
+//   background: transparent;
+// }
 
 ol,
 ul {
@@ -229,7 +229,7 @@ li {
   width: 100%;
   display: flex;
   align-items: center;
-  padding: 16px;
+  padding: 10px 16px 10px 16px;
 
   .userPanel {
     margin-left: auto;

@@ -242,7 +242,7 @@ watchEffect(() => {
             filter: drop-shadow(0 0em 0.8em black);
 
             >p {
-                margin-top: 10px;
+                margin-top: 4px;
             }
 
             .works-dialog-delete-bt {
