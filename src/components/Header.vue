@@ -40,8 +40,7 @@ const getLeft = () => {
 }
 
 onMounted(() => {
-    // goToSeason(1);
-    // console.log(yearNav.value?.getBoundingClientRect())
+    animeWorks.getSeason(yearList.value[animeWorks.seasonSel].seasonID);
 })
 watchEffect(() => {
 
