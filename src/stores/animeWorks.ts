@@ -111,17 +111,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
           };
           this.animeData.push(wData);
         }
-
-        // const matchingAnime = this.originData.find(
-        //   (anime) => anime.season === seasonID
-        // );
-        // // console.log(matchingAnime);
-        // if (matchingAnime) {
-        //   // const index = this.animeData.indexOf(matchingAnime);
-
-        // }
       }
-      // console.log(seasonID);
     },
     async getWorksCount() {
       try {
@@ -141,7 +131,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
             this.historyData = JSON.parse(LZString.decompressFromUTF16(res.data));
 
             for (const [_, hValue] of Object.entries(this.historyData)) {
-              const matchingAnime = this.animeData.find(
+              const matchingAnime = this.originData.find(
                 (anime) => anime.id === hValue.worksID
               );
               if (matchingAnime) {
