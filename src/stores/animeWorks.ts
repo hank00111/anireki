@@ -31,7 +31,27 @@ interface watchDataModel {
   watchDate: string;
   images_url: string;
 };
+interface originDataModel {
+  id: string;
+  title: string,
+  title_jp: string,
+  season: string,
+  images_url: string;
+};
 //https://p2.anireki.com/2.jpg
+// {
+//   id: "1",
+//   title: "456",
+//   title_jp: "",
+//   season: "2023-spring",
+//   images_url: "",
+// }, {
+//   id: "1",
+//   title: "123",
+//   title_jp: "",
+//   season: "2023-summer",
+//   images_url: "",
+// }]
 export const useAnimeWorks = defineStore("animeWorks", {
   state: () => ({
     animeData: [
@@ -43,6 +63,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
         images_url: "",
       },
     ],
+    originData: [] as originDataModel[],
     historyData: [] as historyDataModel[],
     watchData: [] as watchDataModel[],
     worksCount: "",
@@ -60,7 +81,9 @@ export const useAnimeWorks = defineStore("animeWorks", {
     async getAnimeData() {
       try {
         let res = await axios.get("/works/all");
-        this.animeData = JSON.parse(LZString.decompressFromUTF16(res.data));
+        const data = JSON.parse(LZString.decompressFromUTF16(res.data));
+        this.animeData = data;
+        this.originData = data;
       } catch (error) {
         console.log(error);
       }
@@ -73,6 +96,32 @@ export const useAnimeWorks = defineStore("animeWorks", {
       } catch (error) {
         console.log(error);
       }
+    },
+    getSeason(seasonID: string) {
+      this.animeData = [];
+      for (const [_, hValue] of Object.entries(this.originData)) {
+        if (hValue.season === seasonID) {
+          // console.log(hValue);
+          const wData = {
+            id: hValue.id,
+            title: hValue.title,
+            title_jp: hValue.title_jp,
+            season: hValue.season,
+            images_url: hValue.images_url,
+          };
+          this.animeData.push(wData);
+        }
+
+        // const matchingAnime = this.originData.find(
+        //   (anime) => anime.season === seasonID
+        // );
+        // // console.log(matchingAnime);
+        // if (matchingAnime) {
+        //   // const index = this.animeData.indexOf(matchingAnime);
+
+        // }
+      }
+      // console.log(seasonID);
     },
     async getWorksCount() {
       try {

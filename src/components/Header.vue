@@ -1,22 +1,30 @@
 <script setup lang="ts">
 import { ref, onMounted, watchEffect } from 'vue';
 import { useUserControl } from '../stores/userControl'
+import { useAnimeWorks } from '../stores/animeWorks'
 const props = defineProps({
     isHome: Boolean
 })
 
 const showMenu = ref(false);
 const selectItem = ref(1);
-const years = ref([
-    '2023年10月新番', '2023年7月新番',
-    '2023年4月新番', '2023年1月新番',
-    '2022年10月新番', '2022年7月新番',
-    '2022年4月新番', '2022年1月新番',
-    '2021年10月新番', '2021年7月新番',
-    '2021年4月新番', '2021年1月新番',
-    '2022年10月新番', '2022年7月新番',
-]
-)
+const animeWorks = useAnimeWorks();
+// const years = ref([
+//     '2023年10月新番', '2023年7月新番',
+//     '2023年4月新番', '2023年1月新番',
+//     '2022年10月新番', '2022年7月新番',
+//     '2022年4月新番', '2022年1月新番',
+//     '2021年10月新番', '2021年7月新番',
+//     '2021年4月新番', '2021年1月新番',
+//     '2022年10月新番', '2022年7月新番',
+// ])
+
+const yearList = ref([
+    { name: '2023年10月新番', seasonID: '2023-autumn' },
+    { name: '2023年7月新番', seasonID: '2023-summer' },
+    { name: '2023年4月新番', seasonID: '2023-spring' },
+    { name: '2023年1月新番', seasonID: '2023-winter' },])
+
 const userControll = useUserControl();
 const yearNav = ref<HTMLElement>();
 
@@ -26,6 +34,7 @@ const userLogout = () => {
 }
 const goToSeason = (index: number) => {
     selectItem.value = index;
+    animeWorks.getSeason(yearList.value[index].seasonID);
 }
 
 const getLeft = () => {
@@ -39,6 +48,7 @@ const getLeft = () => {
 }
 
 onMounted(() => {
+    goToSeason(1);
     // console.log(yearNav.value?.getBoundingClientRect())
 })
 watchEffect(() => {
@@ -52,9 +62,10 @@ watchEffect(() => {
         <div v-if="props.isHome" class="anime-panel ">
             <div class="all-anime">所有動畫</div>
             <div class="year-nav" ref="yearNav">
-                <div v-for="(year, index) in years" class="year-items" :style="{ transform: `translate(${getLeft()}px,0)` }"
-                    :class="{ selected: selectItem === index }" @click="goToSeason(index)">
-                    {{ year }}
+                <div v-for="(year, index) in yearList" class="year-items"
+                    :style="{ transform: `translate(${getLeft()}px,0)` }" :class="{ selected: selectItem === index }"
+                    @click="goToSeason(index)">
+                    {{ year.name }}
                 </div>
             </div>
         </div>
@@ -83,7 +94,7 @@ watchEffect(() => {
 </template>
 
 <style lang="scss">
-.anime-panel {    
+.anime-panel {
     width: 88%;
     display: flex;
     align-items: center;
@@ -121,7 +132,7 @@ watchEffect(() => {
         .selected {
             color: #fff;
             box-sizing: border-box;
-            
+
             font-weight: 700;
             border-bottom: solid 1px #39aceb;
             transition: all 0.4s;
