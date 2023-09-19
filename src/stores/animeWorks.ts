@@ -76,6 +76,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
     watchMonth: new Date().getMonth() + 1,
     watchDay: new Date().getDate(),
     userControll: useUserControl(),
+    seasonSel: 1,
   }),
   actions: {
     async getAnimeData() {

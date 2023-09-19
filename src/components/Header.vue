@@ -5,19 +5,10 @@ import { useAnimeWorks } from '../stores/animeWorks'
 const props = defineProps({
     isHome: Boolean
 })
+const animeWorks = useAnimeWorks();
 
 const showMenu = ref(false);
-const selectItem = ref(1);
-const animeWorks = useAnimeWorks();
-// const years = ref([
-//     '2023年10月新番', '2023年7月新番',
-//     '2023年4月新番', '2023年1月新番',
-//     '2022年10月新番', '2022年7月新番',
-//     '2022年4月新番', '2022年1月新番',
-//     '2021年10月新番', '2021年7月新番',
-//     '2021年4月新番', '2021年1月新番',
-//     '2022年10月新番', '2022年7月新番',
-// ])
+const selectItem = ref(animeWorks.seasonSel);
 
 const yearList = ref([
     { name: '2023年10月新番', seasonID: '2023-autumn' },
@@ -34,6 +25,7 @@ const userLogout = () => {
 }
 const goToSeason = (index: number) => {
     selectItem.value = index;
+    animeWorks.seasonSel = index;
     animeWorks.getSeason(yearList.value[index].seasonID);
 }
 
