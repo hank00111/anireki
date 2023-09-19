@@ -194,9 +194,10 @@ export const useAnimeWorks = defineStore("animeWorks", {
         const addData = {
           watchData: [{
             worksID: worksId,
-            watchDate: `${this.watchYear}.${(this.watchMonth > 10 ? "0" + this.watchMonth : this.watchMonth)}.${this.watchDay}`
+            watchDate: `${this.watchYear}.${(this.watchMonth < 10 ? "0" + this.watchMonth.toString() : this.watchMonth.toString())}.${this.watchDay < 10 ? "0" + this.watchDay.toString() : this.watchDay.toString()}`
           }]
         };
+        //
         await axios
           .post("/user/addwatchistory", addData)
           .then((res) => {
