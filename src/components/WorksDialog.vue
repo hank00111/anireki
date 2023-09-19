@@ -40,7 +40,7 @@ const deleteWatchHistory = () => {
 
 watchEffect(() => {
     if (props.diaLogShow) {
-        showAnime.value = animeWorks.animeData.find((anime) => anime.id === props.worksID);
+        showAnime.value = animeWorks.originData.find((anime) => anime.id === props.worksID);
         if (props.worksID) {
             Viewed.value = animeWorks.checkWatchHistory(props.worksID);
         }
