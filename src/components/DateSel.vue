@@ -13,9 +13,10 @@ const endYear = ref<string>((thisYear.value + 1).toString())
 const yearsArray = ref<string[]>(
     [...new Array(+endYear.value - +startYear.value)].map((_, i) => (+startYear.value + i).toString()).reverse()
 )
-const monthsArray = ref<string[]>(["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"])
+const monthsArray = ref<string[]>(["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"])
 
-const daysArray = ref<string[]>([...new Array(new Date(animeWorks.watchYear, +animeWorks.watchMonth, 0).getDate())].map((_, i) => (i + 1).toString()))
+const daysArray = ref<string[]>(
+    [...new Array(new Date(animeWorks.watchYear, +animeWorks.watchMonth, 0).getDate())].map((_, i) => (i + 1) < 10 ? "0" + (i + 1).toString() : (i + 1).toString()))
 
 const selYear = ref<string>(animeWorks.watchYear.toString())
 const selMonth = ref<string>(animeWorks.watchMonth.toString())
