@@ -58,7 +58,7 @@ const dayClick = (d: string) => {
 onMounted(() => {
 })
 watchEffect(() => {
-    daysArray.value = [...new Array(new Date(animeWorks.watchYear, animeWorks.watchMonth, 0).getDate())].map((_, i) => (i + 1).toString())
+    daysArray.value = [...new Array(new Date(animeWorks.watchYear, +animeWorks.watchMonth, 0).getDate())].map((_, i) => (i + 1) < 10 ? "0" + (i + 1).toString() : (i + 1).toString())
 })
 </script>
 
