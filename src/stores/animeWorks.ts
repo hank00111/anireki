@@ -84,6 +84,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
         const data = JSON.parse(LZString.decompressFromUTF16(res.data));
         this.animeData = data;
         this.originData = data;
+        this.getSeason('2023-summer');
       } catch (error) {
         console.log(error);
       }

@@ -48,7 +48,7 @@ const getLeft = () => {
 }
 
 onMounted(() => {
-    goToSeason(1);
+    // goToSeason(1);
     // console.log(yearNav.value?.getBoundingClientRect())
 })
 watchEffect(() => {
