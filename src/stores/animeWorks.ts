@@ -102,6 +102,11 @@ export const useAnimeWorks = defineStore("animeWorks", {
     },
     getSeason(seasonID: string) {
       this.animeData = [];
+      if (seasonID === 'all') {
+        this.animeData = this.originData;
+        return;
+      }
+
       for (const [_, hValue] of Object.entries(this.originData)) {
         if (hValue.season === seasonID) {
           // console.log(hValue);

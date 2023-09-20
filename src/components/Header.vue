@@ -17,7 +17,6 @@ const yearList = ref([
     { name: '2023年1月新番', seasonID: '2023-winter' },])
 
 const userControll = useUserControl();
-const yearNav = ref<HTMLElement>();
 
 const userLogout = () => {
     showMenu.value = !showMenu
@@ -28,6 +27,10 @@ const goToSeason = (index: number) => {
     animeWorks.seasonSel = index;
     animeWorks.seasonID = yearList.value[index].seasonID;
     animeWorks.getSeason(yearList.value[index].seasonID);
+}
+const getAllAnimre = () => {
+    selectItem.value = -1;
+    animeWorks.getSeason('all');
 }
 
 const getLeft = () => {
@@ -52,8 +55,8 @@ watchEffect(() => {
 <template>
     <div class="header">
         <div v-if="props.isHome" class="anime-panel ">
-            <div class="all-anime">所有動畫</div>
-            <div class="year-nav" ref="yearNav">
+            <div class="all-anime" @click="getAllAnimre" :class="{ selected: selectItem === -1 }">所有動畫</div>
+            <div class="year-nav">
                 <div v-for="(year, index) in yearList" class="year-items"
                     :style="{ transform: `translate(${getLeft()}px,0)` }" :class="{ selected: selectItem === index }"
                     @click="goToSeason(index)">
@@ -96,6 +99,7 @@ watchEffect(() => {
         min-width: 100px;
         color: #ffffff5a;
         user-select: none;
+        cursor: pointer;
     }
 
     .year-nav {
@@ -124,7 +128,6 @@ watchEffect(() => {
         .selected {
             color: #fff;
             box-sizing: border-box;
-
             font-weight: 700;
             border-bottom: solid 1px #39aceb;
             transition: all 0.4s;
