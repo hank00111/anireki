@@ -199,6 +199,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
             watchDate: `${this.watchYear}.${(this.watchMonth < 10 ? "0" + this.watchMonth.toString() : this.watchMonth.toString())}.${this.watchDay < 10 ? "0" + this.watchDay.toString() : this.watchDay.toString()}`
           }]
         };
+        this.historyData.push(addData.watchData[0]);
         //
         await axios
           .post("/user/addwatchistory", addData)
@@ -209,15 +210,6 @@ export const useAnimeWorks = defineStore("animeWorks", {
           .catch((error) => {
             console.log(`addWorks-1 ${error}`);
           });
-        //setp1. add watch history to firebase
-        //setp2. response historyData
-        //setp3. change dailog status
-        //setp3. watchData push historyData and animeData
-        //setp4. redenr watchData in history page
-        // const find = this.animeData.find((item) => item.id === worksId);
-
-        // console.log(`${addData} ${addData.watchDate}`);
-        // console.log("" + this.watchDay);
         this.watchYear = new Date().getFullYear();
         this.watchMonth = new Date().getMonth() + 1;
         this.watchDay = new Date().getDate();
@@ -232,7 +224,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
             this.historyData = JSON.parse(LZString.decompressFromUTF16(res.data));
 
             for (const [_, hValue] of Object.entries(this.historyData)) {
-              const matchingAnime = this.animeData.find(
+              const matchingAnime = this.originData.find(
                 (anime) => anime.id === hValue.worksID
               );
               if (matchingAnime) {
