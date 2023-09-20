@@ -55,7 +55,7 @@ watchEffect(() => {
 <template>
     <div class="header">
         <div v-if="props.isHome" class="anime-panel ">
-            <div class="all-anime" @click="getAllAnimre" :class="{ selected: selectItem === -1 }">所有動畫</div>
+            <div class="all-anime" @click="getAllAnimre" :class="{ selectedH: selectItem === -1 }">所有動畫</div>
             <div class="year-nav">
                 <div v-for="(year, index) in yearList" class="year-items"
                     :style="{ transform: `translate(${getLeft()}px,0)` }" :class="{ selected: selectItem === index }"
@@ -102,7 +102,7 @@ watchEffect(() => {
         cursor: pointer;
         transition: all 0.4s;
 
-        .selected {
+        .selectedH {
             color: #fff;
             box-sizing: border-box;
             font-weight: 700;
