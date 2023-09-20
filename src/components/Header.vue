@@ -107,7 +107,6 @@ watchEffect(() => {
         align-items: center;
         overflow: hidden;
         width: 80%;
-        // max-width: 990px;
         min-width: 495px;
         height: 100%;
 
@@ -124,14 +123,14 @@ watchEffect(() => {
             cursor: pointer;
             transition: all 0.4s;
         }
+    }
 
-        .selected {
-            color: #fff;
-            box-sizing: border-box;
-            font-weight: 700;
-            border-bottom: solid 1px #39aceb;
-            transition: all 0.4s;
-        }
+    .selected {
+        color: #fff;
+        box-sizing: border-box;
+        font-weight: 700;
+        border-bottom: solid 1px #39aceb;
+        transition: all 0.4s;
     }
 }
 </style>
