@@ -26,9 +26,12 @@ const yearsArray = ref<string[]>(
     [...new Array(+endYear.value - +startYear.value)].map((_, i) => (+startYear.value + i).toString()).reverse()
 )
 
-const seaSon = reactive<seasonModel>({ 1: '春季', 2: '夏季', 3: '秋季', 4: '冬季' })
+const seaSon = reactive<seasonModel>({ 1: '冬季', 2: '春季', 3: '夏季', 4: '秋季' })
 const thisSeason = ref<string>(seaSon[Math.ceil((new Date().getMonth() + 1) / 3)])
 const refSeason = ref<number>(Math.ceil((new Date().getMonth() + 1) / 3))
+
+const startedAt_tw = ref<string>('')
+const startedAt_jp = ref<string>('')
 
 const imageSel = (e: any) => {
     refImages.value = e.target.files[0];
@@ -121,6 +124,16 @@ watchEffect(() => {
                         <div class="card-item">
                             <p>日文名稱</p>
                             <input type="text" v-model="refTitle_jp">
+                        </div>
+                        <div style="display: flex;">
+                            <div class="card-item">
+                                <p>台灣首播日</p>
+                                <input type="date" v-model="startedAt_tw" style="width: 180px;">
+                            </div>
+                            <div class="card-item" style="margin-left: 10px;">
+                                <p>日本首播日</p>
+                                <input type="date" v-model="startedAt_jp" style="width: 180px;">
+                            </div>
                         </div>
                         <div class="card-item">
                             <p>主視覺圖</p>

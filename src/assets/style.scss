@@ -70,6 +70,9 @@ body {
 // ::-webkit-scrollbar-track-piece {
 //   background: transparent;
 // }
+::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
 
 ol,
 ul {
@@ -377,6 +380,7 @@ li {
   .home-card {
     --grid-container-columns: 4;
   }
+
   .test-card {
     --card-columns: calc(33.3333% - 8px);
   }
@@ -395,6 +399,7 @@ li {
   .home-card {
     --grid-container-columns: 2;
   }
+
   .test-card {
     --card-columns: calc(50% - 8px);
   }
@@ -404,6 +409,7 @@ li {
   .home-card {
     --grid-container-columns: 2;
   }
+
   .test-card {
     --card-columns: calc(44% - 8px);
   }
@@ -413,6 +419,7 @@ li {
   .home-card {
     --grid-container-columns: 2;
   }
+
   .test-card {
     --card-columns: calc(33.3333% - 8px);
   }

@@ -22,7 +22,6 @@ interface historyDataModel {
   worksID: string;
   watchDate: string;
 };
-
 interface watchDataModel {
   worksID: string;
   title: string,
@@ -169,12 +168,6 @@ export const useAnimeWorks = defineStore("animeWorks", {
         await axios
           .post("/console/add", data, worksConfig)
           .then((res) => {
-            // let b = JSON.stringify(a);
-            // console.log(b);
-            // let c = LZString.compressToUTF16(b);
-            // console.log(c);
-            // console.log(LZString.decompressFromUTF16(c));
-            // console.log(JSON.parse(LZString.decompressFromUTF16(c)));
             const d = JSON.parse(LZString.decompressFromUTF16(res.data));
             this.sendCode = d.Code;
             this.sendStatus = false;
