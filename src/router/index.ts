@@ -44,13 +44,13 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to) => {
-  // if (to.name === "console" || to.name === "addworks") {
-  //   const userControll = useUserControl();
-  //   const isAd = await userControll.getConsole();
-  //   if (!isAd && to.meta.requiresAuth) {
-  //     console.log("error");
-  //     return { name: "home" };
-  //   }
-  // }
+  if (to.name === "console" || to.name === "addworks") {
+    const userControll = useUserControl();
+    const isAd = await userControll.getConsole();
+    if (!isAd && to.meta.requiresAuth) {
+      console.log("error");
+      return { name: "home" };
+    }
+  }
 });
 export default router;
