@@ -81,9 +81,9 @@ watchEffect(() => {
                 </div>
             </div>
             <div v-else class="userLogin">
-                <button @click="userControll.getUser(1)">
+                <!-- <button @click="userControll.getUser(1)">
                     <span>登入</span>
-                </button>
+                </button> -->
             </div>
         </div>
     </div>
