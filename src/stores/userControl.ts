@@ -33,6 +33,7 @@ export const useUserControl = defineStore("login", {
       try {
         let res = await axios.get("/auth/console");
         if (res.status === 200) {
+          console.log(this.name);
           this.checkConsole = true;
           return true;
         } else {
