@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, watchEffect } from 'vue';
-import { useUserControl } from '../stores/userControl'
+// import { useUserControl } from '../stores/userControl'
 import { useAnimeWorks } from '../stores/animeWorks'
 const props = defineProps({
     isHome: Boolean,
@@ -17,11 +17,11 @@ const yearList = ref([
     { name: '2023年4月新番', seasonID: '2023-spring' },
     { name: '2023年1月新番', seasonID: '2023-winter' },])
 
-const userControll = useUserControl();
+// const userControll = useUserControl();
 
 const userLogout = () => {
     showMenu.value = !showMenu
-    userControll.logout();
+    animeWorks.userControll.logout();
 }
 const goToSeason = (index: number) => {
     selectItem.value = index;
@@ -46,7 +46,7 @@ const getLeft = () => {
 
 onMounted(() => {
     // animeWorks.getSeason(yearList.value[animeWorks.seasonSel].seasonID);
-    console.log(userControll.name)
+    console.log(animeWorks.userControll.name)
 })
 watchEffect(() => {
 
@@ -68,9 +68,9 @@ watchEffect(() => {
         </div>
 
         <div class="userPanel">
-            <div v-if="userControll.name.length != 0 ? true : false" class="userLoggedin">
+            <div v-if="animeWorks.userControll.name.length != 0 ? true : false" class="userLoggedin">
                 <button @click="showMenu = !showMenu">
-                    <img draggable="false" :src=userControll.picture alt="">
+                    <img draggable="false" :src=animeWorks.userControll.picture alt="">
                 </button>
                 <div v-if="showMenu" class="userMenu">
                     <div class="contextMenu">
@@ -79,10 +79,10 @@ watchEffect(() => {
                             <li @click="userLogout"><button><span>登出</span></button></li>
                         </ul>
                     </div>
-                </div>
+                </div>s
             </div>
             <div v-else class="userLogin">
-                <button @click="userControll.getUser(1)">
+                <button @click="animeWorks.userControll.getUser(1)">
                     <span>登入</span>
                 </button>
             </div>
