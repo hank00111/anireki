@@ -46,6 +46,7 @@ const getLeft = () => {
 
 onMounted(() => {
     // animeWorks.getSeason(yearList.value[animeWorks.seasonSel].seasonID);
+    console.log(userControll.name)
 })
 watchEffect(() => {
 
