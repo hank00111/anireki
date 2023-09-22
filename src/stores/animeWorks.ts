@@ -255,5 +255,4 @@ export const useAnimeWorks = defineStore("animeWorks", {
       }
     }
   },
-  //   persist: true,
 });

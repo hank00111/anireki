@@ -11,7 +11,7 @@ const routes = [
     path: "/",
     name: "home",
     component: Home,
-    meta: { title: "首頁 - Anireki",keepAlive: true },
+    meta: { title: "首頁 - Anireki", keepAlive: true },
   },
   {
     path: "/history",

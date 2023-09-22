@@ -48,6 +48,10 @@ const sendData = () => {
                 title: refTitle.value,
                 title_jp: refTitle_jp.value,
             },
+            user:{
+                name: animeWorks.userControll.name,
+                picture: animeWorks.userControll.picture,
+            },            
             image: refImages.value
         }
         animeWorks.addWorks(data).then(() => {

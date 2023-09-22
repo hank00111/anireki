@@ -7,6 +7,7 @@ axios.defaults.withCredentials = true;
 export const useUserControl = defineStore("login", {
   state: () => ({
     isLogin: false,
+    checkConsole: false,
     name: "",
     picture: "",
   }),
@@ -31,11 +32,14 @@ export const useUserControl = defineStore("login", {
       try {
         let res = await axios.get("/auth/console");
         if (res.status === 200) {
+          this.checkConsole = true;
           return true;
         } else {
+          this.checkConsole = false;
           return false;
         }
       } catch (error) {
+        this.checkConsole = false;
         return false;
       }
     },
