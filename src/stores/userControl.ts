@@ -20,6 +20,7 @@ export const useUserControl = defineStore("login", {
             this.isLogin = true;
             this.name = res.data.name;
             this.picture = res.data.picture;
+            console.log(this.name);
           } else if (res.status === 204 && src === 1) {
             window.location.href = "https://a2.anireki.com/v2/auth/google";
           }
