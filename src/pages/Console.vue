@@ -32,8 +32,8 @@ onMounted(() => {
                 <div class="log-card">
                     <div class="log-card-text-bar">
                         <div class="log-card-text">
-                            <span class="mr-5">照片</span>
-                            <span class="mr-5">夏目</span>
+                            <span class="mr-5">{{ userControll.picture }}</span>
+                            <span class="mr-5">{{ userControll.name }}</span>
                             <span class="mr-5">新增了</span>
                             <span class="mr-5">進擊的巨人 #12</span>
                         </div>

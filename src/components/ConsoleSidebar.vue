@@ -21,6 +21,11 @@ const SwichDarkMode = () => {
         </div>
         <ul class="sidebar-ul">
             <li>
+                <router-link to="/" class="router-link">
+                    <span>首頁</span>
+                </router-link>
+            </li>
+            <li>
                 <router-link to="/console" class="router-link">
                     <span>系統動態</span>
                 </router-link>

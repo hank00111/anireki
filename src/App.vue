@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
 import { useDrakModeStore } from './stores/drakMode'
+import { useUserControl } from './stores/userControl'
 const drakMode = useDrakModeStore();
+const userControll = useUserControl();
 
 onMounted(() => {
   if (drakMode.drakState) {
@@ -10,7 +12,7 @@ onMounted(() => {
     document.documentElement.setAttribute('data-theme', 'dark')
   }
   document.title = 'Home - Anireki';
-
+  userControll.getUser(0);
 })
 </script>
 

@@ -4,21 +4,17 @@ import Header from '../components/Header.vue'
 import Sidebar from '../components/Sidebar.vue'
 import WorksCard from '../components/WorksCard.vue';
 import { useAnimeWorks } from '../stores/animeWorks'
-import { useUserControl } from '../stores/userControl'
 
 
 const animeWorks = useAnimeWorks();
-const userControll = useUserControl();
-
 const rightEventClose = (e: { preventDefault: () => void; }) => {
     e.preventDefault();
 }
 onMounted(() => {
-    document.title = 'Home - Anireki';    
+    document.title = 'Home - Anireki';
 
 })
-onBeforeMount(() => {    
-    userControll.getUser(0);
+onBeforeMount(() => {
     animeWorks.getAnimeData();
 })
 
