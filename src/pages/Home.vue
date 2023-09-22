@@ -14,11 +14,11 @@ const rightEventClose = (e: { preventDefault: () => void; }) => {
     e.preventDefault();
 }
 onMounted(() => {
-    document.title = 'Home - Anireki';
-    userControll.getUser(0);
+    document.title = 'Home - Anireki';    
 
 })
-onBeforeMount(() => {
+onBeforeMount(() => {    
+    userControll.getUser(0);
     animeWorks.getAnimeData();
 })
 

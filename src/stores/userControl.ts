@@ -1,4 +1,5 @@
 import axios from "axios";
+import LZString from "lz-string";
 import { defineStore } from "pinia";
 axios.defaults.baseURL = "https://a2.anireki.com/v2";
 axios.defaults.withCredentials = true;
@@ -18,10 +19,11 @@ export const useUserControl = defineStore("login", {
         if (this.name.length === 0) {
           let res = await axios.get("/auth/user");
           if (res.status === 200) {
+            const data = JSON.parse(LZString.decompressFromUTF16(res.data));
             this.isLogin = true;
-            this.name = res.data.name;
-            this.picture = res.data.picture;
-            this.consoleAccess = res.data.console || false;
+            this.name = data.name;
+            this.picture = data.picture;
+            this.consoleAccess = data.console || false;
             console.log(this.name);
           } else if (res.status === 204 && src === 1) {
             window.location.href = "https://a2.anireki.com/v2/auth/google";
