@@ -5,10 +5,10 @@ import Header from '../components/Header.vue'
 import Notifications from '../components/Notifications.vue'
 import ConsoleSidebar from '../components/ConsoleSidebar.vue'
 import { useAnimeWorks } from '../stores/animeWorks'
-// import { useUserControl } from '../stores/userControl'
+import { useUserControl } from '../stores/userControl'
 
 const animeWorks = useAnimeWorks();
-// const userControll = useUserControl();
+const userControll = useUserControl();
 
 onMounted(() => {
     document.title = 'Console - Anireki';
@@ -22,7 +22,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <!-- <Loading :console-show="false" :show="userControll.checkConsole" /> -->
+    <Loading :console-show="false" :show="!userControll.checkConsole" />
     <ConsoleSidebar></ConsoleSidebar>
     <div class="main">
         <Notifications :show="animeWorks.infoStatus" :info="animeWorks.infoMsg"></Notifications>

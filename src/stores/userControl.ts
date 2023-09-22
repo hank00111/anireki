@@ -10,6 +10,7 @@ export const useUserControl = defineStore("login", {
     checkConsole: false,
     name: "",
     picture: "",
+    consoleAccess: false,
   }),
   actions: {
     async getUser(src: number) {
@@ -20,6 +21,7 @@ export const useUserControl = defineStore("login", {
             this.isLogin = true;
             this.name = res.data.name;
             this.picture = res.data.picture;
+            this.consoleAccess = res.data.console || false;
             console.log(this.name);
           } else if (res.status === 204 && src === 1) {
             window.location.href = "https://a2.anireki.com/v2/auth/google";

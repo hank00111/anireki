@@ -1,12 +1,14 @@
 <script setup lang="ts">
+import { useRouter } from 'vue-router'
 import { ref, onMounted, watchEffect } from 'vue';
-// import { useUserControl } from '../stores/userControl'
+import { useUserControl } from '../stores/userControl'
 import { useAnimeWorks } from '../stores/animeWorks'
 const props = defineProps({
     isHome: Boolean,
     isConsole: Boolean,
 })
 const animeWorks = useAnimeWorks();
+const router = useRouter();
 
 const showMenu = ref(false);
 const selectItem = ref(animeWorks.seasonSel);
@@ -17,11 +19,11 @@ const yearList = ref([
     { name: '2023年4月新番', seasonID: '2023-spring' },
     { name: '2023年1月新番', seasonID: '2023-winter' },])
 
-// const userControll = useUserControl();
+const userControll = useUserControl();
 
 const userLogout = () => {
     showMenu.value = !showMenu
-    animeWorks.userControll.logout();
+    userControll.logout();
 }
 const goToSeason = (index: number) => {
     selectItem.value = index;
@@ -43,10 +45,14 @@ const getLeft = () => {
     return left;
     //console.log(selectItem.value + " " + index + " " + left);
 }
+const toConsole = () => {
+    showMenu.value = !showMenu.value;
+    router.push('/console');
+}
 
 onMounted(() => {
     // animeWorks.getSeason(yearList.value[animeWorks.seasonSel].seasonID);
-    console.log(animeWorks.userControll.name)
+    console.log(userControll.name)
 })
 watchEffect(() => {
 
@@ -68,21 +74,30 @@ watchEffect(() => {
         </div>
 
         <div class="userPanel">
-            <div v-if="animeWorks.userControll.name.length != 0 ? true : false" class="userLoggedin">
+            <div v-if="userControll.name.length == 0 ? true : false" class="userLoggedin">
                 <button @click="showMenu = !showMenu">
-                    <img draggable="false" :src=animeWorks.userControll.picture alt="">
+                    <img draggable="false" :src=userControll.picture alt="">
                 </button>
                 <div v-if="showMenu" class="userMenu">
                     <div class="contextMenu">
                         <ul>
-                            <li @click="showMenu = !showMenu"><button><span>設定</span></button></li>
+                            <li v-if="userControll.consoleAccess" @click="toConsole()">
+                                <button>
+                                    <span>控制台</span>
+                                </button>
+                            </li>
+                            <li @click="showMenu = !showMenu">
+                                <button>
+                                    <span>設定</span>
+                                </button>
+                            </li>
                             <li @click="userLogout"><button><span>登出</span></button></li>
                         </ul>
                     </div>
-                </div>s
+                </div>
             </div>
             <div v-else class="userLogin">
-                <button @click="animeWorks.userControll.getUser(1)">
+                <button @click="userControll.getUser(1)">
                     <span>登入</span>
                 </button>
             </div>
