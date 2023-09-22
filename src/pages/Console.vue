@@ -32,7 +32,9 @@ onMounted(() => {
                 <div class="log-card">
                     <div class="log-card-text-bar">
                         <div class="log-card-text">
-                            <span class="mr-5">{{ userControll.picture }}</span>
+                            <span class="mr-5">
+                                <img :src="userControll.picture" alt="" style="height: 32px; width: 32px;">
+                            </span>
                             <span class="mr-5">{{ userControll.name }}</span>
                             <span class="mr-5">新增了</span>
                             <span class="mr-5">進擊的巨人 #12</span>
