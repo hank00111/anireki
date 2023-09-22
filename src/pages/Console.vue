@@ -32,8 +32,8 @@ onMounted(() => {
                 <div class="log-card">
                     <div class="log-card-text-bar">
                         <div class="log-card-text">
-                            <span class="mr-5">
-                                <img :src="userControll.picture" alt="" style="height: 32px; width: 32px;">
+                            <span class="log-card-img mr-5">
+                                <img :src="userControll.picture" alt="">
                             </span>
                             <span class="mr-5">{{ userControll.name }}</span>
                             <span class="mr-5">新增了</span>
@@ -67,8 +67,28 @@ onMounted(() => {
         background: #525657;
     }
 
+
+    .log-card-text {
+        display: flex;
+        align-items: center;
+    }
+
+    .log-card-img {
+        height: 32px;
+        width: 32px;
+
+        >img {
+            height: 32px;
+            width: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+
+        }
+    }
+
     .log-card-text-bar {
         display: flex;
+
     }
 
     .log-card-text-end {
