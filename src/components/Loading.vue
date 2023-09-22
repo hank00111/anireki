@@ -85,7 +85,7 @@ const consoleLoad = ref<string>('console-loading ')
 }
 
 @keyframes animloader {
-    0% {
+    10% {
         transform: scale(0.1);
         opacity: 1;
     }
