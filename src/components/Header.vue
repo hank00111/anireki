@@ -74,7 +74,7 @@ watchEffect(() => {
         </div>
 
         <div class="userPanel">
-            <div v-if="userControll.name.length == 0 ? true : false" class="userLoggedin">
+            <div v-if="userControll.name.length != 0 ? true : false" class="userLoggedin">
                 <button @click="showMenu = !showMenu">
                     <img draggable="false" :src=userControll.picture alt="">
                 </button>
