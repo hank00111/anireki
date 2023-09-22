@@ -5,14 +5,14 @@ import { defineStore } from "pinia";
 axios.defaults.baseURL = "https://a2.anireki.com/v2";
 axios.defaults.withCredentials = true;
 
-interface logData {
-    user: string,
-    userPicture: string,
-    action: string,
-    worksID: string,
-    worksName: string,
-    createdAt: string,
-}
+// interface logData {
+//     user: string,
+//     userPicture: string,
+//     action: string,
+//     worksID: string,
+//     worksName: string,
+//     createdAt: string,
+// }
 
 export const useAnirekiConsole = defineStore("anirekiConsole", {
     state: () => ({

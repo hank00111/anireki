@@ -26,7 +26,7 @@ onMounted(() => {
     <ConsoleSidebar></ConsoleSidebar>
     <div class="main">
         <Notifications :show="animeWorks.infoStatus" :info="animeWorks.infoMsg"></Notifications>
-        <Header class="console-header"></Header>
+        <Header class="console-header" :is-console="true"></Header>
         <div class="content console-content">
             <div class="log-container">
                 <div class="log-card">

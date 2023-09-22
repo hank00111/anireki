@@ -3,7 +3,8 @@ import { ref, onMounted, watchEffect } from 'vue';
 import { useUserControl } from '../stores/userControl'
 import { useAnimeWorks } from '../stores/animeWorks'
 const props = defineProps({
-    isHome: Boolean
+    isHome: Boolean,
+    isConsole: Boolean,
 })
 const animeWorks = useAnimeWorks();
 
@@ -80,9 +81,9 @@ watchEffect(() => {
                 </div>
             </div>
             <div v-else class="userLogin">
-                <button @click="userControll.getUser(1)">
+                <!-- <button @click="userControll.getUser(1)">
                     <span>登入</span>
-                </button>
+                </button> -->
             </div>
         </div>
     </div>
