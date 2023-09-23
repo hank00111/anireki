@@ -24,6 +24,25 @@ const actionCheck = (str: string) => {
             return 'Error'
     }
 }
+const relativeTime = (date: string) => {
+    const targetDate = new Date(date);
+    const currentDate = new Date();
+    const timeDifference = +targetDate - +currentDate;
+    const timeDiffSeconds = Math.floor(timeDifference / 1000);
+    const rtf = new Intl.RelativeTimeFormat('zh-TW', { numeric: 'auto' });
+
+    switch (true) {
+        case (timeDiffSeconds < 60):
+            return rtf.format(Math.round(timeDifference / 1000), 'second');
+        case (timeDiffSeconds < 3600):
+            return rtf.format(Math.round(timeDifference / 1000 / 60), 'minute');
+        case (timeDiffSeconds < 86400):
+            return rtf.format(Math.round(timeDifference / 1000 / 60 / 60), 'hour');
+        default:
+            return date;
+    }
+
+}
 
 onMounted(async () => {
     document.title = 'Console - Anireki';
@@ -51,7 +70,7 @@ onMounted(async () => {
                             <span class="mr-5 highlight">{{ data.worksName + " #" + data.worksID }}</span>
                         </div>
                         <div class="log-card-text-end">
-                            {{ data.date }}
+                            {{ relativeTime(data.date) }}
                         </div>
                     </div>
                 </div>
