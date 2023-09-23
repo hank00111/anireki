@@ -32,13 +32,13 @@ const relativeTime = (date: string) => {
     const rtf = new Intl.RelativeTimeFormat('zh-TW', { numeric: 'auto' });
 
     switch (true) {
-        case (timeDiffSeconds < 60):
+        case (timeDiffSeconds < -60):
             console.log("60 " + timeDiffSeconds);
             return rtf.format(Math.round(timeDifference / 1000), 'second');
-        case (timeDiffSeconds < 3600):
+        case (timeDiffSeconds < -3600):
             console.log("3600 " + timeDiffSeconds);
             return rtf.format(Math.round(timeDifference / 1000 / 60), 'minute');
-        case (timeDiffSeconds < 86400):
+        case (timeDiffSeconds < -86400):
             return rtf.format(Math.round(timeDifference / 1000 / 60 / 60), 'hour');
         default:
             return date;
@@ -49,7 +49,7 @@ const relativeTime = (date: string) => {
 onMounted(async () => {
     document.title = 'Console - Anireki';
     await anirekiConsole.getLogs();
-    console.log(animeWorks.infoStatus)
+    // console.log(animeWorks.infoStatus)
 })
 </script>
 

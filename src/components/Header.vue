@@ -52,7 +52,7 @@ const toConsole = () => {
 
 onMounted(() => {
     // animeWorks.getSeason(yearList.value[animeWorks.seasonSel].seasonID);
-    console.log(userControll.name)
+    // console.log(userControll.name)
 })
 watchEffect(() => {
 
