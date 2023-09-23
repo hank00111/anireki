@@ -69,15 +69,12 @@ onBeforeUnmount(() => {
                 <div v-for="data in anirekiConsole.logData" class="log-card">
                     <div class="log-card-text-bar">
                         <div class="log-card-text">
-                            <span class="log-card-img mr-5">
-                                <img :src="data.userPicture" alt="">
-                            </span>
+                            <img class="log-card-img mr-5" :src="data.userPicture" alt="">
                             <span class="mr-5 highlight">{{ data.user }}</span>
                             <span class="mr-5">{{ actionCheck(data.action) }}</span>
                             <span class="mr-5 highlight">{{ data.worksName + " #" + data.worksID }}</span>
                         </div>
-                        <div class="log-card-text-end">
-                            {{ relativeTime(data.date) }}
+                        <div class="log-card-text-end"> {{ relativeTime(data.date) }}
                         </div>
                     </div>
                 </div>
@@ -105,27 +102,24 @@ onBeforeUnmount(() => {
         background: #525657;
     }
 
+    .log-card-text-bar {
+        color: #fff;
+        height: 100%;
+        display: flex;
+        align-items: center;
+    }
+
     .log-card-text {
         display: flex;
         align-items: center;
     }
 
+
     .log-card-img {
         height: 32px;
         width: 32px;
-
-        >img {
-            height: 32px;
-            width: 32px;
-            border-radius: 50%;
-            cursor: pointer;
-
-        }
-    }
-
-    .log-card-text-bar {
-        display: flex;
-        align-items: center;
+        border-radius: 50%;
+        cursor: pointer;
     }
 
     .log-card-text-end {
