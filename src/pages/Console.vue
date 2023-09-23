@@ -83,8 +83,6 @@ onMounted(async () => {
         align-items: center;
     }
 
-
-
     .log-card-img {
         height: 32px;
         width: 32px;
@@ -110,6 +108,7 @@ onMounted(async () => {
 
     .highlight {
         color: #88e4f0;
+        cursor: pointer;
     }
 
     .mr-5 {
