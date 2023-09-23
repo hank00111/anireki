@@ -89,7 +89,7 @@ onMounted(async () => {
     .log-card {
         color: #fff;
         width: 80%;
-        height: 100px;
+        height: 60px;
         padding: 12px;
         font-size: 1.1em;
         margin-top: 10px;
