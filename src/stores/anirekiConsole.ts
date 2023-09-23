@@ -11,7 +11,7 @@ interface logDataModel {
     action: string,
     worksID: string,
     worksName: string,
-    createdAt: string,
+    date: string,
 }
 
 export const useAnirekiConsole = defineStore("anirekiConsole", {

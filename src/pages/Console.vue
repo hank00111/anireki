@@ -12,6 +12,19 @@ const animeWorks = useAnimeWorks();
 const userControll = useUserControl();
 const anirekiConsole = useAnirekiConsole();
 
+const actionCheck = (str: string) => {
+    switch (str) {
+        case 'W':
+            return '新增了'
+        case 'U':
+            return '更新了'
+        case 'D':
+            return '刪除了'
+        default:
+            return 'Error'
+    }
+}
+
 onMounted(async () => {
     document.title = 'Console - Anireki';
     await anirekiConsole.getLogs();
@@ -34,11 +47,11 @@ onMounted(async () => {
                                 <img :src="data.userPicture" alt="">
                             </span>
                             <span class="mr-5">{{ data.user }}</span>
-                            <span class="mr-5">{{ data.action }}</span>
+                            <span class="mr-5">{{ actionCheck(data.action) }}</span>
                             <span class="mr-5">{{ data.worksName + " #" + data.worksID }}</span>
                         </div>
                         <div class="log-card-text-end">
-                            {{ data.createdAt }}
+                            {{ data.date }}
                         </div>
                     </div>
                 </div>
