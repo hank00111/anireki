@@ -24,7 +24,7 @@ export const useUserControl = defineStore("login", {
             this.name = data.name;
             this.picture = data.picture;
             this.consoleAccess = data.console || false;
-            console.log(this.name);
+            // console.log(this.name);
           } else if (res.status === 204 && src === 1) {
             window.location.href = "https://a2.anireki.com/v2/auth/google";
           }
