@@ -22,7 +22,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <Loading :console-show="false" :show="userControll.checkConsole" />
+    <Loading :console-show="false" :show="true" />
     <ConsoleSidebar></ConsoleSidebar>
     <div class="main">
         <Notifications :show="animeWorks.infoStatus" :info="animeWorks.infoMsg"></Notifications>
