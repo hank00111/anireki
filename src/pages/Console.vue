@@ -6,18 +6,21 @@ import Notifications from '../components/Notifications.vue'
 import ConsoleSidebar from '../components/ConsoleSidebar.vue'
 import { useAnimeWorks } from '../stores/animeWorks'
 import { useUserControl } from '../stores/userControl'
+import { useAnirekiConsole } from '../stores/anirekiConsole'
 
 const animeWorks = useAnimeWorks();
 const userControll = useUserControl();
+const anirekiConsole = useAnirekiConsole();
 
-onMounted(() => {
+onMounted(async () => {
     document.title = 'Console - Anireki';
+    await anirekiConsole.getLogs();
     console.log(animeWorks.infoStatus)
 })
 </script>
 
 <template>
-    <Loading :console-show="false" :show="!userControll.checkConsole" />
+    <Loading :console-show="false" :show="!userControll.checkConsole && anirekiConsole.logLoading" />
     <ConsoleSidebar></ConsoleSidebar>
     <div class="main">
         <Notifications :show="animeWorks.infoStatus" :info="animeWorks.infoMsg"></Notifications>
@@ -25,17 +28,17 @@ onMounted(() => {
         <div class="content console-content">
             <div class="log-container">
                 <div class="log-card">
-                    <div class="log-card-text-bar">
+                    <div v-for="data in anirekiConsole.logData" class="log-card-text-bar">
                         <div class="log-card-text">
                             <span class="log-card-img mr-5">
-                                <img :src="userControll.picture" alt="">
+                                <img :src="data.userPicture" alt="">
                             </span>
-                            <span class="mr-5">{{ userControll.name }}</span>
-                            <span class="mr-5">新增了</span>
-                            <span class="mr-5">進擊的巨人 #12</span>
+                            <span class="mr-5">{{ data.user }}</span>
+                            <span class="mr-5">{{ data.action }}</span>
+                            <span class="mr-5">{{ data.worksName + " #" + data.worksID }}</span>
                         </div>
                         <div class="log-card-text-end">
-                            2023/09/23 12:00:00
+                            {{ data.createdAt }}
                         </div>
                     </div>
                 </div>
