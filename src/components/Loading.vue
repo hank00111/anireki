@@ -52,7 +52,7 @@ const consoleLoad = ref<string>('console-loading ')
             width: 100px;
             height: 100px;
             border-radius: 100%;
-            border: 0.2em solid #88e4f0;
+            border: 0.22em solid #88e4f0;
             position: absolute;
             left: 0;
             top: 0;
@@ -85,7 +85,7 @@ const consoleLoad = ref<string>('console-loading ')
 }
 
 @keyframes animloader {
-    10% {
+    0% {
         transform: scale(0.1);
         opacity: 1;
     }
