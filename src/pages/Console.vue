@@ -33,11 +33,11 @@ const relativeTime = (date: string) => {
 
     switch (true) {
         case (timeDiffSeconds < 60):
-            return rtf.format(Math.round(timeDifference / 1000), 'second');
+            return rtf.format(Math.round(-timeDifference / 1000), 'second');
         case (timeDiffSeconds < 3600):
-            return rtf.format(Math.round(timeDifference / 1000 / 60), 'minute');
+            return rtf.format(Math.round(-timeDifference / 1000 / 60), 'minute');
         case (timeDiffSeconds < 86400):
-            return rtf.format(Math.round(timeDifference / 1000 / 60 / 60), 'hour');
+            return rtf.format(Math.round(-timeDifference / 1000 / 60 / 60), 'hour');
         default:
             return date;
     }
