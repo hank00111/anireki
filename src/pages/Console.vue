@@ -12,17 +12,12 @@ const userControll = useUserControl();
 
 onMounted(() => {
     document.title = 'Console - Anireki';
-    // if (noti.value) {
-    //     setTimeout(() => {
-    //         noti.value = !noti.value
-    //     }, 2000)
-    // }
     console.log(animeWorks.infoStatus)
 })
 </script>
 
 <template>
-    <Loading :console-show="false" :show="userControll.checkConsole" />
+    <Loading :console-show="false" :show="!userControll.checkConsole" />
     <ConsoleSidebar></ConsoleSidebar>
     <div class="main">
         <Notifications :show="animeWorks.infoStatus" :info="animeWorks.infoMsg"></Notifications>
