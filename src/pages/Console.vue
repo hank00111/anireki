@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted } from 'vue';
+import { ref, onMounted, onBeforeUnmount } from 'vue';
 import Header from '../components/Header.vue'
 import Loading from '../components/Loading.vue'
 import Notifications from '../components/Notifications.vue'
@@ -11,6 +11,8 @@ import { useAnirekiConsole } from '../stores/anirekiConsole'
 const animeWorks = useAnimeWorks();
 const userControll = useUserControl();
 const anirekiConsole = useAnirekiConsole();
+
+const timer = ref<any>() || null;
 
 const actionCheck = (str: string) => {
     switch (str) {
@@ -47,7 +49,12 @@ const relativeTime = (date: string) => {
 onMounted(async () => {
     document.title = 'Console - Anireki';
     await anirekiConsole.getLogs();
-    // console.log(animeWorks.infoStatus)
+    timer.value = setInterval(async () => {
+        await anirekiConsole.getLogs();
+    }, 10000);
+})
+onBeforeUnmount(() => {
+    clearInterval(timer.value);
 })
 </script>
 
