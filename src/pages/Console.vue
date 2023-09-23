@@ -46,9 +46,9 @@ onMounted(async () => {
                             <span class="log-card-img mr-5">
                                 <img :src="data.userPicture" alt="">
                             </span>
-                            <span class="mr-5">{{ data.user }}</span>
+                            <span class="mr-5 highlight">{{ data.user }}</span>
                             <span class="mr-5">{{ actionCheck(data.action) }}</span>
-                            <span class="mr-5">{{ data.worksName + " #" + data.worksID }}</span>
+                            <span class="mr-5 highlight">{{ data.worksName + " #" + data.worksID }}</span>
                         </div>
                         <div class="log-card-text-end">
                             {{ data.date }}
@@ -78,11 +78,12 @@ onMounted(async () => {
         background: #525657;
     }
 
-
     .log-card-text {
         display: flex;
         align-items: center;
     }
+
+
 
     .log-card-img {
         height: 32px;
@@ -105,6 +106,10 @@ onMounted(async () => {
     .log-card-text-end {
         margin-left: auto;
         text-align: right !important;
+    }
+
+    .highlight {
+        color: #88e4f0;
     }
 
     .mr-5 {
