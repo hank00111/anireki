@@ -97,7 +97,7 @@ watchEffect(() => {
 </script>
 
 <template>
-    <Loading :console-show="animeWorks.sendStatus" :show="animeWorks.sendStatus" />
+    <Loading :console-show="false" :show="animeWorks.sendStatus" />
     <ConsoleSidebar></ConsoleSidebar>
     <div class="main">
         <Header class="console-header"></Header>
@@ -243,7 +243,7 @@ watchEffect(() => {
                 }
 
                 &:hover {
-                    border: 2px solid #91ddf9;
+                    border: 2px solid #79d5ff;
                 }
             }
 
