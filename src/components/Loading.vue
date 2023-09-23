@@ -37,11 +37,7 @@ const consoleLoad = ref<string>('console-loading ')
     .loading {
         width: 100px;
         height: 100px;
-        // 
-
-        // margin: auto;
-        // text-align: center;
-        // background-color: #fff;
+        
         .loader {
             position: relative;
         }
@@ -49,14 +45,14 @@ const consoleLoad = ref<string>('console-loading ')
         .loader::after,
         .loader::before {
             content: '';
-            width: 100px;
-            height: 100px;
+            width: 110px;
+            height: 110px;
             border-radius: 100%;
             border: 0.22em solid #88e4f0;
             position: absolute;
             left: 0;
             top: 0;
-            animation: animloader 1.8s linear infinite;
+            animation: animloader 2s linear infinite;
         }
 
         .loader::after {
