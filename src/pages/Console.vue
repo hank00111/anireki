@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
 import Header from '../components/Header.vue'
-// import Loading from '../components/Loading.vue'
+import Loading from '../components/Loading.vue'
 import Notifications from '../components/Notifications.vue'
 import ConsoleSidebar from '../components/ConsoleSidebar.vue'
 import { useAnimeWorks } from '../stores/animeWorks'
@@ -22,7 +22,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <Loading :console-show="false" :show="true" />
+    <Loading :console-show="false" :show="userControll.checkConsole" />
     <ConsoleSidebar></ConsoleSidebar>
     <div class="main">
         <Notifications :show="animeWorks.infoStatus" :info="animeWorks.infoMsg"></Notifications>
