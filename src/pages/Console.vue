@@ -51,7 +51,7 @@ onMounted(async () => {
     await anirekiConsole.getLogs();
     timer.value = setInterval(async () => {
         await anirekiConsole.getLogs();
-    }, 10000);
+    }, 30 * 1000);
 })
 onBeforeUnmount(() => {
     clearInterval(timer.value);
@@ -66,8 +66,8 @@ onBeforeUnmount(() => {
         <Header class="console-header" :is-console="true"></Header>
         <div class="content console-content">
             <div class="log-container">
-                <div class="log-card">
-                    <div v-for="data in anirekiConsole.logData" class="log-card-text-bar">
+                <div v-for="data in anirekiConsole.logData" class="log-card">
+                    <div class="log-card-text-bar">
                         <div class="log-card-text">
                             <span class="log-card-img mr-5">
                                 <img :src="data.userPicture" alt="">
