@@ -302,7 +302,6 @@ watchEffect(() => {
         .works-dialog-date {
             position: relative;
             min-width: 35%;
-            height: 50%;
             display: flex;
             border-radius: 10px;
             flex-direction: column;
@@ -329,7 +328,7 @@ watchEffect(() => {
                 align-items: end;
                 justify-content: flex-end;
                 height: 100%;
-                padding: 0px 10px 10px 0px;
+                padding: 10px 10px 10px 0;
 
                 >button {
                     color: #fff;

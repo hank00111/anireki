@@ -118,6 +118,10 @@ watchEffect(() => {
         user-select: none;
         cursor: pointer;
         transition: all 0.4s;
+
+        &:hover {
+            color: #fff;
+        }
     }
 
     .selectedH {
@@ -148,13 +152,17 @@ watchEffect(() => {
             user-select: none;
             cursor: pointer;
             transition: all 0.4s;
+
+            &:hover {
+                color: #fff;
+            }
         }
 
         .selected {
             color: #fff;
             box-sizing: border-box;
             font-weight: 700;
-            border-bottom: solid 1px #39aceb;
+            border-bottom: solid 1px #f59051;
             transition: all 0.4s;
         }
     }
