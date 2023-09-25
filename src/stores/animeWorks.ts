@@ -82,7 +82,16 @@ export const useAnimeWorks = defineStore("animeWorks", {
     seasonSel: 1,
     seasonID: '2023-summer',
     worksLoaded: false,
-    worksData: [] as worksDataModel[],
+    worksData: {
+      id: "",
+      title: "",
+      title_jp: "",
+      season: "",
+      images_url: "",
+      StartedAt_jp: "",
+      StartedAt_tw: "",
+      createdAt: "",
+    },
   }),
   actions: {
     async getAnimeData() {
@@ -151,9 +160,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
       await axios.get(`/works/${worksID}`).then((res) => {
         const data = JSON.parse(LZString.decompressFromUTF16(res.data));
         this.worksData = data;
-        console.log(data);
         this.worksLoaded = true
-        // setTimeout(() => (this.worksLoaded = true), 1000);
       }).catch((error) => {
         console.log(error);
         this.worksLoaded = false;
