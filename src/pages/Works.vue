@@ -12,7 +12,7 @@ const animeWorks = useAnimeWorks();
 onMounted(async () => {
     await animeWorks.getWorks(route?.params.id.toString());
     if (animeWorks.worksLoaded) {
-        document.title = `${animeWorks.worksData[0].title} - Anireki`;
+        document.title = `${animeWorks.worksData.title} - Anireki`;
     } else {
         document.title = `Works - Anireki`;
     }
@@ -23,7 +23,7 @@ onMounted(async () => {
 </script>
 
 <template>
-    <Loading :console-show="false" :show="animeWorks.worksLoaded" />
+    <Loading :console-show="false" :show="!animeWorks.worksLoaded" />
     <ConsoleSidebar></ConsoleSidebar>
     <div class="main">
         <Header class="console-header"></Header>
@@ -33,9 +33,12 @@ onMounted(async () => {
             <WorksCard :is-home="false"></WorksCard>
         </div> -->
         <div class="content console-content">
-            <div v-if="!animeWorks.worksLoaded" class="works-container">
-
+            <div v-if="animeWorks.worksLoaded" class="works-container">
                 <div class="works-content">
+                    <div class="card-item">
+                        <p>ID</p>
+                        <input type="text" :placeholder="animeWorks.worksCount" readonly="true">
+                    </div>
                     {{ $route.params.id }}
                 </div>
             </div>
