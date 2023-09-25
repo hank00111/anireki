@@ -11,6 +11,7 @@ const route = useRoute();
 const animeWorks = useAnimeWorks();
 onMounted(async () => {
     // document.title = 'History - Anireki';
+    console.log(route?.params);
     await animeWorks.getWorks(route?.params.id.toString());
     if (animeWorks.worksLoaded) {
         document.title = `${route?.params.name.toString()} - Anireki`;
