@@ -150,8 +150,10 @@ export const useAnimeWorks = defineStore("animeWorks", {
     async getWorks(worksID: string) {
       await axios.get(`/works/${worksID}`).then((res) => {
         const data = JSON.parse(LZString.decompressFromUTF16(res.data));
+        this.worksData = data;
         console.log(data);
-        setTimeout(() => (this.worksLoaded = true), 1000);
+        this.worksLoaded = true
+        // setTimeout(() => (this.worksLoaded = true), 1000);
       }).catch((error) => {
         console.log(error);
         this.worksLoaded = false;
