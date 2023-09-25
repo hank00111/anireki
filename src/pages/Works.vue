@@ -13,7 +13,7 @@ onMounted(async () => {
     // document.title = 'History - Anireki';
     await animeWorks.getWorks(route?.params.id.toString());
     if (animeWorks.worksLoaded) {
-        document.title = `${route?.params.id.toString()} - Anireki`;
+        document.title = `${route?.params.name.toString()} - Anireki`;
     }else{
         document.title = `Works - Anireki`;
     }

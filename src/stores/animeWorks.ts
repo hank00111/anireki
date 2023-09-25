@@ -264,6 +264,12 @@ export const useAnimeWorks = defineStore("animeWorks", {
       } else {
         return false;
       }
-    }
+    },
+    SysSeason() {
+      const thisYear = new Date().getFullYear();
+      const season = Math.ceil((new Date().getMonth() + 1) / 3);
+      const seasons = ['winter', 'spring', 'summer', 'autumn'];
+      return `${thisYear}-${seasons[season - 1]}`;
+    },
   },
 });

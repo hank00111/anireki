@@ -73,7 +73,7 @@ onBeforeUnmount(() => {
                             <span class="mr-5 highlight">{{ data.user }}</span>
                             <span class="mr-5">{{ actionCheck(data.action) }}</span>
                             <span class="mr-5">
-                                <router-link :to="{ name: 'works', params: { id: data.worksID } }"
+                                <router-link :to="{ name: 'works', params: { id: data.worksID, name: data.worksName } }"
                                     class="log-link highlight">
                                     {{ data.worksName + " #" + data.worksID }}
                                 </router-link>
