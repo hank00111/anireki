@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
-import { ref, onMounted } from 'vue';
+import {  onMounted } from 'vue';
 // import Header from '../components/Header.vue'
 import Loading from '../components/Loading.vue'
 import ConsoleSidebar from '../components/ConsoleSidebar.vue'
