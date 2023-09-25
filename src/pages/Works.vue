@@ -9,7 +9,6 @@ import { useAnimeWorks } from '../stores/animeWorks'
 
 const route = useRoute();
 const animeWorks = useAnimeWorks();
-const worksLoaded = ref(false);
 onMounted(async () => {
     // document.title = 'History - Anireki';
     await animeWorks.getWorks(route?.params.id[0]);
@@ -25,7 +24,7 @@ onMounted(async () => {
 </script>
 
 <template>
-    <Loading :console-show="false" :show="!worksLoaded" />
+    <Loading :console-show="false" :show="animeWorks.worksLoaded" />
     <ConsoleSidebar></ConsoleSidebar>
     <div class="main">
         <!-- <Header></Header>
