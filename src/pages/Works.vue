@@ -14,7 +14,7 @@ onMounted(async () => {
     console.log(route?.params);
     await animeWorks.getWorks(route?.params.id.toString());
     if (animeWorks.worksLoaded) {
-        document.title = `${route?.params.name.toString()} - Anireki`;
+        document.title = `${animeWorks.worksData[0].title} - Anireki`;
     }else{
         document.title = `Works - Anireki`;
     }

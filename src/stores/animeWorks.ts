@@ -37,20 +37,24 @@ interface originDataModel {
   season: string,
   images_url: string;
 };
-//https://p2.anireki.com/2.jpg
-// {
-//   id: "1",
-//   title: "456",
-//   title_jp: "",
-//   season: "2023-spring",
-//   images_url: "",
-// }, {
-//   id: "1",
-//   title: "123",
-//   title_jp: "",
-//   season: "2023-summer",
-//   images_url: "",
-// }]
+interface originDataModel {
+  id: string;
+  title: string,
+  title_jp: string,
+  season: string,
+  images_url: string;
+};
+interface worksDataModel {
+  id: string,
+  title: string,
+  title_jp: string,
+  season: string,
+  images_url: string,
+  StartedAt_jp: string
+  StartedAt_tw: string,
+  createdAt: string,
+}
+
 export const useAnimeWorks = defineStore("animeWorks", {
   state: () => ({
     animeData: [
@@ -78,6 +82,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
     seasonSel: 1,
     seasonID: '2023-summer',
     worksLoaded: false,
+    worksData: [] as worksDataModel[],
   }),
   actions: {
     async getAnimeData() {
