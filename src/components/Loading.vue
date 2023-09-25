@@ -29,14 +29,14 @@ const consoleLoad = ref<string>('console-loading ')
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: #0000006e;
+    background-color: #0000009a;
     display: flex;
     justify-content: center;
     align-items: center;
 
     .loading {
-        width: 100px;
-        height: 100px;
+        width: 110px;
+        height: 110px;
         
         .loader {
             position: relative;
@@ -48,7 +48,7 @@ const consoleLoad = ref<string>('console-loading ')
             width: 110px;
             height: 110px;
             border-radius: 100%;
-            border: 0.22em solid #88e4f0;
+            border: 0.23em solid #9ff4ff;
             position: absolute;
             left: 0;
             top: 0;

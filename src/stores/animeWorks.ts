@@ -77,6 +77,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
     userControll: useUserControl(),
     seasonSel: 1,
     seasonID: '2023-summer',
+    worksLoaded: false,
   }),
   actions: {
     async getAnimeData() {
@@ -97,27 +98,6 @@ export const useAnimeWorks = defineStore("animeWorks", {
         // console.log(res.data);
       } catch (error) {
         console.log(error);
-      }
-    },
-    getSeason(seasonID: string) {
-      this.animeData = [];
-      if (seasonID === 'all') {
-        this.animeData = this.originData;
-        return;
-      }
-
-      for (const [_, hValue] of Object.entries(this.originData)) {
-        if (hValue.season === seasonID) {
-          // console.log(hValue);
-          const wData = {
-            id: hValue.id,
-            title: hValue.title,
-            title_jp: hValue.title_jp,
-            season: hValue.season,
-            images_url: hValue.images_url,
-          };
-          this.animeData.push(wData);
-        }
       }
     },
     async getWorksCount() {
@@ -160,6 +140,37 @@ export const useAnimeWorks = defineStore("animeWorks", {
           });
       } catch (error) {
         console.log(error);
+      }
+    },
+    async getWorks(worksID: string) {
+      await axios.get(`/works/${worksID}`).then((res) => {
+        const data = JSON.parse(LZString.decompressFromUTF16(res.data));
+        console.log(data);
+        this.worksLoaded = true;
+      }).catch((error) => {
+        console.log(error);
+        this.worksLoaded = false;
+      });
+    },
+    getSeason(seasonID: string) {
+      this.animeData = [];
+      if (seasonID === 'all') {
+        this.animeData = this.originData;
+        return;
+      }
+
+      for (const [_, hValue] of Object.entries(this.originData)) {
+        if (hValue.season === seasonID) {
+          // console.log(hValue);
+          const wData = {
+            id: hValue.id,
+            title: hValue.title,
+            title_jp: hValue.title_jp,
+            season: hValue.season,
+            images_url: hValue.images_url,
+          };
+          this.animeData.push(wData);
+        }
       }
     },
     async addWorks(data: object) {

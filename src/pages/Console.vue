@@ -72,7 +72,12 @@ onBeforeUnmount(() => {
                             <img class="log-card-img mr-5" :src="data.userPicture" alt="">
                             <span class="mr-5 highlight">{{ data.user }}</span>
                             <span class="mr-5">{{ actionCheck(data.action) }}</span>
-                            <span class="mr-5 highlight">{{ data.worksName + " #" + data.worksID }}</span>
+                            <span class="mr-5">
+                                <router-link :to="{ name: 'works', params: { id: data.worksID } }"
+                                    class="log-link highlight">
+                                    {{ data.worksName + " #" + data.worksID }}
+                                </router-link>
+                            </span>
                         </div>
                         <div class="log-card-text-end"> {{ relativeTime(data.date) }}
                         </div>
@@ -134,6 +139,10 @@ onBeforeUnmount(() => {
 
     .mr-5 {
         margin-right: 5px;
+    }
+
+    .log-link {
+        text-decoration: none;
     }
 
 }
