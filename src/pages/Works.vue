@@ -11,9 +11,9 @@ const route = useRoute();
 const animeWorks = useAnimeWorks();
 onMounted(async () => {
     // document.title = 'History - Anireki';
-    await animeWorks.getWorks(route?.params.id[0]);
+    await animeWorks.getWorks(route?.params.id.toString());
     if (animeWorks.worksLoaded) {
-        document.title = `${route?.params.id[0] || 'un'} - Anireki`;
+        document.title = `${route?.params.id.toString()} - Anireki`;
     }else{
         document.title = `Works - Anireki`;
     }
@@ -24,7 +24,7 @@ onMounted(async () => {
 </script>
 
 <template>
-    <Loading :console-show="false" :show="animeWorks.worksLoaded" />
+    <Loading :console-show="false" :show="!animeWorks.worksLoaded" />
     <ConsoleSidebar></ConsoleSidebar>
     <div class="main">
         <!-- <Header></Header>
