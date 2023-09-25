@@ -44,16 +44,16 @@ interface originDataModel {
   season: string,
   images_url: string;
 };
-interface worksDataModel {
-  id: string,
-  title: string,
-  title_jp: string,
-  season: string,
-  images_url: string,
-  StartedAt_jp: string
-  StartedAt_tw: string,
-  createdAt: string,
-}
+// interface worksDataModel {
+//   id: string,
+//   title: string,
+//   title_jp: string,
+//   season: string,
+//   images_url: string,
+//   StartedAt_jp: string
+//   StartedAt_tw: string,
+//   createdAt: string,
+// }
 
 export const useAnimeWorks = defineStore("animeWorks", {
   state: () => ({
