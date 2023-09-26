@@ -67,8 +67,8 @@ const updateWorks = () => {
     if (changeText != "更新") {
         console.log(data.changeData);
         changeTextref.value = changeText;
-        console.log(changeText);
-        // animeWorks.updateWorks(route?.params.id.toString(), changeText, worksImages.value);
+        // console.log(changeText);
+        animeWorks.updateWorks(data);
     }
 
 }
@@ -104,7 +104,7 @@ onMounted(async () => {
     <div class="main">
         <Header class="console-header"></Header>
         <div class="content console-content">
-            <div v-if="animeWorks.worksLoaded" class="works-container" @click="">
+            <div v-if="animeWorks.worksLoaded" class="works-container">
                 <div class="works-content">
                     <div class="works-item">
                         <p>ID</p>
@@ -138,7 +138,7 @@ onMounted(async () => {
                     </div>
                     <Transition>
                         <div class="works-image">
-                            <img src="https://p2.anireki.com/1.jpg" style="margin-right: 50px;" alt="">
+                            <img :src="animeWorks.worksData.images_url" style="margin-right: 50px;" alt="">
                             <img :src="worksImagesUrl" alt="">
                         </div>
                     </Transition>

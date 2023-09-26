@@ -238,7 +238,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
         this.watchDay = new Date().getDate();
       }
     },
-    async updateWatchHistory(data: object) {
+    async updateWorks(data: object) {
       await axios
         .post("/console/update", data, worksConfig)
         .then((res) => {
