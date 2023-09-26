@@ -61,6 +61,7 @@ const updateWorks = () => {
     }
     if (worksImages.value != undefined) {
         const imageID = animeWorks.worksData.images_url.split('/')[4];
+        console.log(animeWorks.worksData.images_url.split('/'));
         Object.assign(data.changeData, { image: { new: imageID } });
         Object.assign(data, { image: worksImages.value });
         changeText += `圖片\n`;
