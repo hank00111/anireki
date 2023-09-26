@@ -99,12 +99,12 @@ onMounted(async () => {
 </script>
 
 <template>
-    <Loading :console-show="false" :show="animeWorks.worksLoaded" />
+    <Loading :console-show="false" :show="!animeWorks.worksLoaded" />
     <ConsoleSidebar></ConsoleSidebar>
     <div class="main">
         <Header class="console-header"></Header>
         <div class="content console-content">
-            <div v-if="!animeWorks.worksLoaded" class="works-container" @click="">
+            <div v-if="animeWorks.worksLoaded" class="works-container" @click="">
                 <div class="works-content">
                     <div class="works-item">
                         <p>ID</p>
