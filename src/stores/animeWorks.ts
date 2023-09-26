@@ -242,8 +242,8 @@ export const useAnimeWorks = defineStore("animeWorks", {
       await axios
         .post("/console/update", data, worksConfig)
         .then((res) => {
-          // const d = JSON.parse(LZString.decompressFromUTF16(res.data));
-          console.log(res);
+          const d = JSON.parse(LZString.decompressFromUTF16(res.data));
+          console.log(d);
         })
         .catch((error) => {
           // this.sendCode = 1;
