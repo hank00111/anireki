@@ -226,9 +226,9 @@ export const useAnimeWorks = defineStore("animeWorks", {
         //
         await axios
           .post("/user/addwatchistory", addData)
-          .then((res) => {
-            const d = JSON.parse(LZString.decompressFromUTF16(res.data));
-            console.log(d);
+          .then(() => {
+            // const d = JSON.parse(LZString.decompressFromUTF16(res.data));
+            // console.log(d);
           })
           .catch((error) => {
             console.log(`addWorks-1 ${error}`);
@@ -237,6 +237,20 @@ export const useAnimeWorks = defineStore("animeWorks", {
         this.watchMonth = new Date().getMonth() + 1;
         this.watchDay = new Date().getDate();
       }
+    },
+    async updateWatchHistory(data: object) {
+      await axios
+        .post("/console/update", data, worksConfig)
+        .then((res) => {
+          // const d = JSON.parse(LZString.decompressFromUTF16(res.data));
+          console.log(res);
+        })
+        .catch((error) => {
+          // this.sendCode = 1;
+          // this.sendStatus = false;
+          // this.infoStatus = true;
+          console.log(`updateWorks-1 ${error}`);
+        });
     },
     async deleteWatchHistory(worksId: string) {
       try {

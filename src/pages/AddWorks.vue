@@ -83,6 +83,7 @@ watch(refImages, (refImages) => {
         refImageLoad.value = true;
     })
 })
+
 watch(thisSeason, (thisSeason) => {
     refSeason.value = parseInt(Object.keys(seaSon).find(key => seaSon[key] === thisSeason) || '5')
 })
@@ -122,7 +123,7 @@ watchEffect(() => {
                             </select>
                         </div>
                         <div class="card-item">
-                            <p>動畫名稱</p>
+                            <p>中文名稱</p>
                             <input type="text" v-model="refTitle">
                         </div>
                         <div class="card-item">
