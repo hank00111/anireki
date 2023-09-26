@@ -60,8 +60,7 @@ const updateWorks = () => {
         changeText += `StartedAt_jp: ${animeWorks.worksData.StartedAt_jp} => ${startedAt_jp.value}\n`;
     }
     if (worksImages.value != undefined) {
-        const imageID = animeWorks.worksData.images_url.split('/')[4];
-        console.log(animeWorks.worksData.images_url.split('/'));
+        const imageID = animeWorks.worksData.images_url.split('/')[3].split('.')[0];
         Object.assign(data.changeData, { image: { new: imageID } });
         Object.assign(data, { image: worksImages.value });
         changeText += `圖片\n`;
