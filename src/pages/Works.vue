@@ -30,6 +30,7 @@ const imageSel = (e: any) => {
 const updateWorks = () => {
     let data = {
         id: animeWorks.worksData.id,
+        worksTitle_jp: animeWorks.worksData.title_jp,
         changeData: {},
         user: {
             name: animeWorks.userControll.name,
@@ -63,7 +64,7 @@ const updateWorks = () => {
         const imageID = animeWorks.worksData.images_url.split('/')[3];
         Object.assign(data.changeData, { image: { new: imageID } });
         Object.assign(data, { image: worksImages.value });
-        changeText += `圖片\n`; 
+        changeText += `圖片\n`;
     }
     if (changeText != "更新") {
         console.log(data.changeData);
