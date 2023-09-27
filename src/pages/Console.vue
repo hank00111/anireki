@@ -99,9 +99,9 @@ onBeforeUnmount(() => {
                     </div>
                     <div class="log-card-table">
                         <div class="log-card-table-tr">
-                            <div class="log-card-table-th" style="width: 15%;">項目</div>
-                            <div class="log-card-table-th">After</div>
-                            <div class="log-card-table-th">Before</div>
+                            <div class="log-card-table-th" style="width: 10%;">項目</div>
+                            <div class="log-card-table-th" style="width: 45%;">After</div>
+                            <div class="log-card-table-th" style="width: 45%;">Before</div>
                         </div>
                         <div v-for="(item, key) in data.changeData" class="log-card-table-tr">
                             <div class="log-card-table-td">{{ headerCheck(key) }}</div>
