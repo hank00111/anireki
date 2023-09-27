@@ -82,8 +82,8 @@ onBeforeUnmount(() => {
                         <div class="log-card-text-end"> {{ relativeTime(data.date) }}
                         </div>
                     </div>
-                    <div v-for="change in data.changeData" class="log-card-table">
-                        {{ change }}
+                    <div v-for="(item, index) in data.changeData" class="log-card-table">
+                        {{ item }} - {{ index }}
                     </div>
                 </div>
             </div>
@@ -102,12 +102,14 @@ onBeforeUnmount(() => {
     .log-card {
         color: #fff;
         width: 80%;
-        height: 60px;
+        min-height: 60px;
         padding: 12px;
         font-size: 1.1em;
         margin-top: 10px;
         border-radius: 15px;
         background: #525657;
+        display: flex;
+        flex-direction: row;
     }
 
     .log-card-text-bar {
