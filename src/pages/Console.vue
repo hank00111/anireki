@@ -97,8 +97,8 @@ onBeforeUnmount(() => {
                         <div class="log-card-text-end"> {{ relativeTime(data.date) }}
                         </div>
                     </div>
-                    <div v-for="(item, key) in data.changeData" class="log-card-table">
-                        <div class="log-card-table-cell">
+                    <div class="log-card-table">
+                        <div v-for="(item, key) in data.changeData" class="log-card-table-cell">
                             <div class="log-card-table-cell-h">
                                 {{ headerCheck(key) }}:
                             </div>
@@ -130,7 +130,7 @@ onBeforeUnmount(() => {
     .log-card {
         color: #fff;
         width: 80%;
-        padding: 12px;
+        padding: 10px;
         font-size: 1.1em;
         margin-top: 10px;
         border-radius: 15px;
