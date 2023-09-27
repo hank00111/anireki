@@ -11,6 +11,7 @@ interface logDataModel {
     action: string,
     worksID: string,
     worksName: string,
+    changeData: object,
     date: string,
 }
 
@@ -33,6 +34,7 @@ export const useAnirekiConsole = defineStore("anirekiConsole", {
             try {
                 let res = await axios.get("/console/logs");
                 const data = JSON.parse(LZString.decompressFromUTF16(res.data));
+                console.log(data.changeData);
                 this.logData = data;
                 this.logLoading = true;
             } catch (error) {
