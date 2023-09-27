@@ -18,6 +18,8 @@ const refTitle_jp = ref<string>("")
 const refImages = ref<any>()
 const refImagesUrl = ref<any>()
 const refImageLoad = ref<boolean>(false)
+const refStartedAt_tw = ref<string>('')
+const refStartedAt_jp = ref<string>('')
 
 const startYear = ref<string>('1996')
 const thisYear = ref<number>(new Date().getFullYear())
@@ -30,8 +32,7 @@ const seaSon = reactive<seasonModel>({ 1: '冬季', 2: '春季', 3: '夏季', 4:
 const thisSeason = ref<string>(seaSon[Math.ceil((new Date().getMonth() + 1) / 3)])
 const refSeason = ref<number>(Math.ceil((new Date().getMonth() + 1) / 3))
 
-const startedAt_tw = ref<string>('')
-const startedAt_jp = ref<string>('')
+
 
 const imageSel = (e: any) => {
     refImages.value = e.target.files[0];
@@ -47,11 +48,13 @@ const sendData = () => {
                 season_id: refSeason.value,
                 title: refTitle.value,
                 title_jp: refTitle_jp.value,
+                startedAt_tw: refStartedAt_tw.value,
+                startedAt_jp: refStartedAt_jp.value,
             },
-            user:{
+            user: {
                 name: animeWorks.userControll.name,
                 picture: animeWorks.userControll.picture,
-            },            
+            },
             image: refImages.value
         }
         animeWorks.addWorks(data).then(() => {
@@ -133,11 +136,11 @@ watchEffect(() => {
                         <div style="display: flex;">
                             <div class="card-item">
                                 <p>台灣首播日</p>
-                                <input type="date" v-model="startedAt_tw" style="width: 180px;">
+                                <input type="date" v-model="refStartedAt_tw" style="width: 180px;">
                             </div>
                             <div class="card-item" style="margin-left: 10px;">
                                 <p>日本首播日</p>
-                                <input type="date" v-model="startedAt_jp" style="width: 180px;">
+                                <input type="date" v-model="refStartedAt_jp" style="width: 180px;">
                             </div>
                         </div>
                         <div class="card-item">
