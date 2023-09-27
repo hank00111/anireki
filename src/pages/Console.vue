@@ -103,13 +103,13 @@ onBeforeUnmount(() => {
                     </div>
                     <div class="log-card-table">
                         <div v-for="(item, key) in data.changeData" class="log-card-table-cell">
-                            <div class="log-card-table-cell-h" style="width: 10%;">
-                                {{ headerCheck(key) }}:
+                            <div class="log-card-table-cell-h">
+                                {{ headerCheck(key) }}
                             </div>
-                            <div class="log-card-table-cell-o" style="width: 40%;">
+                            <div class="log-card-table-cell-o">
                                 {{ item.old }}
                             </div>
-                            <div class="log-card-table-cell-h" style="width: 2%;">
+                            <div class="log-card-table-cell-h">
                                 →
                             </div>
                             <div class="log-card-table-cell-n" style="width: 40%;">
@@ -185,8 +185,8 @@ onBeforeUnmount(() => {
         display: flex;
         flex-direction: column;
         box-sizing: border-box;
-        border-top: 2px solid #a5a4a4;
-        margin-top: 10px;
+        // border-top: 2px solid #a5a4a4;
+        // margin-top: 10px;
 
     }
 
