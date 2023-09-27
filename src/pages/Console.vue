@@ -26,6 +26,19 @@ const actionCheck = (str: string) => {
             return 'Error'
     }
 }
+const headerCheck = (str: string) => {
+    switch (str) {
+        case 'StartedAt_jp':
+            return '日本首播日'
+        case 'U':
+            return '更新'
+        case 'D':
+            return '刪除'
+        default:
+            return ''
+    }
+}
+
 const relativeTime = (date: string) => {
     const targetDate = new Date(date);
     const currentDate = new Date();
@@ -82,8 +95,8 @@ onBeforeUnmount(() => {
                         <div class="log-card-text-end"> {{ relativeTime(data.date) }}
                         </div>
                     </div>
-                    <div v-for="(item, index) in data.changeData" class="log-card-table">
-                        {{ item }} - {{ index }}
+                    <div v-for="(item, key) in data.changeData" class="log-card-table">
+                        {{ headerCheck(key) }} {{ item }}
                     </div>
                 </div>
             </div>
@@ -109,7 +122,7 @@ onBeforeUnmount(() => {
         border-radius: 15px;
         background: #525657;
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
     }
 
     .log-card-text-bar {
