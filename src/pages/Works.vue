@@ -52,11 +52,11 @@ const updateWorks = () => {
         Object.assign(data.changeData, { season: { old: animeWorks.worksData.season, new: workSeason.value } });
         changeText += `season: ${animeWorks.worksData.season} => ${workSeason.value}\n`;
     }
-    if (animeWorks.worksData.StartedAt_tw != startedAt_tw.value && startedAt_tw.value.length > 0) {
+    if (animeWorks.worksData.StartedAt_tw != startedAt_tw.value) {
         Object.assign(data.changeData, { StartedAt_tw: { old: animeWorks.worksData.StartedAt_tw, new: startedAt_tw.value } });
         changeText += `StartedAt_tw: ${animeWorks.worksData.StartedAt_tw} => ${startedAt_tw.value}\n`;
     }
-    if (animeWorks.worksData.StartedAt_jp != startedAt_jp.value && startedAt_jp.value.length > 0) {
+    if (animeWorks.worksData.StartedAt_jp != startedAt_jp.value) {
         Object.assign(data.changeData, { StartedAt_jp: { old: animeWorks.worksData.StartedAt_jp, new: startedAt_jp.value } });
         changeText += `StartedAt_jp: ${animeWorks.worksData.StartedAt_jp} => ${startedAt_jp.value}\n`;
     }
@@ -127,11 +127,11 @@ onMounted(async () => {
                     <div style="display: flex;">
                         <div class="works-item">
                             <p>台灣首播日</p>
-                            <input type="date" v-model="startedAt_tw" style="width: 180px;">
+                            <input type="date" v-model="startedAt_tw" style="width: 180px; height: 50px;">
                         </div>
                         <div class="works-item" style="margin-left: 10px;">
                             <p>日本首播日</p>
-                            <input type="date" v-model="startedAt_jp" style="width: 180px;">
+                            <input type="date" v-model="startedAt_jp" style="width: 180px; height: 50px;">
                         </div>
                     </div>
                     <div class="works-item">
