@@ -50,8 +50,8 @@ const updateWorks = () => {
         changeText += `title_jp: ${animeWorks.worksData.title_jp} => ${worksTitle_jp.value}\n`;
     }
     if (animeWorks.worksData.season != workSeason.value && workSeason.value.length > 0) {
-        Object.assign(data.changeData, { season: { old: animeWorks.worksData.season, new: workSeason.value } });
-        changeText += `season: ${animeWorks.worksData.season} => ${workSeason.value}\n`;
+        Object.assign(data.changeData, { Season: { old: animeWorks.worksData.season, new: workSeason.value } });
+        changeText += `Season: ${animeWorks.worksData.season} => ${workSeason.value}\n`;
     }
     if (animeWorks.worksData.StartedAt_tw != startedAt_tw.value) {
         Object.assign(data.changeData, { StartedAt_tw: { old: animeWorks.worksData.StartedAt_tw, new: startedAt_tw.value } });

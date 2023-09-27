@@ -32,10 +32,14 @@ const headerCheck = (str: string) => {
             return '日本首播日'
         case 'StartedAt_tw':
             return '台灣首播日'
-        case 'U':
-            return '更新'
-        case 'D':
-            return '刪除'
+        case 'Title':
+            return '中文名稱'
+        case 'Title_jp':
+            return '日文名稱'
+        case 'Season':
+            return '季度'
+        case 'image':
+            return '視覺圖'
         default:
             return ''
     }
@@ -98,15 +102,19 @@ onBeforeUnmount(() => {
                         </div>
                     </div>
                     <div class="log-card-table">
-                        <div class="log-card-table-tr">
-                            <div class="log-card-table-th" style="width: 10%;">項目</div>
-                            <div class="log-card-table-th" style="width: 45%;">After</div>
-                            <div class="log-card-table-th" style="width: 45%;">Before</div>
-                        </div>
-                        <div v-for="(item, key) in data.changeData" class="log-card-table-tr">
-                            <div class="log-card-table-td">{{ headerCheck(key) }}</div>
-                            <div class="log-card-table-td"> {{ item.old }}</div>
-                            <div class="log-card-table-td"> {{ item.new }}</div>
+                        <div v-for="(item, key) in data.changeData" class="log-card-table-cell">
+                            <div class="log-card-table-cell-h" style="width: 10%;">
+                                {{ headerCheck(key) }}:
+                            </div>
+                            <div class="log-card-table-cell-o" style="width: 40%;">
+                                {{ item.old }}
+                            </div>
+                            <div class="log-card-table-cell-h" style="width: 2%;">
+                                →
+                            </div>
+                            <div class="log-card-table-cell-n" style="width: 40%;">
+                                {{ item.new }}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -147,6 +155,7 @@ onBeforeUnmount(() => {
         align-items: center;
     }
 
+
     .log-card-img {
         height: 32px;
         width: 32px;
@@ -173,28 +182,30 @@ onBeforeUnmount(() => {
     }
 
     .log-card-table {
-        display: table;
+        display: flex;
+        flex-direction: column;
+        box-sizing: border-box;
+        border-top: 2px solid #a5a4a4;
         margin-top: 10px;
+
     }
 
-    .log-card-table-tr {
-        display: table-row;
+    .log-card-table-cell {
+        display: flex;
     }
 
-    .log-card-table-th {
-        display: table-cell;
-        padding: 6px;
-        line-height: 34px;
-        border: 1px solid #7c7c7c;
-        border-bottom: 0.4px solid #7c7c7c;
-        
+    .log-card-table-cell-h {
+        padding: 5px 0px;
     }
 
-    .log-card-table-td {
-        display: table-cell;
-        padding: 6px;
-        line-height: 34px;
-        border: 1px solid #7c7c7c;
+    .log-card-table-cell-o {
+        padding: 5px 0px;
+        color: #ffffff;
+    }
+
+    .log-card-table-cell-n {
+        padding: 5px 0px;
+        color: #ff6a6a;
     }
 
 }

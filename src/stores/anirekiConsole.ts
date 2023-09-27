@@ -15,7 +15,15 @@ interface logDataModel {
     date: string,
 }
 
-
+// {
+//     user: "",
+//     userPicture: "",
+//     action: "",
+//     worksID: "1",
+//     worksName: "123",
+//     date: "",
+//     changeData: StartedAt_tw:{old: "", new: ""}
+// },
 
 export const useAnirekiConsole = defineStore("anirekiConsole", {
     state: () => ({
