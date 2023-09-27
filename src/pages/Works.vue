@@ -108,7 +108,7 @@ onMounted(async () => {
 </script>
 
 <template>
-    <Loading :console-show="false" :show="!animeWorks.worksLoaded" />
+    <Loading :console-show="false" :show="animeWorks.sendStatus" />
     <ConsoleSidebar></ConsoleSidebar>
     <div class="main">
         <Header class="console-header"></Header>
