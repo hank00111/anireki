@@ -82,6 +82,9 @@ onBeforeUnmount(() => {
                         <div class="log-card-text-end"> {{ relativeTime(data.date) }}
                         </div>
                     </div>
+                    <div v-for="change in data.changeData" class="log-card-table">
+                        {{ change }}
+                    </div>
                 </div>
             </div>
         </div>
