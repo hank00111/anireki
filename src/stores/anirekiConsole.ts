@@ -11,7 +11,7 @@ interface logDataModel {
     action: string,
     worksID: string,
     worksName: string,
-    changeData: object,
+    changeData: { object: { old: string, new: string } },
     date: string,
 }
 

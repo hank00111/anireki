@@ -30,6 +30,8 @@ const headerCheck = (str: string) => {
     switch (str) {
         case 'StartedAt_jp':
             return '日本首播日'
+        case 'StartedAt_tw':
+            return '台灣首播日'
         case 'U':
             return '更新'
         case 'D':
@@ -96,7 +98,7 @@ onBeforeUnmount(() => {
                         </div>
                     </div>
                     <div v-for="(item, key) in data.changeData" class="log-card-table">
-                        {{ headerCheck(key) }} {{ item }}
+                        {{ headerCheck(key) }} {{ item.old }} → {{ item.new }}
                     </div>
                 </div>
             </div>
