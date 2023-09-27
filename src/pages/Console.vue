@@ -108,12 +108,9 @@ onBeforeUnmount(() => {
                             </div>
                             <div class="log-card-table-cell-o">
                                 {{ item.old }}
-                            </div>
-                            <div class="log-card-table-cell-h">
-                                →
-                            </div>
+                            </div>   
                             <div class="log-card-table-cell-n" style="width: 40%;">
-                                {{ item.new }}
+                                → {{ item.new }}
                             </div>
                         </div>
                     </div>
@@ -195,7 +192,7 @@ onBeforeUnmount(() => {
     }
 
     .log-card-table-cell-h {
-        padding: 5px 0px;
+        padding: 5px;
     }
 
     .log-card-table-cell-o {
@@ -205,7 +202,7 @@ onBeforeUnmount(() => {
 
     .log-card-table-cell-n {
         padding: 5px 0px;
-        color: #ff6a6a;
+        color: #ffeb7c;
     }
 
 }
