@@ -110,7 +110,7 @@ onBeforeUnmount(() => {
                                 {{ item.old }}
                             </div>
                             <div class="log-card-table-cell-n" style="width: 40%;">
-                                →{{ item.new }}
+                                → {{ item.new }}
                             </div>
                         </div>
                     </div>

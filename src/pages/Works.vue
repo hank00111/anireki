@@ -19,6 +19,7 @@ const startedAt_jp = ref<string>("")
 const worksImages = ref<any>()
 const worksImagesUrl = ref<any>()
 const worksImageLoad = ref<boolean>(false)
+const worksSend = ref<boolean>(false)
 
 const changeTextref = ref<string>("");
 
@@ -70,9 +71,10 @@ const updateWorks = () => {
     if (changeText != "更新") {
         console.log(data.changeData);
         changeTextref.value = changeText;
-        // console.log(changeText);
+        worksSend.value = true;
         animeWorks.updateWorks(data).then(() => {
             if (animeWorks.sendCode === 0) {
+                worksSend.value = false;
                 router.push('/console')
             } else {
 
@@ -108,7 +110,7 @@ onMounted(async () => {
 </script>
 
 <template>
-    <Loading :console-show="false" :show="animeWorks.sendStatus" />
+    <Loading :console-show="false" :show="!animeWorks.worksLoaded || worksSend" />
     <ConsoleSidebar></ConsoleSidebar>
     <div class="main">
         <Header class="console-header"></Header>
