@@ -14,15 +14,8 @@ interface logDataModel {
     changeData: { object: { old: string, new: string } },
     date: string,
 }
-// {
-//     user: "",
-//     userPicture: "",
-//     action: "",
-//     worksID: "1",
-//     worksName: "123",
-//     date: "",
-//     changeData: { StartedAt_tw: { old: "123", new: "123" } },
-// }
+
+
 
 export const useAnirekiConsole = defineStore("anirekiConsole", {
     state: () => ({

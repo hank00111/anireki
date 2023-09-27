@@ -98,19 +98,15 @@ onBeforeUnmount(() => {
                         </div>
                     </div>
                     <div class="log-card-table">
-                        <div v-for="(item, key) in data.changeData" class="log-card-table-cell">
-                            <div class="log-card-table-cell-h">
-                                {{ headerCheck(key) }}:
-                            </div>
-                            <div class="log-card-table-cell-o">
-                                {{ item.old }}
-                            </div>
-                            <div class="log-card-table-cell-h">
-                                →
-                            </div>
-                            <div class="log-card-table-cell-n">
-                                {{ item.new }}
-                            </div>
+                        <div class="log-card-table-tr">
+                            <div class="log-card-table-th" style="width: 15%;">項目</div>
+                            <div class="log-card-table-th">After</div>
+                            <div class="log-card-table-th">Before</div>
+                        </div>
+                        <div v-for="(item, key) in data.changeData" class="log-card-table-tr">
+                            <div class="log-card-table-td">{{ headerCheck(key) }}</div>
+                            <div class="log-card-table-td"> {{ item.old }}</div>
+                            <div class="log-card-table-td"> {{ item.new }}</div>
                         </div>
                     </div>
                 </div>
@@ -144,15 +140,12 @@ onBeforeUnmount(() => {
         height: 100%;
         display: flex;
         align-items: center;
-        margin-bottom: 5px;
-
     }
 
     .log-card-text {
         display: flex;
         align-items: center;
     }
-
 
     .log-card-img {
         height: 32px;
@@ -180,31 +173,28 @@ onBeforeUnmount(() => {
     }
 
     .log-card-table {
-        display: flex;
-        flex-direction: column;
-        box-sizing: border-box;
-        border-top: 2px solid #a5a4a4;
-        // background: #7b8d8d;
-        // border: 1px solid #fff;
-
+        display: table;
+        margin-top: 10px;
     }
 
-    .log-card-table-cell {
-        display: flex;
+    .log-card-table-tr {
+        display: table-row;
     }
 
-    .log-card-table-cell-h {
-        padding: 8px 6px;
+    .log-card-table-th {
+        display: table-cell;
+        padding: 6px;
+        line-height: 34px;
+        border: 1px solid #7c7c7c;
+        border-bottom: 0.4px solid #7c7c7c;
+        
     }
 
-    .log-card-table-cell-o {
-        padding: 8px 6px;
-        color: #ffffff;
-    }
-
-    .log-card-table-cell-n {
-        padding: 8px 6px;
-        color: #ff6a6a;
+    .log-card-table-td {
+        display: table-cell;
+        padding: 6px;
+        line-height: 34px;
+        border: 1px solid #7c7c7c;
     }
 
 }
