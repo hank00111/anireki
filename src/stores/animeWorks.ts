@@ -243,12 +243,16 @@ export const useAnimeWorks = defineStore("animeWorks", {
         .post("/console/update", data, worksConfig)
         .then((res) => {
           const d = JSON.parse(LZString.decompressFromUTF16(res.data));
+          this.sendCode = d.Code;
+          this.sendStatus = false;
+          this.infoMsg = d.Msg;
+          this.infoStatus = true;
           console.log(d);
         })
         .catch((error) => {
-          // this.sendCode = 1;
-          // this.sendStatus = false;
-          // this.infoStatus = true;
+          this.sendCode = 1;
+          this.sendStatus = false;
+          this.infoStatus = true;
           console.log(`updateWorks-1 ${error}`);
         });
     },

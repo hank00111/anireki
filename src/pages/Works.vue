@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router';
 import { ref, watch, onMounted } from 'vue';
 import Header from '../components/Header.vue'
 import Loading from '../components/Loading.vue'
@@ -8,6 +8,7 @@ import ConsoleSidebar from '../components/ConsoleSidebar.vue'
 import { useAnimeWorks } from '../stores/animeWorks'
 
 const route = useRoute();
+const router = useRouter();
 const animeWorks = useAnimeWorks();
 
 const workSeason = ref<string>("")
@@ -70,7 +71,13 @@ const updateWorks = () => {
         console.log(data.changeData);
         changeTextref.value = changeText;
         // console.log(changeText);
-        animeWorks.updateWorks(data);
+        animeWorks.updateWorks(data).then(() => {
+            if (animeWorks.sendCode === 0) {
+                router.push('/console')
+            } else {
+
+            }
+        });
     }
 
 }

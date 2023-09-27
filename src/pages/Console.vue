@@ -98,7 +98,20 @@ onBeforeUnmount(() => {
                         </div>
                     </div>
                     <div v-for="(item, key) in data.changeData" class="log-card-table">
-                        {{ headerCheck(key) }} {{ item.old }} → {{ item.new }}
+                        <div class="log-card-table-cell">
+                            <div class="log-card-table-cell-h">
+                                {{ headerCheck(key) }}:
+                            </div>
+                            <div class="log-card-table-cell-o">
+                                {{ item.old }}
+                            </div>
+                            <div class="log-card-table-cell-h">
+                                →
+                            </div>
+                            <div class="log-card-table-cell-n">
+                                {{ item.new }}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -117,7 +130,6 @@ onBeforeUnmount(() => {
     .log-card {
         color: #fff;
         width: 80%;
-        min-height: 60px;
         padding: 12px;
         font-size: 1.1em;
         margin-top: 10px;
@@ -132,6 +144,8 @@ onBeforeUnmount(() => {
         height: 100%;
         display: flex;
         align-items: center;
+        margin-bottom: 5px;
+
     }
 
     .log-card-text {
@@ -163,6 +177,34 @@ onBeforeUnmount(() => {
 
     .log-link {
         text-decoration: none;
+    }
+
+    .log-card-table {
+        display: flex;
+        flex-direction: column;
+        box-sizing: border-box;
+        border-top: 2px solid #a5a4a4;
+        // background: #7b8d8d;
+        // border: 1px solid #fff;
+
+    }
+
+    .log-card-table-cell {
+        display: flex;
+    }
+
+    .log-card-table-cell-h {
+        padding: 8px 6px;
+    }
+
+    .log-card-table-cell-o {
+        padding: 8px 6px;
+        color: #ffffff;
+    }
+
+    .log-card-table-cell-n {
+        padding: 8px 6px;
+        color: #ff6a6a;
     }
 
 }
