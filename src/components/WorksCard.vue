@@ -33,7 +33,7 @@ onMounted(() => {
                 <div class="home-works-images" :style="{ backgroundImage: `url(${data.images_url})` }">
                 </div>
                 <div class="home-works-context">
-                    <p>{{ data.title }}</p>
+                    <p>{{ data.title === "" ? data.title_jp : data.title }}</p>
                 </div>
             </div>
         </div>
@@ -42,7 +42,7 @@ onMounted(() => {
                 <div class="history-works-images" :style="{ backgroundImage: `url(${data.images_url})` }">
                 </div>
                 <div class="history-works-context">
-                    <p class="history-works-context-title">{{ data.title }}</p>
+                    <p class="history-works-context-title">{{ data.title === "" ? data.title_jp : data.title }}</p>
                     <p class="history-works-context-date">觀看日期:{{ data.watchDate }}</p>
                 </div>
             </div>
@@ -125,6 +125,7 @@ onMounted(() => {
 
         .history-works-context {
             padding: 6px;
+
             >p {
                 margin: 0;
                 font-weight: 400;
