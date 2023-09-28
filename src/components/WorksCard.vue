@@ -93,7 +93,7 @@ onMounted(() => {
 
         &:hover {
             z-index: 2;
-            transform: scale(1.05);
+            transform: scale(1.06);
             background-color: hsl(345, 17%, 36%);
             filter: drop-shadow(0 0 0.75rem black);
         }
