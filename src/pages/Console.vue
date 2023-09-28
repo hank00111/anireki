@@ -134,7 +134,7 @@ onBeforeUnmount(() => {
         padding: 10px;
         font-size: 1.1em;
         margin-top: 10px;
-        border-radius: 15px;
+        // border-radius: 15px;
         // background: #525657;
         border-bottom: 2px solid #525657;
         display: flex;

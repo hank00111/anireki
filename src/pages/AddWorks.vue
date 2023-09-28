@@ -135,12 +135,12 @@ watchEffect(() => {
                         </div>
                         <div style="display: flex;">
                             <div class="card-item">
-                                <p>台灣首播日</p>
-                                <input type="date" v-model="refStartedAt_tw" style="width: 180px;">
-                            </div>
-                            <div class="card-item" style="margin-left: 10px;">
                                 <p>日本首播日</p>
                                 <input type="date" v-model="refStartedAt_jp" style="width: 180px;">
+                            </div>
+                            <div class="card-item" style="margin-left: 10px;">
+                                <p>台灣首播日</p>
+                                <input type="date" v-model="refStartedAt_tw" style="width: 180px;">
                             </div>
                         </div>
                         <div class="card-item">

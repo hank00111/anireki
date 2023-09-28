@@ -54,7 +54,7 @@ onMounted(() => {
 
 <style lang="scss">
 .home-card {
-    gap: 8px;
+    gap: 12px;
     padding: 12px 12px 12px 15px;
     display: grid;
     flex-wrap: wrap;
@@ -67,12 +67,13 @@ onMounted(() => {
         user-select: none;
         background-color: hsla(0, 0%, 100%, 0.19);
         transition: all 0.22s;
+        transform: scale(1.01);
 
         // will-change: transform;
         .home-works-images {
             height: 0;
             overflow: hidden;
-            padding-bottom: 140%;
+            padding-bottom: 137%;
             background-size: 100% 100%;
             background-position: center;
             background-color: #6b6363;

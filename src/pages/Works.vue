@@ -132,12 +132,12 @@ onMounted(async () => {
                     </div>
                     <div style="display: flex;">
                         <div class="works-item">
-                            <p>台灣首播日</p>
-                            <input type="date" v-model="startedAt_tw" style="width: 180px; height: 50px;">
-                        </div>
-                        <div class="works-item" style="margin-left: 10px;">
                             <p>日本首播日</p>
                             <input type="date" v-model="startedAt_jp" style="width: 180px; height: 50px;">
+                        </div>
+                        <div class="works-item" style="margin-left: 10px;">
+                            <p>台灣首播日</p>
+                            <input type="date" v-model="startedAt_tw" style="width: 180px; height: 50px;">
                         </div>
                     </div>
                     <div class="works-item">
