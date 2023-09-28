@@ -35,7 +35,7 @@ export const useAnirekiConsole = defineStore("anirekiConsole", {
             try {
                 let res = await axios.get("/console/logs");
                 const data = JSON.parse(LZString.decompressFromUTF16(res.data));
-                console.log(data);
+                // console.log(data);
                 this.logData = data;
                 this.logLoading = true;
             } catch (error) {

@@ -239,6 +239,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
       }
     },
     async updateWorks(data: object) {
+      this.sendStatus = true;
       await axios
         .post("/console/update", data, worksConfig)
         .then((res) => {
@@ -247,7 +248,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
           this.sendStatus = false;
           this.infoMsg = d.Msg;
           this.infoStatus = true;
-          console.log(d);
+          // console.log(d);
         })
         .catch((error) => {
           this.sendCode = 1;

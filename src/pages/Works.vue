@@ -69,7 +69,7 @@ const updateWorks = () => {
         changeText += `圖片\n`;
     }
     if (changeText != "更新") {
-        console.log(data.changeData);
+        // console.log(data.changeData);
         changeTextref.value = changeText;
         // worksSend.value = true;
         animeWorks.updateWorks(data).then(() => {
