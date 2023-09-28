@@ -93,7 +93,7 @@ onBeforeUnmount(() => {
                             <span class="mr-5">{{ actionCheck(data.action) }}</span>
                             <span class="mr-5">
                                 <router-link :to="{ name: 'works', params: { id: data.worksID } }"
-                                    class="log-link highlight">
+                                    class="log-link highlight-2">
                                     {{ data.worksName + " #" + data.worksID }}
                                 </router-link>
                             </span>
@@ -135,7 +135,8 @@ onBeforeUnmount(() => {
         font-size: 1.1em;
         margin-top: 10px;
         border-radius: 15px;
-        background: #525657;
+        // background: #525657;
+        border-bottom: 2px solid #525657;
         display: flex;
         flex-direction: column;
     }
@@ -167,6 +168,10 @@ onBeforeUnmount(() => {
 
     .highlight {
         color: #88e4f0;
+        cursor: pointer;
+    }
+    .highlight-2{
+        color: #ff5b7f;
         cursor: pointer;
     }
 

@@ -95,7 +95,8 @@ watchEffect(() => {
                 </div>
 
                 <div class="wokrs-dialog-info">
-                    <div class="works-dialog-info-title"> {{ showAnime.title }}</div>
+                    <div class="works-dialog-info-title">
+                        {{ showAnime.title === "" ? showAnime.title_jp : showAnime.title }}</div>
                     <div class="works-dialog-info-title_jp"> {{ showAnime.title_jp }}</div>
                     <div class="works-dialog-info-context"></div>
                     <div class="works-dialog-control-bt">
