@@ -43,16 +43,16 @@ const updateWorks = () => {
     let changeText = "更新";
 
     if (animeWorks.worksData.title != worksTitle.value && worksTitle.value.length > 0) {
-        Object.assign(data.changeData, { Title: { old: animeWorks.worksData.title, new: worksTitle.value } })
+        Object.assign(data.changeData, { title: { old: animeWorks.worksData.title, new: worksTitle.value } })
         changeText += `title: ${animeWorks.worksData.title} => ${worksTitle.value}\n`;
     }
     if (animeWorks.worksData.title_jp != worksTitle_jp.value && worksTitle_jp.value.length > 0) {
-        Object.assign(data.changeData, { Title_jp: { old: animeWorks.worksData.title_jp, new: worksTitle_jp.value } });
+        Object.assign(data.changeData, { title_jp: { old: animeWorks.worksData.title_jp, new: worksTitle_jp.value } });
         changeText += `title_jp: ${animeWorks.worksData.title_jp} => ${worksTitle_jp.value}\n`;
     }
     if (animeWorks.worksData.season != workSeason.value && workSeason.value.length > 0) {
-        Object.assign(data.changeData, { Season: { old: animeWorks.worksData.season, new: workSeason.value } });
-        changeText += `Season: ${animeWorks.worksData.season} => ${workSeason.value}\n`;
+        Object.assign(data.changeData, { season: { old: animeWorks.worksData.season, new: workSeason.value } });
+        changeText += `season: ${animeWorks.worksData.season} => ${workSeason.value}\n`;
     }
     if (animeWorks.worksData.StartedAt_tw != startedAt_tw.value) {
         Object.assign(data.changeData, { StartedAt_tw: { old: animeWorks.worksData.StartedAt_tw, new: startedAt_tw.value } });
@@ -69,12 +69,9 @@ const updateWorks = () => {
         changeText += `圖片\n`;
     }
     if (changeText != "更新") {
-        // console.log(data.changeData);
         changeTextref.value = changeText;
-        // worksSend.value = true;
         animeWorks.updateWorks(data).then(() => {
             if (animeWorks.sendCode === 0) {
-                // worksSend.value = false;
                 router.push('/console')
             } else {
 
