@@ -82,7 +82,8 @@ onMounted(() => {
         .home-works-context {
             >p {
                 margin: 0;
-                padding: 6px;
+                padding: 8px 6px;
+                font-size: 1.1em;
                 font-weight: 700;
                 color: #eee;
                 white-space: nowrap;

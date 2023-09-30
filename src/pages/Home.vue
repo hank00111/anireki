@@ -45,52 +45,52 @@ onBeforeMount(() => {
     user-select: none;
 }
 
-.home-info {
-    gap: 8px;
-    padding: 12px 12px 12px 15px;
-    display: grid;
-    flex-wrap: wrap;
-    grid-auto-rows: auto;
-    grid-template-columns: repeat(var(--grid-container-columns), minmax(0, 1fr));
-    // grid-template-columns: repeat(3, 1fr);
+// .home-info {
+//     gap: 8px;
+//     padding: 12px 12px 12px 15px;
+//     display: grid;
+//     flex-wrap: wrap;
+//     grid-auto-rows: auto;
+//     grid-template-columns: repeat(var(--grid-container-columns), minmax(0, 1fr));
+//     // grid-template-columns: repeat(3, 1fr);
 
-    .works-card {
-        display: inline-block;
-        border-radius: 8px;
-        overflow: hidden;
-        user-select: none;
-        background-color: hsla(0, 0%, 100%, 0.19);
-        transition: all 0.24s;
+//     .works-card {
+//         display: inline-block;
+//         border-radius: 8px;
+//         overflow: hidden;
+//         user-select: none;
+//         background-color: hsla(0, 0%, 100%, 0.19);
+//         transition: all 0.24s;
 
-        // will-change: transform;
-        .works-images {
-            height: 0;
-            overflow: hidden;
-            padding-bottom: 140%;
-            background-size: 100% 100%;
-            background-position: center;
-            background-color: #6b6363;
-        }
+//         // will-change: transform;
+//         .works-images {
+//             height: 0;
+//             overflow: hidden;
+//             padding-bottom: 140%;
+//             background-size: 100% 100%;
+//             background-position: center;
+//             background-color: #6b6363;
+//         }
 
-        .works-context {
-            >p {
-                margin: 0;
-                padding: 8px 6px;
-                font-size: 1.1em;
-                font-weight: 700;
-                color: #eee;
-                white-space: nowrap;
-                text-overflow: ellipsis;
-                overflow: hidden;
-            }
-        }
+//         .works-context {
+//             >p {
+//                 margin: 0;
+//                 padding: 8px 6px;
+//                 font-size: 1.1em;
+//                 font-weight: 700;
+//                 color: #eee;
+//                 white-space: nowrap;
+//                 text-overflow: ellipsis;
+//                 overflow: hidden;
+//             }
+//         }
 
-        &:hover {
-            z-index: 2;
-            transform: scale(1.05);
-            background-color: hsl(345, 17%, 36%);
-            filter: drop-shadow(0 0 0.75rem black);
-        }
-    }
-}
+//         &:hover {
+//             z-index: 2;
+//             transform: scale(1.05);
+//             background-color: hsl(345, 17%, 36%);
+//             filter: drop-shadow(0 0 0.75rem black);
+//         }
+//     }
+// }
 </style>
