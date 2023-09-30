@@ -95,7 +95,7 @@ onMounted(() => {
         &:hover {
             z-index: 2;
             transform: scale(1.06);
-            background-color: hsl(345, 17%, 36%);
+            background-color: hsl(345, 38%, 37%);
             filter: drop-shadow(0 0 0.75rem black);
         }
     }
@@ -142,7 +142,7 @@ onMounted(() => {
         &:hover {
             z-index: 2;
             transform: scale(1.05);
-            background-color: hsl(345, 17%, 36%);
+            background-color: hsl(345, 38%, 37%);
             filter: drop-shadow(0 0 0.75rem black);
         }
     }

@@ -49,6 +49,9 @@ const toConsole = () => {
     showMenu.value = !showMenu.value;
     router.push('/console');
 }
+const toForm = () => {
+    window.location.href = "https://forms.gle/mq6hLwdMR4i6e9Mh8";
+}
 
 onMounted(() => {
     // animeWorks.getSeason(yearList.value[animeWorks.seasonSel].seasonID);
@@ -81,6 +84,11 @@ watchEffect(() => {
                 <div v-if="showMenu" class="userMenu">
                     <div class="contextMenu">
                         <ul>
+                            <li @click="toForm()">
+                                <button>
+                                    <span>聯絡我們</span>
+                                </button>
+                            </li>
                             <li v-if="userControll.consoleAccess" @click="toConsole()">
                                 <button>
                                     <span>控制台</span>
