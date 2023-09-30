@@ -20,7 +20,7 @@ onMounted(() => {
     <div class="main">
         <Header></Header>
         <div class="content">
-            <div class="home-title">Time Line</div>
+            <!-- <div class="home-title">Time Line</div> -->
             <WorksCard :is-home="false"></WorksCard>
         </div>
     </div>

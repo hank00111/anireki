@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { watchEffect, onMounted, onBeforeMount } from 'vue';
+import { onMounted, onBeforeMount } from 'vue';
 import Header from '../components/Header.vue'
 import Sidebar from '../components/Sidebar.vue'
 import WorksCard from '../components/WorksCard.vue';
@@ -15,12 +15,13 @@ onMounted(() => {
 
 })
 onBeforeMount(() => {
+    animeWorks.SysSeason();
     animeWorks.getAnimeData();
 })
 
-watchEffect(() => {
+// watchEffect(() => {
 
-})
+// })
 </script>
 
 <template>
@@ -74,7 +75,8 @@ watchEffect(() => {
         .works-context {
             >p {
                 margin: 0;
-                padding: 6px;
+                padding: 8px 6px;
+                font-size: 1.1em;
                 font-weight: 700;
                 color: #eee;
                 white-space: nowrap;
