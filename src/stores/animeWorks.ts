@@ -302,7 +302,8 @@ export const useAnimeWorks = defineStore("animeWorks", {
       const thisYear = new Date().getFullYear();
       const season = Math.ceil((new Date().getMonth() + 1) / 3);
       const seasons = ['winter', 'spring', 'summer', 'autumn'];
-      return `${thisYear}-${seasons[season - 1]}`;
+      this.seasonID = `${thisYear}-${seasons[season - 1]}`;
+      // return `${thisYear}-${seasons[season - 1]}`;
     },
   },
 });
