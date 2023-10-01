@@ -22,7 +22,7 @@ const dateConvert = (date: string) => {
     const year = objectDate.getFullYear();
     const month = objectDate.getMonth() + 1 < 10 ? '0' + (objectDate.getMonth() + 1) : objectDate.getMonth() + 1;
     const day = objectDate.getDate() < 10 ? '0' + objectDate.getDate() : objectDate.getDate();
-    return `${year}.${month}.${day}`;
+    return `${year}-${month}-${day}`;
 }
 
 onMounted(async () => {
@@ -38,8 +38,8 @@ onMounted(async () => {
         <Header class="console-header" :is-console="true"></Header>
         <div class="content console-content">
             <div class="works-list-container">
-                <div v-for="data in animeWorks.originData" class="works-list-card" @click="toWorks(data.id)">
-                    <div class="works-list-image-container">
+                <div v-for="data in animeWorks.originData" class="works-list-card">
+                    <div class="works-list-image-container" @click="toWorks(data.id)">
                         <div class="works-list-image" :style="{ backgroundImage: `url(${data.images_url})` }">
                         </div>
                     </div>
@@ -76,7 +76,8 @@ onMounted(async () => {
         width: var(--card-columns);
 
         &:hover {
-            background: #6b6363;
+            background: #4d6070;
+            transition-duration: 200ms;
         }
     }
 
