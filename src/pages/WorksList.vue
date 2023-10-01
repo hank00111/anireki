@@ -61,12 +61,15 @@ onBeforeUnmount(async () => {
         height: 12em;
         margin: 8px 8px;
         display: flex;
+        background: #5a5a5a;
+        border-radius: 10px;
     }
 
     .works-list-image-container {
         background: #b96868;
         height: 100%;
         width: 8em;
+        border-radius: 10px 0px 0px 10px;
     }
 
     .works-list-image {
@@ -76,10 +79,11 @@ onBeforeUnmount(async () => {
     }
 
     .works-list-context {
-        margin-left: 6px;
+        padding: 6px;
 
         >p {
             margin: 0;
+            color: #fff;
         }
     }
 }
