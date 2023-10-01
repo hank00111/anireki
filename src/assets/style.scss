@@ -376,6 +376,15 @@ li {
 //   }
 // }
 
+// @media only screen and (min-width: 28em) and (max-width: 54.99em) {
+//   .home-card {
+//     --grid-container-columns: 2;
+//   }
+//   .test-card {
+//     --card-columns: calc(30% - 8px);
+//   }
+// }
+
 @media (min-width: 55em) and (max-width: 79.99em) {
   .home-card {
     --grid-container-columns: 4;
@@ -386,21 +395,12 @@ li {
   }
 }
 
-// @media only screen and (min-width: 28em) and (max-width: 54.99em) {
-//   .home-card {
-//     --grid-container-columns: 2;
-//   }
-//   .test-card {
-//     --card-columns: calc(30% - 8px);
-//   }
-// }
-
 @media (min-width: 37.5em) and (max-width: 54.99em) {
   .home-card {
     --grid-container-columns: 2;
   }
 
-  .works-list-card{
+  .works-list-card {
     --card-columns: calc(50% - 8px);
   }
 }
