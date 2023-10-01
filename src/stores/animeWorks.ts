@@ -96,7 +96,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
         const data = JSON.parse(LZString.decompressFromUTF16(res.data));
         data.sort((a: originDataModel, b: originDataModel) => {
           console.log(`${a.id}:${a.StartedAt_jp} ${b.id}:${b.StartedAt_jp}`);
-          if (a.StartedAt_jp === "") return 1;
+          if (a.StartedAt_jp || a.StartedAt_jp === "") return 1;
           if (a.StartedAt_jp > b.StartedAt_jp) return 1;
           if (a.StartedAt_jp < b.StartedAt_jp) return -1;
           // if (a.StartedAt_jp === "") {
