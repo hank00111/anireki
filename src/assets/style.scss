@@ -391,7 +391,7 @@ li {
   }
 
   .works-list-card {
-    --card-columns: calc(20% - 16px);
+    --card-columns: calc(50% - 16px);
   }
 }
 
@@ -401,7 +401,7 @@ li {
   }
 
   .works-list-card {
-    --card-columns: calc(50%);
+    --card-columns: calc(100% - 16px);
   }
 }
 
@@ -411,7 +411,7 @@ li {
   }
 
   .works-list-card {
-    --card-columns: calc(20% - 16px);
+    --card-columns: calc(100% - 16px);
   }
 }
 
@@ -421,6 +421,6 @@ li {
   }
 
   .works-list-card {
-    --card-columns: calc(20% - 16px);
+    --card-columns: calc(100% - 16px);
   }
 }
