@@ -29,6 +29,7 @@ interface watchDataModel {
   season: string,
   watchDate: string;
   images_url: string;
+  imagesCover: boolean;
 };
 interface originDataModel {
   id: string;
@@ -36,33 +37,36 @@ interface originDataModel {
   title_jp: string,
   season: string,
   images_url: string;
+  imagesCover: boolean;
   StartedAt_jp: string;
   StartedAt_tw: string;
   createdAt: string;
 };
-// interface worksDataModel {
-//   id: string,
-//   title: string,
-//   title_jp: string,
-//   season: string,
-//   images_url: string,
-//   StartedAt_jp: string
-//   StartedAt_tw: string,
-//   createdAt: string,
-// }
 
 export const useAnimeWorks = defineStore("animeWorks", {
   state: () => ({
     animeData: [
       {
-        id: "1",
+        id: "",
         title: "",
         title_jp: "",
         season: "",
         images_url: "",
+        imagesCover: false
       },
     ],
     originData: [] as originDataModel[],
+    // originData: [{
+    //   id: "1",
+    //   title: "",
+    //   title_jp: "",
+    //   season: "",
+    //   images_url: "",
+    //   StartedAt_jp: "",
+    //   StartedAt_tw: "",
+    //   createdAt: "",
+    //   imagesCover: false
+    // },],
     historyData: [] as historyDataModel[],
     watchData: [] as watchDataModel[],
     worksCount: "",
@@ -94,14 +98,6 @@ export const useAnimeWorks = defineStore("animeWorks", {
       try {
         let res = await axios.get("/works/all");
         const data = JSON.parse(LZString.decompressFromUTF16(res.data));
-        // data.sort((a: originDataModel, b: originDataModel) => {
-        //   console.log(`${a.title_jp}:${a.StartedAt_jp} ${b.title_jp}:${b.StartedAt_jp}`);
-        //   return !a.StartedAt_jp || a.StartedAt_jp === "" ? 1 : 0;
-        //   // console.log(a.id + " " + ((!a.StartedAt_jp ? 1 : 0) - (!b.StartedAt_jp ? 1 : 0)));
-        //   // if (a.StartedAt_jp === b.StartedAt_jp) return 0;
-        //   // if (!a.StartedAt_jp) return 1;
-        //   // return a.StartedAt_jp > b.StartedAt_jp ? 1 : -1;
-        // })
         // this.animeData = data;
         this.originData = data;
         this.getSeason(this.seasonID);
@@ -148,6 +144,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
                   season: matchingAnime.season,
                   watchDate: hValue.watchDate,
                   images_url: matchingAnime.images_url,
+                  imagesCover: matchingAnime.imagesCover,
                 };
                 this.watchData.push(wData);
               }
@@ -186,6 +183,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
             title_jp: hValue.title_jp,
             season: hValue.season,
             images_url: hValue.images_url,
+            imagesCover: hValue.imagesCover,
           };
           this.animeData.push(wData);
         }
@@ -282,6 +280,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
                   season: matchingAnime.season,
                   watchDate: hValue.watchDate,
                   images_url: matchingAnime.images_url,
+                  imagesCover: matchingAnime.imagesCover,
                 };
                 this.watchData.push(wData);
               }

@@ -29,8 +29,9 @@ onMounted(() => {
 <template>
     <Transition name="works-card">
         <div v-if="isHome" class="home-card">
-            <div v-for="data in animeWorks.animeData" class="home-works-card" v-on:click="dialogOpen(data.id)">
-                <div class="home-works-images" :style="{ backgroundImage: `url(${data.images_url})` }">
+            <div v-for="data in  animeWorks.animeData " class="home-works-card" v-on:click="dialogOpen(data.id)">
+                <div class="home-works-images" :class="{ imagesCover: data.imagesCover }"
+                    :style="{ backgroundImage: `url(${data.images_url})` }">
                 </div>
                 <div class="home-works-context">
                     <p>{{ data.title === "" ? data.title_jp : data.title }}</p>
@@ -38,7 +39,7 @@ onMounted(() => {
             </div>
         </div>
         <div v-else class="history-card">
-            <div v-for="data in animeWorks.watchData" class="history-works-card" v-on:click="dialogOpen(data.worksID)">
+            <div v-for=" data  in  animeWorks.watchData " class="history-works-card" v-on:click="dialogOpen(data.worksID)">
                 <div class="history-works-images" :style="{ backgroundImage: `url(${data.images_url})` }">
                 </div>
                 <div class="history-works-context">
@@ -77,6 +78,10 @@ onMounted(() => {
             background-size: 100% 100%;
             background-position: center;
             background-color: #6b6363;
+        }
+
+        .imagesCover {
+            background-size: cover;
         }
 
         .home-works-context {

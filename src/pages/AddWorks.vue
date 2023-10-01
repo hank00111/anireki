@@ -48,8 +48,8 @@ const sendData = () => {
                 season_id: refSeason.value,
                 title: refTitle.value,
                 title_jp: refTitle_jp.value,
-                startedAt_tw: refStartedAt_tw.value,
-                startedAt_jp: refStartedAt_jp.value,
+                StartedAt_tw: refStartedAt_tw.value,
+                StartedAt_jp: refStartedAt_jp.value,
             },
             user: {
                 name: animeWorks.userControll.name,
