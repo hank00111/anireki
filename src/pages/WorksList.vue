@@ -17,6 +17,13 @@ const anirekiConsole = useAnirekiConsole();
 const toWorks = (id: string) => {
     router.push({ name: 'works', params: { id: id } })
 }
+const dateConvert = (date: string) => {
+    const objectDate = new Date(+date * 1000);
+    const year = objectDate.getFullYear();
+    const month = objectDate.getMonth() + 1 < 10 ? '0' + (objectDate.getMonth() + 1) : objectDate.getMonth() + 1;
+    const day = objectDate.getDate() < 10 ? '0' + objectDate.getDate() : objectDate.getDate();
+    return `${year}.${month}.${day}`;
+}
 
 onMounted(async () => {
     await animeWorks.getAnimeData();
@@ -38,12 +45,12 @@ onMounted(async () => {
                     </div>
                     <div class="works-list-context">
                         <p>ID:{{ data.id }}</p>
-                        <p>中文名稱{{ data.title }}</p>
-                        <p>日文名稱{{ data.title_jp }}</p>
+                        <p>中文名稱:{{ data.title }}</p>
+                        <p>日文名稱:{{ data.title_jp }}</p>
                         <p>季度:{{ data.season }}</p>
                         <p>日本首播日:{{ !data.StartedAt_jp || data.StartedAt_jp === "" ? "Null" : data.StartedAt_jp }}</p>
                         <p>台灣首播日:{{ !data.StartedAt_tw || data.StartedAt_tw === "" ? "Null" : data.StartedAt_tw }}</p>
-                        <p>建立時間:{{ data.createdAt }}</p>
+                        <p>建立時間:{{ dateConvert(data.createdAt) }}</p>
                     </div>
                 </div>
             </div>
@@ -67,6 +74,10 @@ onMounted(async () => {
         background: #5a5a5a;
         border-radius: 10px;
         width: var(--card-columns);
+
+        &:hover {
+            background: #6b6363;
+        }
     }
 
     .works-list-image-container {
