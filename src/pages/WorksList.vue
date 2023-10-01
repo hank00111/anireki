@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onBeforeUnmount } from 'vue';
+import { onMounted } from 'vue';
 import Header from '../components/Header.vue'
 import Loading from '../components/Loading.vue'
 import Notifications from '../components/Notifications.vue'
@@ -12,11 +12,10 @@ const animeWorks = useAnimeWorks();
 const userControll = useUserControl();
 const anirekiConsole = useAnirekiConsole();
 
-// onMounted(async () => {
-//     await anirekiConsole.getLogs();
-// })
-onBeforeUnmount(async () => {
+onMounted(async () => {
     await animeWorks.getAnimeData();
+})
+onBeforeUnmount(async () => {
 })
 </script>
 
