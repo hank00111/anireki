@@ -95,8 +95,9 @@ export const useAnimeWorks = defineStore("animeWorks", {
         let res = await axios.get("/works/all");
         const data = JSON.parse(LZString.decompressFromUTF16(res.data));
         data.sort((a: originDataModel, b: originDataModel) => {
-          if (a.StartedAt_jp === null) return 1;
-          return a.StartedAt_jp > b.StartedAt_jp ? 1 : -1;
+          if (a.StartedAt_jp === "") return 1;
+          return ((a.StartedAt_jp < b.StartedAt_jp) ? -1 : ((a.StartedAt_jp > b.StartedAt_jp) ? 1 : 0));
+          // return a.StartedAt_jp > b.StartedAt_jp ? 1 : -1;
         })
         // this.animeData = data;
         this.originData = data;
