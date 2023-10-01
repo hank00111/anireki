@@ -74,6 +74,7 @@ onMounted(async () => {
         background: transparent 50% no-repeat;
         background-size: cover;
         height: 100%;
+        border-radius: 10px 0px 0px 10px;
     }
 
     .works-list-context {
