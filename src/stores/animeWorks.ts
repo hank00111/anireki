@@ -36,13 +36,9 @@ interface originDataModel {
   title_jp: string,
   season: string,
   images_url: string;
-};
-interface originDataModel {
-  id: string;
-  title: string,
-  title_jp: string,
-  season: string,
-  images_url: string;
+  StartedAt_jp: string;
+  StartedAt_tw: string;
+  createdAt: string;
 };
 // interface worksDataModel {
 //   id: string,
@@ -98,7 +94,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
       try {
         let res = await axios.get("/works/all");
         const data = JSON.parse(LZString.decompressFromUTF16(res.data));
-        this.animeData = data;
+        // this.animeData = data;
         this.originData = data;
         this.getSeason(this.seasonID);
       } catch (error) {

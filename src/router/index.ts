@@ -5,6 +5,7 @@ import Console from "../pages/Console.vue";
 import NotFound from "../pages/NotFound.vue";
 import AddWorks from "../pages/AddWorks.vue";
 import Works from "../pages/Works.vue";
+import WorksList from "../pages/WorksList.vue";
 import { useUserControl } from "../stores/userControl";
 
 const routes = [
@@ -39,6 +40,12 @@ const routes = [
     meta: { title: "Works - Anireki", requiresAuth: true },
   },
   {
+    path: "/console/works",
+    name: "workslist",
+    component: WorksList,
+    meta: { title: "Works - Anireki", requiresAuth: true },
+  },
+  {
     path: "/:pathMatch(.*)*",
     name: "404",
     component: NotFound,
@@ -51,7 +58,7 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to) => {
-  if (to.name === "console" || to.name === "addworks" || to.name === "works") {
+  if (to.name === "console" || to.name === "addworks" || to.name === "works" || to.name === "workslist") {
     const userControll = useUserControl();
     const isAd = await userControll.getConsole();
     if (!isAd && to.meta.requiresAuth) {
