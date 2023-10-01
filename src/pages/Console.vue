@@ -32,11 +32,11 @@ const headerCheck = (str: string) => {
             return '日本首播日'
         case 'StartedAt_tw':
             return '台灣首播日'
-        case 'Title':
+        case 'title':
             return '中文名稱'
-        case 'Title_jp':
+        case 'title_jp':
             return '日文名稱'
-        case 'Season':
+        case 'season':
             return '季度'
         case 'image':
             return '視覺圖'
