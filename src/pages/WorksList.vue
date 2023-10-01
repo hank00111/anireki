@@ -60,6 +60,7 @@ onMounted(async () => {
         display: flex;
         background: #5a5a5a;
         border-radius: 10px;
+        // width: var(card-columns);
     }
 
     .works-list-image-container {
@@ -77,10 +78,13 @@ onMounted(async () => {
 
     .works-list-context {
         padding: 6px;
-
+        overflow: hidden;
         >p {
             margin: 0;
             color: #fff;
+            overflow: hidden;
+            white-space: nowrap; 
+            text-overflow: ellipsis;
         }
     }
 }
