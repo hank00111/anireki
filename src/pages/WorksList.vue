@@ -60,7 +60,7 @@ onMounted(async () => {
         display: flex;
         background: #5a5a5a;
         border-radius: 10px;
-        width: var(card-columns);
+        width: var(--card-columns);
     }
 
     .works-list-image-container {
