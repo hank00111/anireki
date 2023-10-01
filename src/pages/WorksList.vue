@@ -15,8 +15,6 @@ const anirekiConsole = useAnirekiConsole();
 onMounted(async () => {
     await animeWorks.getAnimeData();
 })
-onBeforeUnmount(async () => {
-})
 </script>
 
 <template>
