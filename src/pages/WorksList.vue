@@ -66,7 +66,7 @@ onMounted(async () => {
     .works-list-image-container {
         background: #b96868;
         height: 100%;
-        width: 8em;
+        min-width: 8em;
         border-radius: 10px 0px 0px 10px;
     }
 
