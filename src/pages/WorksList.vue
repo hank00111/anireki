@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 import Header from '../components/Header.vue'
 import Loading from '../components/Loading.vue'
 import Notifications from '../components/Notifications.vue'
@@ -8,9 +9,14 @@ import { useAnimeWorks } from '../stores/animeWorks'
 import { useUserControl } from '../stores/userControl'
 import { useAnirekiConsole } from '../stores/anirekiConsole'
 
+const router = useRouter();
 const animeWorks = useAnimeWorks();
 const userControll = useUserControl();
 const anirekiConsole = useAnirekiConsole();
+
+const toWorks = (id: string) => {
+    router.push({ name: 'works', params: { id: id } })
+}
 
 onMounted(async () => {
     await animeWorks.getAnimeData();
@@ -25,19 +31,19 @@ onMounted(async () => {
         <Header class="console-header" :is-console="true"></Header>
         <div class="content console-content">
             <div class="works-list-container">
-                <div v-for="data in animeWorks.originData" class="works-list-card">
+                <div v-for="data in animeWorks.originData" class="works-list-card" @click="toWorks(data.id)">
                     <div class="works-list-image-container">
                         <div class="works-list-image" :style="{ backgroundImage: `url(${data.images_url})` }">
                         </div>
                     </div>
                     <div class="works-list-context">
-                        <p>{{ data.id }}</p>
-                        <p>{{ data.title }}</p>
-                        <p>{{ data.title_jp }}</p>
-                        <p>{{ data.season }}</p>
-                        <p>{{ data.StartedAt_jp }}</p>
-                        <p>{{ data.StartedAt_tw }}</p>
-                        <p>{{ data.createdAt }}</p>
+                        <p>ID:{{ data.id }}</p>
+                        <p>中文名稱{{ data.title }}</p>
+                        <p>日文名稱{{ data.title_jp }}</p>
+                        <p>季度:{{ data.season }}</p>
+                        <p>日本首播日{{ data.StartedAt_jp }}</p>
+                        <p>台灣首播日{{ data.StartedAt_tw }}</p>
+                        <p>建立時間{{ data.createdAt }}</p>
                     </div>
                 </div>
             </div>
@@ -80,11 +86,12 @@ onMounted(async () => {
     .works-list-context {
         padding: 6px;
         overflow: hidden;
+
         >p {
             margin: 0;
             color: #fff;
             overflow: hidden;
-            white-space: nowrap; 
+            white-space: nowrap;
             text-overflow: ellipsis;
         }
     }
