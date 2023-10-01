@@ -54,6 +54,12 @@ const toForm = () => {
 }
 
 onMounted(() => {
+    yearList.value.forEach((year, index) => {
+        if (year.seasonID == animeWorks.seasonID) {
+            selectItem.value = index;
+            animeWorks.seasonSel = index;
+        }
+    })
     // animeWorks.getSeason(yearList.value[animeWorks.seasonSel].seasonID);
     // console.log(userControll.name)
 })
