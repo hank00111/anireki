@@ -99,6 +99,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
           if (!a.StartedAt_jp || a.StartedAt_jp === "") return 1;
           if (a.StartedAt_jp > b.StartedAt_jp) return 1;
           if (a.StartedAt_jp < b.StartedAt_jp) return -1;
+          if (a.StartedAt_jp === b.StartedAt_jp) return 0;
           // if (a.StartedAt_jp === "") {
           //   console.log(a.id);
           // };
