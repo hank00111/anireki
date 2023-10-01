@@ -41,9 +41,9 @@ onMounted(async () => {
                         <p>中文名稱{{ data.title }}</p>
                         <p>日文名稱{{ data.title_jp }}</p>
                         <p>季度:{{ data.season }}</p>
-                        <p>日本首播日{{ data.StartedAt_jp }}</p>
-                        <p>台灣首播日{{ data.StartedAt_tw }}</p>
-                        <p>建立時間{{ data.createdAt }}</p>
+                        <p>日本首播日:{{ !data.StartedAt_jp || data.StartedAt_jp === "" ? "Null" : data.StartedAt_jp }}</p>
+                        <p>台灣首播日:{{ !data.StartedAt_tw || data.StartedAt_tw === "" ? "Null" : data.StartedAt_tw }}</p>
+                        <p>建立時間:{{ data.createdAt }}</p>
                     </div>
                 </div>
             </div>
