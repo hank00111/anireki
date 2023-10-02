@@ -40,7 +40,7 @@ const deleteWatchHistory = () => {
 
 watchEffect(() => {
     if (props.diaLogShow) {
-        showAnime.value = animeWorks.originData.find((anime) => anime.id === props.worksID);
+        showAnime.value = animeWorks.animeData.find((anime) => anime.id === props.worksID);
         if (props.worksID) {
             Viewed.value = animeWorks.checkWatchHistory(props.worksID);
         }
@@ -98,7 +98,44 @@ watchEffect(() => {
                     <div class="works-dialog-info-title">
                         {{ showAnime.title === "" ? showAnime.title_jp : showAnime.title }}</div>
                     <div class="works-dialog-info-title_jp"> {{ showAnime.title_jp }}</div>
-                    <div class="works-dialog-info-context"></div>
+                    <div class="works-dialog-info-context">
+                        <!-- <div class="works-dialog-info-story-header">介紹</div> -->
+                        <div class="works-dialog-info-story">   
+                            約兒接下東國（Ostania）祕密組織「花園」的任務，將登上豪華郵輪，護衛黑手黨要人！
+                            然而洛伊德和安妮亞也將搭乘同一艘船去旅遊，這讓約兒對自己的祕密工作萌生迷惘？
+                        </div>
+                        <div class="works-dialog-info-copyright">© 山田鐘人・アベツカサ／小学館／「葬送のフリーレン」製作委員会</div>
+                        <div class="works-dialog-info-story-header">＜STAFF＞</div>
+                        <div class="works-dialog-info-staff">
+                            <div class="works-dialog-info-col">原作：門司柿家</div>
+                            <div class="works-dialog-info-col">角色原案：toi8</div>
+                            <div class="works-dialog-info-col">副監督：淺見松雄</div>
+                            <div class="works-dialog-info-col">腳本編劇：高橋龍也、山田哲哉</div>
+                            <div class="works-dialog-info-col">角色設計：安田祥子</div>
+                            <div class="works-dialog-info-col">美術監督：松宮正純</div>
+                            <div class="works-dialog-info-col">美術設定：飯島由樹子</div>
+                            <div class="works-dialog-info-col">監督：直谷隆</div>
+                            <div class="works-dialog-info-col">原作：門司柿家</div>
+                            <div class="works-dialog-info-col">監督：直谷隆</div>
+                            <div class="works-dialog-info-col">原作：門司柿家</div>
+                            <div class="works-dialog-info-col">監督：直谷隆</div>
+                        </div>
+                        <div class="works-dialog-info-story-header">＜CAST＞</div>
+                        <div class="works-dialog-info-cast">
+                            <div class="works-dialog-info-col">原作：門司柿家</div>
+                            <div class="works-dialog-info-col">角色原案：toi8</div>
+                            <div class="works-dialog-info-col">副監督：淺見松雄</div>
+                            <div class="works-dialog-info-col">腳本編劇：高橋龍也、山田哲哉</div>
+                            <div class="works-dialog-info-col">角色設計：安田祥子</div>
+                            <div class="works-dialog-info-col">美術監督：松宮正純</div>
+                            <div class="works-dialog-info-col">美術設定：飯島由樹子</div>
+                            <div class="works-dialog-info-col">監督：直谷隆</div>
+                            <div class="works-dialog-info-col">原作：門司柿家</div>
+                            <div class="works-dialog-info-col">監督：直谷隆</div>
+                            <div class="works-dialog-info-col">原作：門司柿家</div>
+                            <div class="works-dialog-info-col">監督：直谷隆</div>
+                        </div>
+                    </div>
                     <div class="works-dialog-control-bt">
                         <button v-if="!Viewed" @click="dateOpen">新增至觀看紀錄</button>
                         <button v-else class="works-dialog-control-bt-delete" @click="deleteOpen">刪除觀看紀錄</button>
@@ -130,8 +167,8 @@ watchEffect(() => {
 
 .wokrs-dialog-container {
     position: fixed;
-    width: 70%;
-    height: 65%;
+    width: 72%;
+    height: 72%;
     margin: 0 auto;
     display: flex;
     border-radius: 15px;
@@ -146,9 +183,6 @@ watchEffect(() => {
             width: 100%;
             height: 100%;
             border-radius: 14px 0px 0px 14px;
-            // background-size: contain;
-            // background-position: center;
-            // background-repeat: no-repeat;
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
@@ -168,18 +202,56 @@ watchEffect(() => {
 
         .works-dialog-info-title {
             color: #fff;
-            font-size: 1.6em;
+            font-size: 1.65em;
             font-weight: 700;
             letter-spacing: .02em;
         }
 
         .works-dialog-info-title_jp {
-            font-size: 1.1em;
+            font-size: 14px;
             letter-spacing: .02em;
+            margin-bottom: 8px;
         }
 
         .works-dialog-info-context {
             height: 100%;
+            display: flex;
+            flex-direction: column;
+            
+        }
+
+        .works-dialog-info-story-header {
+            margin-bottom: 2px;
+            color:#8beeff;
+        }
+
+        .works-dialog-info-story {
+            font-size: 18px;
+            color: #ffffff;
+            margin-bottom: 2px;            
+        }
+        .works-dialog-info-copyright {
+            font-size: 14px;
+            margin-bottom: 8px;            
+        }
+
+        .works-dialog-info-staff {
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: row;
+        }
+
+        .works-dialog-info-cast {
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: row;
+        }
+
+        .works-dialog-info-col {
+            font-size: 16px;
+            flex-basis: 50%;
+            white-space: nowrap;
+            color: #e1e1e1;
         }
 
         .works-dialog-control-bt {

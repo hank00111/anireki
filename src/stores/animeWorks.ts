@@ -47,26 +47,15 @@ export const useAnimeWorks = defineStore("animeWorks", {
   state: () => ({
     animeData: [
       {
-        id: "",
-        title: "",
-        title_jp: "",
-        season: "",
-        images_url: "",
+        id: "1",
+        title: "想當冒險者前往都市的女兒成為 S 級",
+        title_jp: "冒険者になりたいと都に出て行った娘が S ランクになってた",
+        season: "1",
+        images_url: "https://p2.anireki.com/1c8ffc27-a7dd-4093-a91c-1d0c9bf8c3f3.webp",
         imagesCover: false
       },
     ],
     originData: [] as originDataModel[],
-    // originData: [{
-    //   id: "1",
-    //   title: "",
-    //   title_jp: "",
-    //   season: "",
-    //   images_url: "",
-    //   StartedAt_jp: "",
-    //   StartedAt_tw: "",
-    //   createdAt: "",
-    //   imagesCover: false
-    // },],
     historyData: [] as historyDataModel[],
     watchData: [] as watchDataModel[],
     worksCount: "",
