@@ -128,7 +128,7 @@ watchEffect(() => {
 
     .all-anime {
         font-size: 1.25em;
-        min-width: 100px;
+        min-width: 86px;
         color: #ffffff5a;
         user-select: none;
         cursor: pointer;

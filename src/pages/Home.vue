@@ -4,7 +4,7 @@ import Header from '../components/Header.vue'
 import Sidebar from '../components/Sidebar.vue'
 import WorksCard from '../components/WorksCard.vue';
 import { useAnimeWorks } from '../stores/animeWorks'
-
+// import Notifications from '../components/Notifications.vue'
 
 const animeWorks = useAnimeWorks();
 const rightEventClose = (e: { preventDefault: () => void; }) => {
@@ -27,6 +27,7 @@ onBeforeMount(() => {
 <template>
     <Sidebar @click.right="rightEventClose($event)"></Sidebar>
     <div class="main" @click.right="rightEventClose($event)">
+        <!-- <Notifications :show="animeWorks.infoStatus" :info="animeWorks.infoMsg"></Notifications> -->
         <Header :is-home="true"></Header>
         <div class="content">
             <div class="home-title"></div>

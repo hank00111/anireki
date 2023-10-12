@@ -14,6 +14,7 @@ const refDialogID = ref<string>('')
 const dialogOpen = (id: string) => {
     refDialog.value = true;
     refDialogID.value = id;
+    // animeWorks.infoStatus = true;
 }
 const dialogClose = () => {
     refDialog.value = false;

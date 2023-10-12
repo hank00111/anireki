@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted } from 'vue';
+import { watchEffect } from 'vue';
 import { useAnimeWorks } from '../stores/animeWorks'
 const animeWorks = useAnimeWorks();
 defineProps({
@@ -7,13 +7,22 @@ defineProps({
     info: String,
 })
 
-onMounted(() => {
+// onMounted(() => {
+//     if (animeWorks.infoStatus) {
+//         setTimeout(() => {
+//             animeWorks.infoStatus = false
+//         }, 4000)
+//     }
+// })
+
+watchEffect(() => {
     if (animeWorks.infoStatus) {
         setTimeout(() => {
             animeWorks.infoStatus = false
         }, 4000)
     }
 })
+
 </script>
 
 <template>
@@ -73,7 +82,7 @@ onMounted(() => {
 }
 
 .notifications-enter-active {
-    transition: 1s ease-out;
+    transition: 0.5s ease-out;
 }
 
 .notifications-leave-active {
