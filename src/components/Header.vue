@@ -14,6 +14,7 @@ const showMenu = ref(false);
 const selectItem = ref(animeWorks.seasonSel);
 
 const yearList = ref([
+    { name: '2024年1月新番', seasonID: '2024-winter' },
     { name: '2023年10月新番', seasonID: '2023-autumn' },
     { name: '2023年7月新番', seasonID: '2023-summer' },
     { name: '2023年4月新番', seasonID: '2023-spring' },
@@ -121,7 +122,7 @@ watchEffect(() => {
 
 <style lang="scss">
 .anime-panel {
-    width: 88%;
+    width: 86%;
     display: flex;
     align-items: center;
 
@@ -150,8 +151,8 @@ watchEffect(() => {
         align-items: center;
         overflow: hidden;
         width: 80%;
-        // max-width: 990px;
-        min-width: 495px;
+        max-width: 100%;
+        // min-width: 495px;
         height: 100%;
 
         .year-items {
