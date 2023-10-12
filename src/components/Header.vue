@@ -150,10 +150,10 @@ watchEffect(() => {
         display: flex;
         align-items: center;
         overflow: hidden;
-        width: 80%;
-        max-width: 100%;
-        // min-width: 495px;
+        // width: 80%;
+        // max-width: 100%;
         height: 100%;
+        overflow-x: auto;
 
         .year-items {
             color: #ffffff5a;
@@ -180,6 +180,10 @@ watchEffect(() => {
             border-bottom: solid 1px #f59051;
             transition: all 0.4s;
         }
+    }
+
+    .year-nav::-webkit-scrollbar {
+        display: none;
     }
 }
 </style>
