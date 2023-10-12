@@ -1,7 +1,7 @@
 #app {
   display: flex;
-  min-height: 100vh;
-  max-height: 100vh;
+  min-height: 100svh;
+  max-height: 100svh;
 }
 
 html,
@@ -229,7 +229,7 @@ li {
   display: flex;
   align-items: center;
   padding: 8px 16px 8px 16px;
-  position: sticky;
+  // position: sticky;
 
   .userPanel {
     margin-left: auto;
