@@ -408,9 +408,7 @@ li {
 
 
 
-@media only screen and (min-width: 600px) {
-
-}
+@media only screen and (min-width: 600px) {}
 
 @media only screen and (min-width: 768px) {
   :root {
@@ -429,6 +427,7 @@ li {
 
   .content {
     margin-bottom: 0px;
+    height: calc(100% - 137px);
   }
 
   .sidebar-logo {
@@ -453,10 +452,11 @@ li {
       display: flex;
       align-items: center !important;
       justify-content: space-around !important;
+      
 
       >li {
         height: 100%;
-
+        flex: 1 0 0%;
         .router-link {
           display: flex;
           flex-direction: column;
