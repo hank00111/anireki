@@ -86,7 +86,8 @@ watchEffect(() => {
         <div class="userPanel">
             <div v-if="userControll.name.length != 0 ? true : false" class="userLoggedin">
                 <button @click="showMenu = !showMenu">
-                    <img draggable="false" :src=userControll.picture alt="">
+                    <!-- <img draggable="false" :src=userControll.picture alt=""> -->
+                    <img src="https://lh3.googleusercontent.com/a/ACg8ocKPsdnExrdQPWBipfrJlRAq-8QT61HXzJD7dSU5p4XUeuA=s96-c">
                 </button>
                 <div v-if="showMenu" class="userMenu">
                     <div class="contextMenu">
@@ -122,7 +123,7 @@ watchEffect(() => {
 
 <style lang="scss">
 .anime-panel {
-    width: 86%;
+    width: 80%;
     display: flex;
     align-items: center;
 
