@@ -140,7 +140,7 @@ watchEffect(() => {
 
     .wokrs-dialog-img-area {
         width: 685px;
-        min-width: 450px;
+        // min-width: 450px;
 
         .wokrs-dialog-img {
             width: 100%;
