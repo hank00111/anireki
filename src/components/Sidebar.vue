@@ -41,7 +41,7 @@ const SwichDarkMode = () => {
 
         </ul>
 
-        <div class="sidebar-switch-darkmode">
+        <div class="sidebar-switch-darkmode" style="display: none;">
             <input class="swift-btn_toggle" type="checkbox" id="lightSwitch" @click="SwichDarkMode"
                 v-bind:checked="darkMode.drakState">
             <label for="lightSwitch"></label>

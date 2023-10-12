@@ -58,7 +58,7 @@ onMounted(() => {
     gap: 12px;
     padding: 12px 12px 12px 15px;
     display: grid;
-    flex-wrap: wrap;
+    // flex-wrap: wrap;
     grid-auto-rows: auto;
     grid-template-columns: repeat(var(--grid-container-columns), minmax(0, 1fr));
 
