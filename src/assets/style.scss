@@ -103,11 +103,9 @@ li {
   }
 
   .sidebar-ul {
-    flex-basis: 85%;
     margin: 0;
     padding: 8px 12px;
 
-    // padding: 8px 12px;
     >li {
       user-select: none;
       padding: 8px 8px;
@@ -116,7 +114,7 @@ li {
       .router-link {
         display: flex;
         gap: 5px;
-        height: 56px;        
+        height: 56px;
         align-items: center;
         transition: color 0.3s;
         color: var(--text-default-color);
@@ -431,7 +429,7 @@ li {
     margin: 0;
     min-height: 72px;
     border-radius: 0px;
-    background-color: hsla(0, 0%, 100%, 0.19);
+    background-color: hsl(0, 0%, 39%);
     z-index: 1020;
 
     .sidebar-ul {
