@@ -53,7 +53,7 @@ const getLeft = () => {
         }
         // return left - (yearNavWidth.value / 2);
         console.log(left + " " + yearNavWidth.value / 4);
-        return left - 125;
+        return left - 120;
     }
 
     left = (selectItem.value - 1) * -146;
@@ -154,7 +154,7 @@ watchEffect(() => {
 
     .all-anime {
         font-size: 18px;
-        padding: 0 6px;
+        padding: 2px 4px;
         color: #ffffff5a;
         user-select: none;
         cursor: pointer;
@@ -168,10 +168,11 @@ watchEffect(() => {
 
     .selectedH {
         color: #fff;
+        background-color: #23262b;
         box-sizing: border-box;
         font-weight: 700;
-        transition: all 0.4s;
-        border-bottom: solid 1px #f59051;
+        border-bottom: solid 2px #e6e6e6;
+        transition: transform 0.4s;
     }
 
     .year-nav {
@@ -187,11 +188,11 @@ watchEffect(() => {
             color: #ffffff5a;
             white-space: nowrap;
             font-size: 18px;
-            padding: 0 6px;
+            padding: 2px 4px;
             text-align: center;
             user-select: none;
             cursor: pointer;
-            transition: all 0.4s;
+            transition: transform 0.4s;
 
             &:hover {
                 color: #fff;
@@ -200,10 +201,11 @@ watchEffect(() => {
 
         .selected {
             color: #fff;
+            background-color: #23262b;
             box-sizing: border-box;
             font-weight: 700;
-            border-bottom: solid 1.2px #f59051;
-            transition: all 0.4s;
+            border-bottom: solid 2px #e6e6e6;
+            transition: transform 0.4s;
         }
     }
 
