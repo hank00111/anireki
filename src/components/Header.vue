@@ -157,7 +157,7 @@ watchEffect(() => {
         color: #ffffff5a;
         user-select: none;
         cursor: pointer;
-        transition: all 0.4s;
+        transition: transform .4s, color .4s;
 
 
         &:hover {
@@ -171,7 +171,7 @@ watchEffect(() => {
         box-sizing: border-box;
         font-weight: 700;
         border-bottom: solid 2px #89c3eb;
-        transition: transform 0.4s;
+        transition: transform .4s, color .4s;
     }
 
     .year-nav {
@@ -191,7 +191,7 @@ watchEffect(() => {
             text-align: center;
             user-select: none;
             cursor: pointer;
-            transition: transform 0.4s;
+            transition: transform .4s, color .4s;
 
             &:hover {
                 color: #fff;
@@ -204,7 +204,7 @@ watchEffect(() => {
             box-sizing: border-box;
             font-weight: 700;
             border-bottom: solid 2px #89c3eb;
-            transition: transform 0.4s;
+            transition: transform .4s, color .4s;
         }
     }
 
