@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
-import { ref, onMounted, watchEffect } from 'vue';
+import { ref, onMounted, watchEffect, onUnmounted } from 'vue';
 import { useUserControl } from '../stores/userControl'
 import { useAnimeWorks } from '../stores/animeWorks'
 const props = defineProps({
@@ -12,6 +12,8 @@ const router = useRouter();
 
 const showMenu = ref(false);
 const selectItem = ref(animeWorks.seasonSel);
+const yearNav = ref();
+const yearNavWidth = ref(0);
 
 const yearList = ref([
     { name: '2024年1月新番', seasonID: '2024-winter' },
@@ -39,7 +41,22 @@ const getAllAnimre = () => {
 
 const getLeft = () => {
     let left = 0;
-    left = (selectItem.value - 1) * -165;
+
+    if (yearNavWidth.value < 325) {
+        left = (selectItem.value - 1) * -146;
+
+        if (selectItem.value <= 1) {
+            left = 0;
+        }
+        if (selectItem.value == 0) {
+            return 0;
+        }
+        // return left - (yearNavWidth.value / 2);
+        console.log(left + " " + yearNavWidth.value / 4);
+        return left - 125;
+    }
+
+    left = (selectItem.value - 1) * -146;
     if (selectItem.value <= 1) {
         left = 0;
     }
@@ -54,27 +71,36 @@ const toForm = () => {
     window.location.href = "https://forms.gle/mq6hLwdMR4i6e9Mh8";
 }
 
+const getYearNavWidth = () => {
+    if (yearNav.value) {
+        yearNavWidth.value = yearNav.value.clientWidth;
+        console.log(yearNav.value.clientWidth);
+    }
+}
+
 onMounted(() => {
+    getYearNavWidth();
+    window.addEventListener("resize", getYearNavWidth);
     yearList.value.forEach((year, index) => {
         if (year.seasonID == animeWorks.seasonID) {
             selectItem.value = index;
             animeWorks.seasonSel = index;
         }
     })
-    // animeWorks.getSeason(yearList.value[animeWorks.seasonSel].seasonID);
-    // console.log(userControll.name)
 })
+onUnmounted(() => {
+    window.removeEventListener("scroll", getYearNavWidth);
+});
 watchEffect(() => {
 
 })
-
 </script>
 
 <template>
     <div class="header">
-        <div v-if="props.isHome" class="anime-panel ">
+        <div v-if="props.isHome" class="anime-panel">
             <div class="all-anime" @click="getAllAnimre" :class="{ selectedH: selectItem === -1 }">所有動畫</div>
-            <div class="year-nav">
+            <div class="year-nav" ref="yearNav">
                 <div v-for="(year, index) in yearList" class="year-items"
                     :style="{ transform: `translate(${getLeft()}px,0)` }" :class="{ selected: selectItem === index }"
                     @click="goToSeason(index)">
@@ -122,17 +148,18 @@ watchEffect(() => {
 
 <style lang="scss">
 .anime-panel {
-    width: 80%;
+    width: calc(100% - 70px);
     display: flex;
     align-items: center;
 
     .all-anime {
-        font-size: 1.25em;
-        min-width: 86px;
+        font-size: 18px;
+        padding: 0 6px;
         color: #ffffff5a;
         user-select: none;
         cursor: pointer;
         transition: all 0.4s;
+
 
         &:hover {
             color: #fff;
@@ -144,25 +171,23 @@ watchEffect(() => {
         box-sizing: border-box;
         font-weight: 700;
         transition: all 0.4s;
+        border-bottom: solid 1px #f59051;
     }
 
     .year-nav {
+        flex: 1;
         display: flex;
         align-items: center;
         overflow: hidden;
-        // width: 80%;
-        // max-width: 100%;
+        width: 100%;
         height: 100%;
         overflow-x: auto;
 
         .year-items {
             color: #ffffff5a;
-            font-size: 1.25em;
-            margin-left: 5px;
-            width: 160px;
-            min-width: 160px;
-            height: 100%;
-            line-height: 44px;
+            white-space: nowrap;
+            font-size: 18px;
+            padding: 0 6px;
             text-align: center;
             user-select: none;
             cursor: pointer;
@@ -177,7 +202,7 @@ watchEffect(() => {
             color: #fff;
             box-sizing: border-box;
             font-weight: 700;
-            border-bottom: solid 1px #f59051;
+            border-bottom: solid 1.2px #f59051;
             transition: all 0.4s;
         }
     }

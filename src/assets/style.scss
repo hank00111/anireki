@@ -222,13 +222,13 @@ li {
 }
 
 .header {
-  height: 64px;
+  height: 58px;
   background: var(--main-background-color);
-  border-radius: 5px 5px 0px 0px;
+  // border-radius: 5px 5px 0px 0px;
   width: 100%;
   display: flex;
   align-items: center;
-  padding: 8px 16px 8px 16px;
+  padding: 8px 16px 0px 16px;
   // position: sticky;
 
   .userPanel {
@@ -428,7 +428,7 @@ li {
 
   .content {
     margin-bottom: 0px;
-    height: calc(100% - 137px);
+    height: calc(100% - 131px);
   }
 
   .sidebar-logo {
