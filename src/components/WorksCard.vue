@@ -40,8 +40,9 @@ onMounted(() => {
             </div>
         </div>
         <div v-else class="history-card">
-            <div v-for=" data  in  animeWorks.watchData " class="history-works-card" v-on:click="dialogOpen(data.worksID)">
-                <div class="history-works-images" :style="{ backgroundImage: `url(${data.images_url})` }">
+            <div v-for="data  in  animeWorks.watchData " class="history-works-card" v-on:click="dialogOpen(data.worksID)">
+                <div class="history-works-images" :class="{ imagesCover: data.imagesCover }"
+                    :style="{ backgroundImage: `url(${data.images_url})` }">
                 </div>
                 <div class="history-works-context">
                     <p class="history-works-context-title">{{ data.title === "" ? data.title_jp : data.title }}</p>
@@ -59,7 +60,6 @@ onMounted(() => {
     gap: 12px;
     padding: 12px 12px 12px 15px;
     display: grid;
-    // flex-wrap: wrap;
     grid-auto-rows: auto;
     grid-template-columns: repeat(var(--grid-container-columns), minmax(0, 1fr));
 
@@ -111,7 +111,6 @@ onMounted(() => {
     gap: 8px;
     padding: 12px 12px 12px 15px;
     display: grid;
-    flex-wrap: wrap;
     grid-auto-rows: auto;
     grid-template-columns: repeat(var(--grid-container-columns), minmax(0, 1fr));
 
@@ -121,6 +120,7 @@ onMounted(() => {
         user-select: none;
         background-color: hsla(0, 0%, 100%, 0.19);
         transition: all 0.24s;
+        font-size: 14px;
 
         .history-works-images {
             height: 0;
@@ -136,8 +136,9 @@ onMounted(() => {
 
             >p {
                 margin: 0;
-                font-weight: 400;
                 color: #eee;
+                font-size: 14px;
+                font-weight: 400;
                 white-space: nowrap;
                 text-overflow: ellipsis;
                 overflow: hidden;
