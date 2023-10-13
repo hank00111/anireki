@@ -81,10 +81,6 @@ onMounted(() => {
             background-color: #6b6363;
         }
 
-        .imagesCover {
-            background-size: cover;
-        }
-
         .home-works-context {
             >p {
                 margin: 0;
@@ -155,6 +151,10 @@ onMounted(() => {
     }
 
 
+}
+
+.imagesCover {
+    background-size: cover;
 }
 
 .works-card-enter-from {
