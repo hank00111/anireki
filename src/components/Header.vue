@@ -55,7 +55,7 @@ const getLeft = () => {
         return left - 120;
     }
 
-    left = (selectItem.value - 1) * -146;
+    left = (selectItem.value - 1) * -140;
     if (selectItem.value <= 1) {
         left = 0;
     }
@@ -170,7 +170,7 @@ watchEffect(() => {
         background-color: #23262b;
         box-sizing: border-box;
         font-weight: 700;
-        border-bottom: solid 2px #e6e6e6;
+        border-bottom: solid 2px #89c3eb;
         transition: transform 0.4s;
     }
 
@@ -203,7 +203,7 @@ watchEffect(() => {
             background-color: #23262b;
             box-sizing: border-box;
             font-weight: 700;
-            border-bottom: solid 2px #e6e6e6;
+            border-bottom: solid 2px #89c3eb;
             transition: transform 0.4s;
         }
     }
