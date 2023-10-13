@@ -368,7 +368,9 @@ li {
 }
 
 @media (min-width: 55em) and (max-width: 79.99em) {
-  .home-card {
+
+  .home-card,
+  .history-card {
     --grid-container-columns: 4;
   }
 
@@ -378,7 +380,9 @@ li {
 }
 
 @media (min-width: 37.5em) and (max-width: 54.99em) {
-  .home-card {
+
+  .home-card,
+  .history-card {
     --grid-container-columns: 3;
   }
 
@@ -388,7 +392,9 @@ li {
 }
 
 @media (min-width: 28em) and (max-width: 42.49em) {
-  .home-card {
+
+  .home-card,
+  .history-card {
     --grid-container-columns: 3;
   }
 
@@ -398,7 +404,9 @@ li {
 }
 
 @media (max-width: 27.99em) {
-  .home-card {
+
+  .home-card,
+  .history-card {
     --grid-container-columns: 2;
   }
 
@@ -453,11 +461,12 @@ li {
       display: flex;
       align-items: center !important;
       justify-content: space-around !important;
-      
+
 
       >li {
         height: 100%;
         flex: 1 0 0%;
+
         .router-link {
           display: flex;
           flex-direction: column;
