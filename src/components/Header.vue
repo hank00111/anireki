@@ -135,22 +135,28 @@ onUnmounted(() => {
             <div v-else class="anime-panel-container">
                 <div class="mobile-year-nav" :style="{ marginLeft: `${navCenter}px` }">
                     <div class="year-next" @click="yearControl(true)">
-                        <svg v-if="!nextEnd" width="32" height="32" viewBox="0 -960 960 900"  fill="#0fff">
+                        <svg v-if="!nextEnd" width="32" height="32" viewBox="0 -960 960 920" fill="#5c9291">
                             <path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z" />
                         </svg>
                     </div>
-                    <div class="mobile-year"
-                        :style="{  opacity: `${yearTextOpacity}` }">
+                    <div class="mobile-year" :style="{ opacity: `${yearTextOpacity}` }">
                         {{ yearList[selectItem].name_jp }}</div>
+                    <div class="mobile-year-nav-list">
+                        <ul>
+                            <li v-for="year in yearList">
+                                {{ year.name_jp }}
+                            </li>
+                        </ul>
+                    </div>
                     <div class="year-prev" @click="yearControl(false)">
-                        <svg v-if="!prevEnd" width="32" height="32" viewBox="0 -960 960 820" fill="#0fff">
+                        <svg v-if="!prevEnd" width="32" height="32" viewBox="0 -960 960 810" fill="#5c9291">
                             <path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z" />
                         </svg>
                     </div>
                 </div>
+
             </div>
         </div>
-
         <div v-else></div>
 
         <div class="userPanel" ref="userPanel">
@@ -275,29 +281,62 @@ onUnmounted(() => {
     justify-content: center;
 
     .year-next {
-        width: 52px;
+        width: 50px;
         display: flex;
         justify-content: center;
         user-select: none;
-        transform-origin: 43% 55%;
+        transform-origin: 50% 55%;
         transform: rotate(-180deg);
-        z-index: 100;
     }
 
     .year-prev {
-        width: 52px;
-        display: flex;
+        width: 50px;
+        display: flex;        
         justify-content: center;
         user-select: none;
-        z-index: 100;
     }
 
     .mobile-year {
-        display: flex;        
-        width: 72px;
+        display: flex;
         color: #fff;
+        margin: 0 5px;
         font-size: 19px;
+        user-select: none;
         transition: opacity 0.1s ease-in-out;
     }
+}
+
+.mobile-year-nav-list {
+    z-index: 100;
+    position: absolute;
+    max-height: 340px;
+    inset: 0px auto auto auto;
+    transform: translate(0px, 50px);
+
+    >ul {
+        margin: 0;
+        padding: 0;
+        background-color: #525657;
+        border-radius: 4px;
+        -webkit-box-shadow: 0 16px 24px rgba(0, 0, 0, 0.3),
+            0 6px 8px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 16px 24px rgba(0, 0, 0, 0.3),
+            0 6px 8px rgba(0, 0, 0, 0.2);
+        max-height: 100%;
+        width: 140px;        
+        overflow: hidden;
+        overflow-y: scroll;
+
+        >li {
+            font-size: 19px;            
+            text-align: center;
+        }
+    }
+
+    >ul::-webkit-scrollbar {
+        display: none;
+    }
+
+
 }
 </style>
