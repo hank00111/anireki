@@ -19,8 +19,8 @@ const isMobile = ref<boolean>(false);
 const navCenter = ref<number>(0);
 const nextEnd = ref<boolean>(false);
 const prevEnd = ref<boolean>(false);
-const yearTextX = ref<number>(0);
 const yearTextOpacity = ref<number>(1);
+const yearListShow = ref<boolean>(false);
 
 const yearList = ref([
     { name: '2024年1月新番', name_jp: '2024 冬', seasonID: '2024-winter' },
@@ -77,27 +77,36 @@ const checkMobile = () => {
     window.innerWidth < 768 ? isMobile.value = true : isMobile.value = false;
 }
 
-const yearAnime = (next: boolean) => {
+const yearAnime = () => {
     yearTextOpacity.value = 0;
-    next ? yearTextX.value = -55 : yearTextX.value = 55;
     setTimeout(() => {
-        yearTextX.value = 0;
         yearTextOpacity.value = 1;
     }, 180)
 }
 
-const yearControl = (next: boolean) => {
-    if (next) {
-        selectItem.value -= 1;
-        goToSeason(selectItem.value);
+const yearControl = (next: boolean, isDown: boolean, index: number) => {
+    if (isDown) {
+        yearListShow.value = !yearListShow.value;
+        goToSeason(index);
     } else {
-        selectItem.value += 1;
-        goToSeason(selectItem.value);
+        if (next) {
+            selectItem.value -= 1;
+            goToSeason(selectItem.value);
+        } else {
+            selectItem.value += 1;
+            goToSeason(selectItem.value);
+        }
     }
-    yearAnime(next);
+    yearAnime();
     selectItem.value <= 0 ? nextEnd.value = true : nextEnd.value = false;
     selectItem.value >= yearList.value.length - 1 ? prevEnd.value = true : prevEnd.value = false;
 }
+
+const yearListOpen = () => {
+    yearListShow.value = !yearListShow.value;
+    console.log(yearListShow.value);
+}
+
 
 onMounted(() => {
     checkMobile();
@@ -134,22 +143,24 @@ onUnmounted(() => {
             </div>
             <div v-else class="anime-panel-container">
                 <div class="mobile-year-nav" :style="{ marginLeft: `${navCenter}px` }">
-                    <div class="year-next" @click="yearControl(true)">
-                        <svg v-if="!nextEnd" width="32" height="32" viewBox="0 -960 960 920" fill="#5c9291">
+                    <div class="year-next">
+                        <svg v-if="!nextEnd" @click="yearControl(true, false, 0)" width="32" height="32"
+                            viewBox="0 -960 960 800" fill="#5c9291">
                             <path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z" />
                         </svg>
                     </div>
-                    <div class="mobile-year" :style="{ opacity: `${yearTextOpacity}` }">
+                    <div class="mobile-year" :style="{ opacity: `${yearTextOpacity}` }" @click="yearListOpen">
                         {{ yearList[selectItem].name_jp }}</div>
-                    <div class="mobile-year-nav-list">
+                    <div v-show="yearListShow" class="mobile-year-nav-list">
                         <ul>
-                            <li v-for="year in yearList">
+                            <li v-for="(year, index) in yearList" @click="yearControl(false, true, index)">
                                 {{ year.name_jp }}
                             </li>
                         </ul>
                     </div>
-                    <div class="year-prev" @click="yearControl(false)">
-                        <svg v-if="!prevEnd" width="32" height="32" viewBox="0 -960 960 810" fill="#5c9291">
+                    <div class="year-prev">
+                        <svg v-if="!prevEnd" @click="yearControl(false, false, 0)" width="32" height="32"
+                            viewBox="0 -960 960 800" fill="#5c9291">
                             <path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z" />
                         </svg>
                     </div>
@@ -281,27 +292,26 @@ onUnmounted(() => {
     justify-content: center;
 
     .year-next {
-        width: 50px;
-        display: flex;
-        justify-content: center;
+        width: 32px;
+        height: 32px;
         user-select: none;
-        transform-origin: 50% 55%;
+        transform-origin: 50% 58.5%;
         transform: rotate(-180deg);
     }
 
     .year-prev {
-        width: 50px;
-        display: flex;        
-        justify-content: center;
+        width: 32px;
+        height: 32px;
         user-select: none;
     }
 
     .mobile-year {
-        display: flex;
         color: #fff;
-        margin: 0 5px;
+        width: 100px;
+        height: 32px;
+        line-height: 32px;
+        text-align: center;
         font-size: 19px;
-        user-select: none;
         transition: opacity 0.1s ease-in-out;
     }
 }
@@ -323,12 +333,13 @@ onUnmounted(() => {
         box-shadow: 0 16px 24px rgba(0, 0, 0, 0.3),
             0 6px 8px rgba(0, 0, 0, 0.2);
         max-height: 100%;
-        width: 140px;        
+        width: 140px;
         overflow: hidden;
         overflow-y: scroll;
 
         >li {
-            font-size: 19px;            
+            font-size: 19px;
+            line-height: 28px;
             text-align: center;
         }
     }
