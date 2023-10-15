@@ -295,7 +295,7 @@ onUnmounted(() => {
         width: 32px;
         height: 32px;
         user-select: none;
-        transform-origin: 50% 58.5%;
+        transform-origin: 49.2% 58.5%;
         transform: rotate(-180deg);
     }
 
