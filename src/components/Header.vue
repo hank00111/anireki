@@ -86,7 +86,7 @@ const yearAnime = () => {
 
 const yearControl = (next: boolean, isDown: boolean, index: number) => {
     if (isDown) {
-        yearListShow.value = !yearListShow.value;
+        yearListShow.value = false;
         goToSeason(index);
     } else {
         if (next) {
@@ -333,13 +333,13 @@ onUnmounted(() => {
         box-shadow: 0 16px 24px rgba(0, 0, 0, 0.3),
             0 6px 8px rgba(0, 0, 0, 0.2);
         max-height: 100%;
-        width: 140px;
+        width: 160px;
         overflow: hidden;
         overflow-y: scroll;
 
         >li {
             font-size: 19px;
-            line-height: 28px;
+            line-height: 34px;
             text-align: center;
         }
     }
