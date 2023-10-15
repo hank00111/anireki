@@ -10,20 +10,25 @@ const props = defineProps({
 
 const router = useRouter();
 const animeWorks = useAnimeWorks();
+const userControll = useUserControl();
 
-const showMenu = ref(false);
+const showMenu = ref<boolean>(false);
 const selectItem = ref(animeWorks.seasonSel);
-const yearNav = ref();
-const yearNavWidth = ref(0);
+const userPanel = ref<any>(null);
+const isMobile = ref<boolean>(false);
+const navCenter = ref<number>(0);
+const nextEnd = ref<boolean>(false);
+const prevEnd = ref<boolean>(false);
+const yearTextX = ref<number>(0);
+const yearTextOpacity = ref<number>(1);
 
 const yearList = ref([
-    { name: '2024年1月新番', seasonID: '2024-winter' },
-    { name: '2023年10月新番', seasonID: '2023-autumn' },
-    { name: '2023年7月新番', seasonID: '2023-summer' },
-    { name: '2023年4月新番', seasonID: '2023-spring' },
-    { name: '2023年1月新番', seasonID: '2023-winter' },])
+    { name: '2024年1月新番', name_jp: '2024 冬', seasonID: '2024-winter' },
+    { name: '2023年10月新番', name_jp: '2023 秋', seasonID: '2023-autumn' },
+    { name: '2023年7月新番', name_jp: '2023 夏', seasonID: '2023-summer' },
+    { name: '2023年4月新番', name_jp: '2023 春', seasonID: '2023-spring' },
+    { name: '2023年1月新番', name_jp: '2023 冬', seasonID: '2023-winter' },])
 
-const userControll = useUserControl();
 
 const userLogout = () => {
     showMenu.value = !showMenu
@@ -37,26 +42,13 @@ const goToSeason = (index: number) => {
     animeWorks.getSeason(yearList.value[index].seasonID);
 }
 
-const getAllAnimre = () => {
+const getAllAnime = () => {
     selectItem.value = -1;
     animeWorks.getSeason('all');
 }
 
 const getLeft = () => {
     let left = 0;
-
-    if (yearNavWidth.value < 325) {
-        left = (selectItem.value - 1) * -146;
-        if (selectItem.value <= 1) {
-            left = 0;
-        }
-        if (selectItem.value == 0) {
-            return 0;
-        }
-        return left - 120;
-    }
-
-
 
     left = (selectItem.value - 1) * -146;
     if (selectItem.value <= 1) {
@@ -74,23 +66,42 @@ const toForm = () => {
     window.location.href = "https://forms.gle/mq6hLwdMR4i6e9Mh8";
 }
 
-const getYearNavWidth = () => {
-    if (yearNav.value) {
-        yearNavWidth.value = yearNav.value.clientWidth;
-    }
+const yearNavCenter = () => {
+    const c = window.innerWidth / 2;
+    const y_c = (window.innerWidth - 32 - userPanel.value.offsetWidth) / 2;
+    navCenter.value = c - y_c + 20;
 }
 
 const checkMobile = () => {
-    if (window.innerWidth < 425) {
-        return true;
+    yearNavCenter();
+    window.innerWidth < 768 ? isMobile.value = true : isMobile.value = false;
+}
+
+const yearAnime = (next: boolean) => {
+    yearTextOpacity.value = 0;
+    next ? yearTextX.value = -55 : yearTextX.value = 55;
+    setTimeout(() => {
+        yearTextX.value = 0;
+        yearTextOpacity.value = 1;
+    }, 180)
+}
+
+const yearControl = (next: boolean) => {
+    if (next) {
+        selectItem.value -= 1;
+        goToSeason(selectItem.value);
+    } else {
+        selectItem.value += 1;
+        goToSeason(selectItem.value);
     }
-    return false;
+    yearAnime(next);
+    selectItem.value <= 0 ? nextEnd.value = true : nextEnd.value = false;
+    selectItem.value >= yearList.value.length - 1 ? prevEnd.value = true : prevEnd.value = false;
 }
 
 onMounted(() => {
-    getYearNavWidth();
-
-    window.addEventListener("resize", getYearNavWidth, true);
+    checkMobile();
+    window.addEventListener("resize", checkMobile, true);
 
     yearList.value.forEach((year, index) => {
         if (year.seasonID == animeWorks.seasonID) {
@@ -101,7 +112,7 @@ onMounted(() => {
 })
 
 onUnmounted(() => {
-    window.removeEventListener("resize", getYearNavWidth, true);
+    window.removeEventListener("resize", checkMobile, true);
 });
 
 
@@ -110,18 +121,39 @@ onUnmounted(() => {
 <template>
     <div class="header">
         <div v-if="props.isHome" class="anime-panel">
-            <div v-if="checkMobile()" class="all-anime" @click="getAllAnimre" :class="{ selectedH: selectItem === -1 }">所有動畫
+            <div v-if="!isMobile" class="anime-panel-container">
+                <div class="all-anime" @click="getAllAnime" :class="{ selectedH: selectItem === -1 }">所有動畫
+                </div>
+                <div class="year-nav">
+                    <div v-for="(year, index) in yearList" class="year-items"
+                        :style="{ transform: `translate(${getLeft()}px,0)` }" :class="{ selected: selectItem === index }"
+                        @click="goToSeason(index)">
+                        {{ year.name }}
+                    </div>
+                </div>
             </div>
-            <div class="year-nav" ref="yearNav">
-                <div v-for="(year, index) in yearList" class="year-items"
-                    :style="{ transform: `translate(${getLeft()}px,0)` }" :class="{ selected: selectItem === index }"
-                    @click="goToSeason(index)">
-                    {{ year.name }}
+            <div v-else class="anime-panel-container">
+                <div class="mobile-year-nav" :style="{ marginLeft: `${navCenter}px` }">
+                    <div class="year-next" @click="yearControl(true)">
+                        <svg v-if="!nextEnd" height="24" viewBox="0 -960 960 860" width="24" fill="#0fff">
+                            <path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z" />
+                        </svg>
+                    </div>
+                    <div class="mobile-year"
+                        :style="{  opacity: `${yearTextOpacity}` }">
+                        {{ yearList[selectItem].name_jp }}</div>
+                    <div class="year-prev" @click="yearControl(false)">
+                        <svg v-if="!prevEnd" height="24" viewBox="0 -960 960 860" width="24" fill="#0fff">
+                            <path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z" />
+                        </svg>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="userPanel">
+        <div v-else></div>
+
+        <div class="userPanel" ref="userPanel">
             <div v-if="userControll.name.length != 0 ? true : false" class="userLoggedin">
                 <button @click="showMenu = !showMenu">
                     <img draggable="false" :src=userControll.picture alt="">
@@ -163,22 +195,65 @@ onUnmounted(() => {
     width: calc(100% - 70px);
     display: flex;
     align-items: center;
+}
 
-    .all-anime {
+.anime-panel-container {
+    display: flex;
+    width: 100%;
+    overflow: hidden;
+}
+
+.all-anime {
+    font-size: 18px;
+    padding: 4px 0px;
+    color: #ffffff5a;
+    user-select: none;
+    cursor: pointer;
+    transition: transform .4s, color .4s;
+
+
+    &:hover {
+        color: #fff;
+    }
+}
+
+.selectedH {
+    color: #fff;
+    background-color: #23262b;
+    box-sizing: border-box;
+    font-weight: 700;
+    border-bottom: solid 2px #89c3eb;
+    transition: transform .4s, color .4s;
+}
+
+.year-nav {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    overflow-x: auto;
+
+    .year-items {
+        color: #ffffff5a;
+        display: block;
+        white-space: nowrap;
         font-size: 18px;
         padding: 4px 0px;
-        color: #ffffff5a;
+        margin: 0px 2px;
+        min-width: 144px;
+        text-align: center;
         user-select: none;
         cursor: pointer;
         transition: transform .4s, color .4s;
-
 
         &:hover {
             color: #fff;
         }
     }
 
-    .selectedH {
+    .selected {
         color: #fff;
         background-color: #23262b;
         box-sizing: border-box;
@@ -186,46 +261,42 @@ onUnmounted(() => {
         border-bottom: solid 2px #89c3eb;
         transition: transform .4s, color .4s;
     }
+}
 
-    .year-nav {
-        flex: 1;
+.year-nav::-webkit-scrollbar {
+    display: none;
+}
+
+.mobile-year-nav {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+
+    .year-next {
+        width: 48px;
         display: flex;
-        align-items: center;
-        overflow: hidden;
-        width: 100%;
-        height: 100%;
-        overflow-x: auto;
-
-        .year-items {
-            color: #ffffff5a;
-            display: block;
-            white-space: nowrap;
-            font-size: 18px;
-            padding: 4px 0px;
-            margin: 0px 2px;
-            min-width: 144px;
-            text-align: center;
-            user-select: none;
-            cursor: pointer;
-            transition: transform .4s, color .4s;
-
-            &:hover {
-                color: #fff;
-            }
-        }
-
-        .selected {
-            color: #fff;
-            background-color: #23262b;
-            box-sizing: border-box;
-            font-weight: 700;
-            border-bottom: solid 2px #89c3eb;
-            transition: transform .4s, color .4s;
-        }
+        justify-content: center;
+        user-select: none;
+        transform-origin: 45% 55%;
+        transform: rotate(-180deg);
+        z-index: 100;
     }
 
-    .year-nav::-webkit-scrollbar {
-        display: none;
+    .year-prev {
+        width: 48px;
+        display: flex;
+        justify-content: center;
+        user-select: none;
+        z-index: 100;
+    }
+
+    .mobile-year {
+        display: flex;
+        color: #fff;
+        width: 60px;
+        transition: opacity 0.1s ease-in-out;
     }
 }
 </style>
