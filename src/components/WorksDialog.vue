@@ -17,6 +17,9 @@ const Viewed = ref(false);
 
 
 const dateOpen = () => {
+    animeWorks.watchYear = new Date().getFullYear();
+    animeWorks.watchMonth = new Date().getMonth() + 1;
+    animeWorks.watchDay = new Date().getDate();
     dateShow.value = !dateShow.value;
 }
 const deleteOpen = () => {
