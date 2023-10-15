@@ -44,11 +44,11 @@ const getAllAnimre = () => {
 
 const getLeft = () => {
     let left = 0;
-    if (yearNavWidth.value < 375) {
-        left = (selectItem.value - 1) * -146;
 
+    if (yearNavWidth.value < 325) {
+        left = (selectItem.value - 1) * -146;
         if (selectItem.value <= 1) {
-            left = 0;
+            return 0;
         }
         return left - 120;
     }
