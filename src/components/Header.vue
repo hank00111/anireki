@@ -31,7 +31,8 @@ const yearList = ref([
 
 
 const userLogout = () => {
-    showMenu.value = !showMenu
+    showMenu.value = !showMenu;
+    yearListShow.value = false;
     userControll.logout();
 }
 
@@ -102,9 +103,9 @@ const yearControl = (next: boolean, isDown: boolean, index: number) => {
     selectItem.value >= yearList.value.length - 1 ? prevEnd.value = true : prevEnd.value = false;
 }
 
-const yearListOpen = () => {
+const yearListOpen = () => {    
+    showMenu.value = false;
     yearListShow.value = !yearListShow.value;
-    console.log(yearListShow.value);
 }
 
 
@@ -172,7 +173,7 @@ onUnmounted(() => {
 
         <div class="userPanel" ref="userPanel">
             <div v-if="userControll.name.length != 0 ? true : false" class="userLoggedin">
-                <button @click="showMenu = !showMenu">
+                <button @click="showMenu = !showMenu; yearListShow = false;">
                     <img draggable="false" :src=userControll.picture alt="">
                 </button>
                 <div v-if="showMenu" class="userMenu">
