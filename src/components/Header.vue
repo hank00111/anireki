@@ -275,7 +275,7 @@ onUnmounted(() => {
     justify-content: center;
 
     .year-next {
-        width: 48px;
+        width: 52px;
         display: flex;
         justify-content: center;
         user-select: none;
@@ -285,7 +285,7 @@ onUnmounted(() => {
     }
 
     .year-prev {
-        width: 48px;
+        width: 52px;
         display: flex;
         justify-content: center;
         user-select: none;
