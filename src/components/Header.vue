@@ -135,7 +135,7 @@ onUnmounted(() => {
             <div v-else class="anime-panel-container">
                 <div class="mobile-year-nav" :style="{ marginLeft: `${navCenter}px` }">
                     <div class="year-next" @click="yearControl(true)">
-                        <svg v-if="!nextEnd" height="24" viewBox="0 -960 960 860" width="24" fill="#0fff">
+                        <svg v-if="!nextEnd" width="32" height="32" viewBox="0 -960 960 900"  fill="#0fff">
                             <path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z" />
                         </svg>
                     </div>
@@ -143,7 +143,7 @@ onUnmounted(() => {
                         :style="{  opacity: `${yearTextOpacity}` }">
                         {{ yearList[selectItem].name_jp }}</div>
                     <div class="year-prev" @click="yearControl(false)">
-                        <svg v-if="!prevEnd" height="24" viewBox="0 -960 960 860" width="24" fill="#0fff">
+                        <svg v-if="!prevEnd" width="32" height="32" viewBox="0 -960 960 820" fill="#0fff">
                             <path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z" />
                         </svg>
                     </div>
@@ -279,7 +279,7 @@ onUnmounted(() => {
         display: flex;
         justify-content: center;
         user-select: none;
-        transform-origin: 45% 55%;
+        transform-origin: 43% 55%;
         transform: rotate(-180deg);
         z-index: 100;
     }
@@ -293,9 +293,10 @@ onUnmounted(() => {
     }
 
     .mobile-year {
-        display: flex;
+        display: flex;        
+        width: 72px;
         color: #fff;
-        width: 60px;
+        font-size: 19px;
         transition: opacity 0.1s ease-in-out;
     }
 }
