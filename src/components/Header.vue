@@ -48,10 +48,15 @@ const getLeft = () => {
     if (yearNavWidth.value < 325) {
         left = (selectItem.value - 1) * -146;
         if (selectItem.value <= 1) {
+            left = 0;
+        }
+        if (selectItem.value == 0) {
             return 0;
         }
         return left - 120;
     }
+
+
 
     left = (selectItem.value - 1) * -146;
     if (selectItem.value <= 1) {
