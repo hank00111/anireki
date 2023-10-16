@@ -124,39 +124,6 @@ export const useAnimeWorks = defineStore("animeWorks", {
       }
       // setTimeout(() => (this.isLoaded = true), 2000);
     },
-    async getWatchHistory() {
-      try {
-        await axios.get("/user/watchistory")
-          .then((res) => {
-            this.watchData = [];
-            this.historyData = JSON.parse(LZString.decompressFromUTF16(res.data));
-
-            for (const [_, hValue] of Object.entries(this.historyData)) {
-              const matchingAnime = this.originData.find(
-                (anime) => anime.id === hValue.worksID
-              );
-              if (matchingAnime) {
-                // const index = this.animeData.indexOf(matchingAnime);
-                const wData = {
-                  worksID: matchingAnime.id,
-                  title: matchingAnime.title,
-                  title_jp: matchingAnime.title_jp,
-                  season: matchingAnime.season,
-                  watchDate: hValue.watchDate,
-                  images_url: matchingAnime.images_url,
-                  imagesCover: matchingAnime.imagesCover,
-                };
-                this.watchData.push(wData);
-              }
-            }
-
-          }).catch((error) => {
-            console.log(error);
-          });
-      } catch (error) {
-        console.log(error);
-      }
-    },
     async getWorks(worksID: string) {
       await axios.get(`/works/${worksID}`).then((res) => {
         const data = JSON.parse(LZString.decompressFromUTF16(res.data));
@@ -213,33 +180,6 @@ export const useAnimeWorks = defineStore("animeWorks", {
         console.log(`addWorks-2 ${error}`);
       }
     },
-    async addWatchHistory(worksId: string) {
-      if (this.userControll.name.length < 1) {
-        //請先登入
-        console.log("error");
-      } else {
-        const addData = {
-          watchData: [{
-            worksID: worksId,
-            watchDate: `${this.watchYear}.${(this.watchMonth < 10 ? "0" + this.watchMonth.toString() : this.watchMonth.toString())}.${this.watchDay < 10 ? "0" + this.watchDay.toString() : this.watchDay.toString()}`
-          }]
-        };
-        this.historyData.push(addData.watchData[0]);
-        //
-        await axios
-          .post("/user/addwatchistory", addData)
-          .then(() => {
-            // const d = JSON.parse(LZString.decompressFromUTF16(res.data));
-            // console.log(d);
-          })
-          .catch((error) => {
-            console.log(`addWorks-1 ${error}`);
-          });
-        this.watchYear = new Date().getFullYear();
-        this.watchMonth = new Date().getMonth() + 1;
-        this.watchDay = new Date().getDate();
-      }
-    },
     async updateWorks(data: object) {
       this.sendStatus = true;
       await axios
@@ -258,6 +198,83 @@ export const useAnimeWorks = defineStore("animeWorks", {
           this.infoStatus = true;
           console.log(`updateWorks-1 ${error}`);
         });
+    },
+    async getWatchHistory() {
+      try {
+        await axios.get("/user/watchistory")
+          .then((res) => {
+            this.watchData = [];
+            this.historyData = JSON.parse(LZString.decompressFromUTF16(res.data));
+
+            for (const [_, hValue] of Object.entries(this.historyData)) {
+              const matchingAnime = this.originData.find(
+                (anime) => anime.id === hValue.worksID
+              );
+              if (matchingAnime) {
+                // const index = this.animeData.indexOf(matchingAnime);
+                const wData = {
+                  worksID: matchingAnime.id,
+                  title: matchingAnime.title,
+                  title_jp: matchingAnime.title_jp,
+                  season: matchingAnime.season,
+                  watchDate: hValue.watchDate,
+                  images_url: matchingAnime.images_url,
+                  imagesCover: matchingAnime.imagesCover,
+                };
+                this.watchData.push(wData);
+              }
+            }
+
+          }).catch((error) => {
+            console.log(error);
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async addWatchHistory(worksId: string) {
+      if (this.userControll.name.length < 1) {
+        //請先登入
+        console.log("error");
+      } else {
+        const addData = {
+          watchData: [{
+            worksID: worksId,
+            watchDate: `${this.watchYear}.${(this.watchMonth < 10 ? "0" + this.watchMonth.toString() : this.watchMonth.toString())}.${this.watchDay < 10 ? "0" + this.watchDay.toString() : this.watchDay.toString()}`
+          }]
+        };
+        await axios
+          .post("/user/watchistory", addData)
+          .then((res) => {
+            this.watchData = [];
+            this.historyData = JSON.parse(LZString.decompressFromUTF16(res.data));
+
+            for (const [_, hValue] of Object.entries(this.historyData)) {
+              const matchingAnime = this.originData.find(
+                (anime) => anime.id === hValue.worksID
+              );
+              if (matchingAnime) {
+                // const index = this.animeData.indexOf(matchingAnime);
+                const wData = {
+                  worksID: matchingAnime.id,
+                  title: matchingAnime.title,
+                  title_jp: matchingAnime.title_jp,
+                  season: matchingAnime.season,
+                  watchDate: hValue.watchDate,
+                  images_url: matchingAnime.images_url,
+                  imagesCover: matchingAnime.imagesCover,
+                };
+                this.watchData.push(wData);
+              }
+            }
+          })
+          .catch((error) => {
+            console.log(`addWorks-1 ${error}`);
+          });
+        this.watchYear = new Date().getFullYear();
+        this.watchMonth = new Date().getMonth() + 1;
+        this.watchDay = new Date().getDate();
+      }
     },
     async deleteWatchHistory(worksId: string) {
       try {
