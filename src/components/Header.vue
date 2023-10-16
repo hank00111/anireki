@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
 import { ref, onMounted, onUnmounted } from 'vue';
-import { useUserControl } from '../stores/userControl'
 import { useAnimeWorks } from '../stores/animeWorks'
+import { useAnimeYears } from '../stores/animeYears'
+import { useUserControl } from '../stores/userControl'
+
 const props = defineProps({
     isHome: Boolean,
     isConsole: Boolean,
@@ -10,6 +12,7 @@ const props = defineProps({
 
 const router = useRouter();
 const animeWorks = useAnimeWorks();
+const animeYears = useAnimeYears();
 const userControll = useUserControl();
 
 const showMenu = ref<boolean>(false);
@@ -22,12 +25,7 @@ const prevEnd = ref<boolean>(false);
 const yearTextOpacity = ref<number>(1);
 const yearListShow = ref<boolean>(false);
 
-const yearList = ref([
-    { name: '2024年1月新番', name_jp: '2024 冬', seasonID: '2024-winter' },
-    { name: '2023年10月新番', name_jp: '2023 秋', seasonID: '2023-autumn' },
-    { name: '2023年7月新番', name_jp: '2023 夏', seasonID: '2023-summer' },
-    { name: '2023年4月新番', name_jp: '2023 春', seasonID: '2023-spring' },
-    { name: '2023年1月新番', name_jp: '2023 冬', seasonID: '2023-winter' },])
+const yearList = ref(animeYears.animeYearsObj);
 
 
 const userLogout = () => {
@@ -51,7 +49,7 @@ const getAllAnime = () => {
 const getLeft = () => {
     let left = 0;
 
-    left = (selectItem.value - 1) * -146;
+    left = (selectItem.value - 1) * -148;
     if (selectItem.value <= 1) {
         left = 0;
     }
@@ -103,7 +101,7 @@ const yearControl = (next: boolean, isDown: boolean, index: number) => {
     selectItem.value >= yearList.value.length - 1 ? prevEnd.value = true : prevEnd.value = false;
 }
 
-const yearListOpen = () => {    
+const yearListOpen = () => {
     showMenu.value = false;
     yearListShow.value = !yearListShow.value;
 }
@@ -249,7 +247,7 @@ onUnmounted(() => {
     display: flex;
     align-items: center;
     overflow: hidden;
-    width: 100%;
+    max-width: 90%;
     height: 100%;
     overflow-x: auto;
 
@@ -333,8 +331,8 @@ onUnmounted(() => {
             0 6px 8px rgba(0, 0, 0, 0.2);
         box-shadow: 0 16px 24px rgba(0, 0, 0, 0.3),
             0 6px 8px rgba(0, 0, 0, 0.2);
-        max-height: 100%;
         width: 160px;
+        max-height: 340px;
         overflow: hidden;
         overflow-y: scroll;
 
