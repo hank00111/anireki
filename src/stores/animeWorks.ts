@@ -267,8 +267,12 @@ export const useAnimeWorks = defineStore("animeWorks", {
                 this.watchData.push(wData);
               }
             }
+            this.infoMsg = '已將動畫加入觀看紀錄';
+            this.infoStatus = true;
           })
           .catch((error) => {
+            this.infoMsg = '觀看紀錄加入異常';
+            this.infoStatus = true;
             console.log(`addWorks-1 ${error}`);
           });
         this.watchYear = new Date().getFullYear();

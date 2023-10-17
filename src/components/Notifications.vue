@@ -7,19 +7,11 @@ defineProps({
     info: String,
 })
 
-// onMounted(() => {
-//     if (animeWorks.infoStatus) {
-//         setTimeout(() => {
-//             animeWorks.infoStatus = false
-//         }, 4000)
-//     }
-// })
-
 watchEffect(() => {
     if (animeWorks.infoStatus) {
         setTimeout(() => {
             animeWorks.infoStatus = false
-        }, 4000)
+        }, 3000)
     }
 })
 
