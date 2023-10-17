@@ -27,7 +27,7 @@ onBeforeMount(() => {
 <template>
     <Sidebar @click.right="rightEventClose($event)"></Sidebar>
     <div class="main" @click.right="rightEventClose($event)">
-        <!-- <Notifications :show="animeWorks.infoStatus" :info="animeWorks.infoMsg"></Notifications> -->
+        <Notifications :show="animeWorks.infoStatus" :info="animeWorks.infoMsg"></Notifications>
         <Header :is-home="true"></Header>
         <div class="content">
             <div class="home-title"></div>
