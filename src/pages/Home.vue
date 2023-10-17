@@ -4,7 +4,7 @@ import Header from '../components/Header.vue'
 import Sidebar from '../components/Sidebar.vue'
 import WorksCard from '../components/WorksCard.vue';
 import { useAnimeWorks } from '../stores/animeWorks'
-// import Notifications from '../components/Notifications.vue'
+import Notifications from '../components/Notifications.vue'
 
 const animeWorks = useAnimeWorks();
 const rightEventClose = (e: { preventDefault: () => void; }) => {
@@ -20,7 +20,7 @@ onBeforeMount(() => {
 })
 
 // watchEffect(() => {
-
+//animeWorks.infoMsg
 // })
 </script>
 
