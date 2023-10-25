@@ -1,33 +1,35 @@
 <script setup lang="ts">
 import { useRoute, useRouter } from 'vue-router';
 import { ref, watch, onMounted } from 'vue';
-import Header from '../components/Header.vue'
-import Loading from '../components/Loading.vue'
-import ConsoleSidebar from '../components/ConsoleSidebar.vue'
+import SelBar from '../components/SelBar.vue';
+import Header from '../components/Header.vue';
+import Loading from '../components/Loading.vue';
+import ConsoleSidebar from '../components/ConsoleSidebar.vue';
 // import WorksCard from '../components/WorksCard.vue';
-import { useAnimeWorks } from '../stores/animeWorks'
+import { useAnimeWorks } from '../stores/animeWorks';
 
 const route = useRoute();
 const router = useRouter();
 const animeWorks = useAnimeWorks();
 
-const workSeason = ref<string>("")
-const worksTitle = ref<string>("")
-const worksTitle_jp = ref<string>("")
-const startedAt_tw = ref<string>("")
-const startedAt_jp = ref<string>("")
-const worksImages = ref<any>()
-const worksImagesUrl = ref<any>()
-const worksImageLoad = ref<boolean>(false)
-// const worksSend = ref<boolean>(false)
+
+const workMedia = ref<string>("");
+const workSeason = ref<string>("");
+const worksTitle = ref<string>("");
+const worksTitle_jp = ref<string>("");
+const startedAt_tw = ref<string>("");
+const startedAt_jp = ref<string>("");
+const worksImages = ref<any>();
+const worksImagesUrl = ref<any>();
+const worksImageLoad = ref<boolean>(false);
+const media = ref<string[]>(['TV', '映画', 'OVA', '其他']);
+const refMedia = ref<string>('TV');
 
 const changeTextref = ref<string>("");
-
 
 const imageSel = (e: any) => {
     worksImages.value = e.target.files[0];
 }
-
 
 const updateWorks = () => {
     let data = {
@@ -38,7 +40,6 @@ const updateWorks = () => {
             name: animeWorks.userControll.name,
             picture: animeWorks.userControll.picture,
         },
-        // image: '',
     }
     let changeText = "更新";
 
@@ -49,6 +50,10 @@ const updateWorks = () => {
     if (animeWorks.worksData.title_jp != worksTitle_jp.value && worksTitle_jp.value.length > 0) {
         Object.assign(data.changeData, { title_jp: { old: animeWorks.worksData.title_jp, new: worksTitle_jp.value } });
         changeText += `title_jp: ${animeWorks.worksData.title_jp} => ${worksTitle_jp.value}\n`;
+    }
+    if (animeWorks.worksData.media != workMedia.value) {
+        Object.assign(data.changeData, { media: { old: animeWorks.worksData.media, new: workMedia.value } });
+        changeText += `media: ${animeWorks.worksData.media} => ${workMedia.value}\n`;
     }
     if (animeWorks.worksData.season != workSeason.value && workSeason.value.length > 0) {
         Object.assign(data.changeData, { season: { old: animeWorks.worksData.season, new: workSeason.value } });
@@ -100,8 +105,6 @@ onMounted(async () => {
     } else {
         document.title = `Works - Anireki`;
     }
-    // animeWorks.getAnimeData();
-    // animeWorks.getWatchHistory();
 })
 
 </script>
@@ -117,6 +120,10 @@ onMounted(async () => {
                     <div class="works-item">
                         <p>ID</p>
                         <input type="text" :placeholder="animeWorks.worksData.id" readonly="true">
+                    </div>
+                    <div class="works-item-2">
+                        <span>播映方式:</span>
+                        <SelBar :selDataArray="media" v-model:selDataString="refMedia" />
                     </div>
                     <div class="works-item">
                         <p>年份季度 - winter,spring,summer,autumn</p>
@@ -168,7 +175,7 @@ onMounted(async () => {
     max-width: 80%;
 
     .works-content {
-        padding: 0.8em;
+        padding: 1.1em;
     }
 
     .works-item {
@@ -222,6 +229,15 @@ onMounted(async () => {
             //     color: #fff;
             // }
         }
+    }
+
+    .works-item-2 {
+        display: flex;
+        align-items: center;
+        font-size: 1.3em;
+        color: #fff;
+        font-weight: 600;
+        margin-bottom: 20px;
     }
 
     .works-image {

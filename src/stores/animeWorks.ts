@@ -22,19 +22,23 @@ interface historyDataModel {
   worksID: string;
   watchDate: string;
 };
+
 interface watchDataModel {
   worksID: string;
   title: string,
   title_jp: string,
+  media: string,
   season: string,
   watchDate: string;
   images_url: string;
   imagesCover: boolean;
 };
+
 interface originDataModel {
   id: string;
   title: string,
   title_jp: string,
+  media: string,
   season: string,
   images_url: string;
   imagesCover: boolean;
@@ -54,7 +58,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
         images_url: "",
         imagesCover: false
       },
-    ],
+    ] as originDataModel[],
     originData: [] as originDataModel[],
     // originData: [{
     //   id: "1",
@@ -91,29 +95,27 @@ export const useAnimeWorks = defineStore("animeWorks", {
       StartedAt_jp: "",
       StartedAt_tw: "",
       createdAt: "",
-    },
+    } as originDataModel,
   }),
   actions: {
     async getAnimeData() {
       try {
         let res = await axios.get("/works/all");
         const data = JSON.parse(LZString.decompressFromUTF16(res.data));
-        // this.animeData = data;
         this.originData = data;
         this.getSeason(this.seasonID);
       } catch (error) {
         console.log(error);
       }
     },
-    async getCurrentSeason() {
-      try {
-        let res = await axios.get("/works/season/2023-summer");
-        this.animeData = res.data;
-        // console.log(res.data);
-      } catch (error) {
-        console.log(error);
-      }
-    },
+    // async getCurrentSeason() {
+    //   try {
+    //     let res = await axios.get("/works/season/2023-summer");
+    //     this.animeData = res.data;
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // },
     async getWorksCount() {
       try {
         let res = await axios.get("/console/workscount");
@@ -144,15 +146,20 @@ export const useAnimeWorks = defineStore("animeWorks", {
       for (const [_, hValue] of Object.entries(this.originData)) {
         if (hValue.season === seasonID) {
           // console.log(hValue);
-          const wData = {
-            id: hValue.id,
-            title: hValue.title,
-            title_jp: hValue.title_jp,
-            season: hValue.season,
-            images_url: hValue.images_url,
-            imagesCover: hValue.imagesCover,
-          };
-          this.animeData.push(wData);
+          // const wData = {
+          //   id: hValue.id,
+          //   title: hValue.title,
+          //   title_jp: hValue.title_jp,
+          //   media: hValue.media,
+          //   season: hValue.season,
+          //   images_url: hValue.images_url,
+          //   imagesCover: hValue.imagesCover,
+          //   StartedAt_jp: hValue.StartedAt_jp,
+          //   StartedAt_tw: hValue.StartedAt_tw,
+          //   createdAt: hValue.createdAt,
+          // };
+
+          this.animeData.push(hValue);
         }
       }
     },
@@ -216,6 +223,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
                   worksID: matchingAnime.id,
                   title: matchingAnime.title,
                   title_jp: matchingAnime.title_jp,
+                  media: matchingAnime.media,
                   season: matchingAnime.season,
                   watchDate: hValue.watchDate,
                   images_url: matchingAnime.images_url,
@@ -259,6 +267,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
                   worksID: matchingAnime.id,
                   title: matchingAnime.title,
                   title_jp: matchingAnime.title_jp,
+                  media: matchingAnime.media,
                   season: matchingAnime.season,
                   watchDate: hValue.watchDate,
                   images_url: matchingAnime.images_url,
@@ -282,7 +291,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
     },
     async deleteWatchHistory(worksId: string) {
       try {
-        console.log(worksId);
+        // console.log(worksId);
         await axios.delete("/user/watchistory", { data: { worksID: worksId } })
           .then((res) => {
             this.watchData = [];
@@ -298,6 +307,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
                   worksID: matchingAnime.id,
                   title: matchingAnime.title,
                   title_jp: matchingAnime.title_jp,
+                  media: matchingAnime.media,
                   season: matchingAnime.season,
                   watchDate: hValue.watchDate,
                   images_url: matchingAnime.images_url,
