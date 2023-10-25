@@ -23,7 +23,7 @@ const worksImages = ref<any>();
 const worksImagesUrl = ref<any>();
 const worksImageLoad = ref<boolean>(false);
 const media = ref<string[]>(['TV', '映画', 'OVA', '其他']);
-const refMedia = ref<string>('TV');
+const refMedia = ref<string>(animeWorks.worksData.media);
 
 const changeTextref = ref<string>("");
 
