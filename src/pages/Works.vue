@@ -12,8 +12,8 @@ const route = useRoute();
 const router = useRouter();
 const animeWorks = useAnimeWorks();
 
-
-const workMedia = ref<string>("");
+const media = ref<string[]>(['TV', '映画', 'OVA', '其他']);
+const workMedia = ref<string>(animeWorks.worksData.media);
 const workSeason = ref<string>("");
 const worksTitle = ref<string>("");
 const worksTitle_jp = ref<string>("");
@@ -22,8 +22,6 @@ const startedAt_jp = ref<string>("");
 const worksImages = ref<any>();
 const worksImagesUrl = ref<any>();
 const worksImageLoad = ref<boolean>(false);
-const media = ref<string[]>(['TV', '映画', 'OVA', '其他']);
-const refMedia = ref<string>(animeWorks.worksData.media);
 
 const changeTextref = ref<string>("");
 
@@ -123,7 +121,7 @@ onMounted(async () => {
                     </div>
                     <div class="works-item-2">
                         <span>播映方式:</span>
-                        <SelBar :selDataArray="media" v-model:selDataString="refMedia" />
+                        <SelBar :selDataArray="media" v-model:selDataString="workMedia" />
                     </div>
                     <div class="works-item">
                         <p>年份季度 - winter,spring,summer,autumn</p>
