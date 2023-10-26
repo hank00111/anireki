@@ -30,6 +30,7 @@ interface watchDataModel {
   media: string,
   season: string,
   watchDate: string;
+  copyright: string,
   images_url: string;
   imagesCover: boolean;
 };
@@ -40,6 +41,7 @@ interface originDataModel {
   title_jp: string,
   media: string,
   season: string,
+  copyright: string,
   images_url: string;
   imagesCover: boolean;
   StartedAt_jp: string;
@@ -55,11 +57,23 @@ export const useAnimeWorks = defineStore("animeWorks", {
         title: "",
         title_jp: "",
         season: "",
+        copyright: "",
         images_url: "",
         imagesCover: false
       },
     ] as originDataModel[],
     originData: [] as originDataModel[],
+    // animeData: [
+    //   {
+    //     id: "1",
+    //     title: "1",
+    //     title_jp: "",
+    //     season: "",
+    //     copyright: "1",
+    //     images_url: "",
+    //     imagesCover: false
+    //   },
+    // ] as originDataModel[],
     // originData: [{
     //   id: "1",
     //   title: "",
@@ -67,6 +81,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
     //   media: "",
     //   season: "",
     //   images_url: "",
+    //   copyright: "1",
     //   StartedAt_jp: "",
     //   StartedAt_tw: "",
     //   createdAt: "",

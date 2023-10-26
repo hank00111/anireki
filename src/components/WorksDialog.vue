@@ -125,7 +125,12 @@ watchEffect(() => {
                         {{ showAnime.title === "" ? showAnime.title_jp : showAnime.title }}
                     </div>
                     <div class="works-dialog-info-title_jp"> {{ showAnime.title_jp }}</div>
-                    <div class="works-dialog-info-context"></div>
+                    <div class="works-dialog-info-context">
+                        <div class="works-dialog-info-copyright">
+                            <span>© </span>
+                            <span>{{ showAnime.copyright }}</span>
+                        </div>
+                    </div>
                     <div class="works-dialog-control-bt">
                         <button v-if="!Viewed" @click="dateOpen">新增至觀看紀錄</button>
                         <button v-else class="works-dialog-control-bt-delete" @click="deleteOpen">刪除觀看紀錄</button>
@@ -242,6 +247,11 @@ watchEffect(() => {
 
         .works-dialog-info-context {
             height: 100%;
+        }
+
+        .works-dialog-info-copyright {
+            font-size: 70%;
+            margin-bottom: 8px;
         }
 
         .works-dialog-control-bt {
