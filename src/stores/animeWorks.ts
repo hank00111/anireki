@@ -58,7 +58,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
         images_url: "",
         imagesCover: false
       },
-    ] as originDataModel,
+    ] as originDataModel[],
     originData: [] as originDataModel[],
     // originData: [{
     //   id: "1",
