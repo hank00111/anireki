@@ -169,7 +169,7 @@ watchEffect(() => {
     .wokrs-dialog-info {
         width: 100%;
         height: 100%;
-        padding: 6px;
+        padding: 8px;
         word-break: break-all;
         position: relative;
         display: flex;

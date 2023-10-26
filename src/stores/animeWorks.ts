@@ -58,7 +58,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
         images_url: "",
         imagesCover: false
       },
-    ] as originDataModel[],
+    ] as originDataModel,
     originData: [] as originDataModel[],
     // originData: [{
     //   id: "1",
@@ -197,7 +197,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
           this.sendStatus = false;
           this.infoMsg = d.Msg;
           this.infoStatus = true;
-          // console.log(d);
+          this.watchData = [];
         })
         .catch((error) => {
           this.sendCode = 1;
