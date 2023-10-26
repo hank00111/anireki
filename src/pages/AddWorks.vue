@@ -36,6 +36,7 @@ const refSeason = ref<number>(Math.ceil((new Date().getMonth() + 1) / 3));
 
 const media = ref<string[]>(['TV', '映画', 'OVA', '其他']);
 const refMedia = ref<string>('TV');
+const refCopyRight = ref<string>('');
 
 const refSel = ref<string>('');
 
@@ -52,6 +53,7 @@ const sendData = () => {
                 year: thisYear.value,
                 media: refMedia.value,
                 season_id: refSeason.value,
+                copyright: refCopyRight.value,
                 title: refTitle.value,
                 title_jp: refTitle_jp.value,
                 StartedAt_tw: refStartedAt_tw.value,
@@ -148,6 +150,10 @@ watchEffect(() => {
                         <div class="card-item">
                             <p>日文名稱</p>
                             <input type="text" v-model="refTitle_jp">
+                        </div>
+                        <div class="card-item">
+                            <p>Copyright</p>
+                            <input type="text" v-model="refCopyRight">
                         </div>
                         <div style="display: flex;">
                             <div class="card-item">

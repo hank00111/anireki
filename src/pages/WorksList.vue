@@ -45,6 +45,7 @@ onMounted(async () => {
                         <p>日文名稱:{{ data.title_jp }}</p>
                         <p>季度:{{ data.season }}</p>
                         <p>播映方式:{{ data.media }}</p>
+                        <p>Copyright:{{ data.copyright }}</p>
                         <p>日本首播日:{{ !data.StartedAt_jp || data.StartedAt_jp === "" ? "Null" : data.StartedAt_jp }}</p>
                         <p>台灣首播日:{{ !data.StartedAt_tw || data.StartedAt_tw === "" ? "Null" : data.StartedAt_tw }}</p>
                         <p>建立時間:{{ dateConvert(data.createdAt) }}</p>

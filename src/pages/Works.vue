@@ -17,6 +17,7 @@ const workMedia = ref<string>('');
 const workSeason = ref<string>("");
 const worksTitle = ref<string>("");
 const worksTitle_jp = ref<string>("");
+const worksCopyright = ref<string>("");
 const startedAt_tw = ref<string>("");
 const startedAt_jp = ref<string>("");
 const worksImages = ref<any>();
@@ -57,6 +58,10 @@ const updateWorks = () => {
         Object.assign(data.changeData, { season: { old: animeWorks.worksData.season, new: workSeason.value } });
         changeText += `season: ${animeWorks.worksData.season} => ${workSeason.value}\n`;
     }
+    if (animeWorks.worksData.copyright != worksCopyright.value && worksCopyright.value.length > 0) {
+        Object.assign(data.changeData, { copyright: { old: animeWorks.worksData.copyright, new: worksCopyright.value } });
+        changeText += `copyright: ${animeWorks.worksData.copyright} => ${worksCopyright.value}\n`;
+    }
     if (animeWorks.worksData.StartedAt_tw != startedAt_tw.value) {
         Object.assign(data.changeData, { StartedAt_tw: { old: animeWorks.worksData.StartedAt_tw, new: startedAt_tw.value } });
         changeText += `StartedAt_tw: ${animeWorks.worksData.StartedAt_tw} => ${startedAt_tw.value}\n`;
@@ -81,7 +86,6 @@ const updateWorks = () => {
             }
         });
     }
-
 }
 
 watch(worksImages, (worksImages) => {
@@ -101,6 +105,7 @@ onMounted(async () => {
         startedAt_tw.value = animeWorks.worksData.StartedAt_tw;
         startedAt_jp.value = animeWorks.worksData.StartedAt_jp;
         workMedia.value = animeWorks.worksData.media;
+        worksCopyright.value = animeWorks.worksData.copyright;
     } else {
         document.title = `Works - Anireki`;
     }
@@ -135,6 +140,10 @@ onMounted(async () => {
                     <div class="works-item">
                         <p>日文名稱</p>
                         <input type="text" v-model="worksTitle_jp" :placeholder="animeWorks.worksData.title_jp">
+                    </div>
+                    <div class="works-item">
+                        <p>Copyright</p>
+                        <input type="text" v-model="worksCopyright" :placeholder="animeWorks.worksData.copyright">
                     </div>
                     <div style="display: flex;">
                         <div class="works-item">
