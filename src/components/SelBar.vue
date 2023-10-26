@@ -55,14 +55,6 @@ watchEffect(() => {
     background-color: #33373b;
 }
 
-.ml-4 {
-    margin-left: 4px;
-}
-
-.ml-10 {
-    margin-left: 10px;
-}
-
 .selBar {
     position: relative;
     top: auto;

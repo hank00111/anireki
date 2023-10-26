@@ -14,7 +14,6 @@ const refDialogID = ref<string>('')
 const dialogOpen = (id: string) => {
     refDialog.value = true;
     refDialogID.value = id;
-    // animeWorks.infoStatus = true;
 }
 const dialogClose = () => {
     refDialog.value = false;
@@ -130,7 +129,7 @@ onMounted(() => {
             background-position: center;
             background-color: #6b6363;
         }
-        
+
         .imagesCover {
             background-size: cover;
         }

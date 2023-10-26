@@ -92,14 +92,20 @@ watchEffect(() => {
                     </div>
                     <div v-else></div>
                 </Transition>
+
                 <div class="wokrs-dialog-img-area">
                     <div class="wokrs-dialog-img" :style="{ backgroundImage: `url(${showAnime.images_url})` }">
                     </div>
                 </div>
 
                 <div class="wokrs-dialog-info">
+                    <div class="works-dialog-info-tag">
+                        <span v-show="showAnime.media">{{ showAnime.media }}</span>
+                        <!-- <span v-show="showAnime.media" class=" ml-6 tag-Aki">2023秋</span> -->
+                    </div>
                     <div class="works-dialog-info-title">
-                        {{ showAnime.title === "" ? showAnime.title_jp : showAnime.title }}</div>
+                        {{ showAnime.title === "" ? showAnime.title_jp : showAnime.title }}
+                    </div>
                     <div class="works-dialog-info-title_jp"> {{ showAnime.title_jp }}</div>
                     <div class="works-dialog-info-context"></div>
                     <div class="works-dialog-control-bt">
@@ -163,17 +169,52 @@ watchEffect(() => {
     .wokrs-dialog-info {
         width: 100%;
         height: 100%;
-        padding: 12px;
+        padding: 6px;
         word-break: break-all;
         position: relative;
         display: flex;
         flex-direction: column;
+
+        .works-dialog-info-tag {
+            display: flex;
+
+            .tag-Fuyu {
+                background-color: #8791B5;
+            }
+
+            .tag-Haru {
+                background-color: #e94e66;
+            }
+
+            .tag-Natsu {
+                background-color: #6FA0D8;
+            }
+
+            .tag-Aki {
+                background-color: #F36E3C;
+            }
+
+            >span {
+                background-color: #2985be;
+                padding: 0.24em 0.64em;
+                font-size: .82em;
+                line-height: 1;
+                color: #fff;
+                text-align: center;
+                white-space: nowrap;
+                vertical-align: baseline;
+                border-radius: 1rem;
+                user-select: none;
+            }
+        }
+
 
         .works-dialog-info-title {
             color: #fff;
             font-size: 1.6em;
             font-weight: 700;
             letter-spacing: .02em;
+            line-height: 36px;
         }
 
         .works-dialog-info-title_jp {
@@ -360,6 +401,7 @@ watchEffect(() => {
         }
     }
 }
+
 
 .works-dialog-enter-from {
     opacity: 0;
