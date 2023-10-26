@@ -13,6 +13,7 @@ const userControll = useUserControl();
 const showAnime = ref();
 const dateShow = ref(false);
 const deleteShow = ref(false);
+const seasonCoverClass = ref('');
 const Viewed = ref(false);
 
 
@@ -38,6 +39,22 @@ const deleteWatchHistory = () => {
     deleteShow.value = !deleteShow.value;
     if (props.worksID) {
         animeWorks.deleteWatchHistory(props.worksID);
+    }
+}
+
+const seasonCover = (season: string) => {
+    const seasonMappings: { [key: string]: { className: string; text: string } } = {
+        winter: { className: "tag-Fuyu", text: "冬" },
+        spring: { className: "tag-Haru", text: "春" },
+        summer: { className: "tag-Natsu", text: "夏" },
+        autumn: { className: "tag-Aki", text: "秋" }
+    };
+
+    for (const key in seasonMappings) {
+        if (season.includes(key)) {
+            seasonCoverClass.value = seasonMappings[key].className;
+            return season.replace(`-${key}`, seasonMappings[key].text);
+        }
     }
 }
 
@@ -101,7 +118,8 @@ watchEffect(() => {
                 <div class="wokrs-dialog-info">
                     <div class="works-dialog-info-tag">
                         <span v-show="showAnime.media">{{ showAnime.media }}</span>
-                        <!-- <span v-show="showAnime.media" class=" ml-6 tag-Aki">2023秋</span> -->
+                        <span v-show="showAnime.media" class="ml-6" :class="[seasonCoverClass]">
+                            {{ seasonCover(showAnime.season) }}</span>
                     </div>
                     <div class="works-dialog-info-title">
                         {{ showAnime.title === "" ? showAnime.title_jp : showAnime.title }}
