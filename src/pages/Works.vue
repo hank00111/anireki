@@ -13,7 +13,7 @@ const router = useRouter();
 const animeWorks = useAnimeWorks();
 
 const media = ref<string[]>(['TV', '映画', 'OVA', '其他']);
-const workMedia = ref<string>(animeWorks.worksData.media);
+const workMedia = ref<string>('');
 const workSeason = ref<string>("");
 const worksTitle = ref<string>("");
 const worksTitle_jp = ref<string>("");
@@ -100,6 +100,7 @@ onMounted(async () => {
         document.title = `${animeWorks.worksData.title} - Anireki`;
         startedAt_tw.value = animeWorks.worksData.StartedAt_tw;
         startedAt_jp.value = animeWorks.worksData.StartedAt_jp;
+        workMedia.value = animeWorks.worksData.media;
     } else {
         document.title = `Works - Anireki`;
     }
