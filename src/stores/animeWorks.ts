@@ -235,17 +235,17 @@ export const useAnimeWorks = defineStore("animeWorks", {
               );
               if (matchingAnime) {
                 // const index = this.animeData.indexOf(matchingAnime);
-                const wData = {
-                  worksID: matchingAnime.id,
-                  title: matchingAnime.title,
-                  title_jp: matchingAnime.title_jp,
-                  media: matchingAnime.media,
-                  season: matchingAnime.season,
-                  watchDate: hValue.watchDate,
-                  images_url: matchingAnime.images_url,
-                  imagesCover: matchingAnime.imagesCover,
-                };
-                this.watchData.push(wData);
+                // const wData = {
+                //   worksID: matchingAnime.id,
+                //   title: matchingAnime.title,
+                //   title_jp: matchingAnime.title_jp,
+                //   media: matchingAnime.media,
+                //   season: matchingAnime.season,
+                //   watchDate: hValue.watchDate,
+                //   images_url: matchingAnime.images_url,
+                //   imagesCover: matchingAnime.imagesCover,
+                // };
+                this.watchData.push(matchingAnime);
               }
             }
 
@@ -279,17 +279,17 @@ export const useAnimeWorks = defineStore("animeWorks", {
               );
               if (matchingAnime) {
                 // const index = this.animeData.indexOf(matchingAnime);
-                const wData = {
-                  worksID: matchingAnime.id,
-                  title: matchingAnime.title,
-                  title_jp: matchingAnime.title_jp,
-                  media: matchingAnime.media,
-                  season: matchingAnime.season,
-                  watchDate: hValue.watchDate,
-                  images_url: matchingAnime.images_url,
-                  imagesCover: matchingAnime.imagesCover,
-                };
-                this.watchData.push(wData);
+                // const wData = {
+                //   worksID: matchingAnime.id,
+                //   title: matchingAnime.title,
+                //   title_jp: matchingAnime.title_jp,
+                //   media: matchingAnime.media,
+                //   season: matchingAnime.season,
+                //   watchDate: hValue.watchDate,
+                //   images_url: matchingAnime.images_url,
+                //   imagesCover: matchingAnime.imagesCover,
+                // };
+                this.watchData.push(matchingAnime);
               }
             }
             this.infoMsg = '已將動畫加入觀看紀錄';
@@ -319,17 +319,17 @@ export const useAnimeWorks = defineStore("animeWorks", {
               );
               if (matchingAnime) {
                 // const index = this.animeData.indexOf(matchingAnime);
-                const wData = {
-                  worksID: matchingAnime.id,
-                  title: matchingAnime.title,
-                  title_jp: matchingAnime.title_jp,
-                  media: matchingAnime.media,
-                  season: matchingAnime.season,
-                  watchDate: hValue.watchDate,
-                  images_url: matchingAnime.images_url,
-                  imagesCover: matchingAnime.imagesCover,
-                };
-                this.watchData.push(wData);
+                // const wData = {
+                //   worksID: matchingAnime.id,
+                //   title: matchingAnime.title,
+                //   title_jp: matchingAnime.title_jp,
+                //   media: matchingAnime.media,
+                //   season: matchingAnime.season,
+                //   watchDate: hValue.watchDate,
+                //   images_url: matchingAnime.images_url,
+                //   imagesCover: matchingAnime.imagesCover,
+                // };
+                this.watchData.push(matchingAnime);
               }
             }
 
