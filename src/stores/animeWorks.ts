@@ -64,6 +64,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
     //   id: "1",
     //   title: "",
     //   title_jp: "",
+    //   media: "",
     //   season: "",
     //   images_url: "",
     //   StartedAt_jp: "",

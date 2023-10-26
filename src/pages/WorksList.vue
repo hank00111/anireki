@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
-import { useRouter } from 'vue-router';
 import Header from '../components/Header.vue'
 import Loading from '../components/Loading.vue'
 import Notifications from '../components/Notifications.vue'
@@ -9,14 +8,11 @@ import { useAnimeWorks } from '../stores/animeWorks'
 import { useUserControl } from '../stores/userControl'
 import { useAnirekiConsole } from '../stores/anirekiConsole'
 
-const router = useRouter();
 const animeWorks = useAnimeWorks();
 const userControll = useUserControl();
 const anirekiConsole = useAnirekiConsole();
 
-const toWorks = (id: string) => {
-    router.push({ name: 'works', params: { id: id } })
-}
+
 const dateConvert = (date: string) => {
     const objectDate = new Date(+date * 1000);
     const year = objectDate.getFullYear();
@@ -39,15 +35,16 @@ onMounted(async () => {
         <div class="content console-content">
             <div class="works-list-container">
                 <div v-for="data in animeWorks.originData" class="works-list-card">
-                    <div class="works-list-image-container" @click="toWorks(data.id)">
+                    <router-link class="works-list-image-container" :to="{ name: 'works', params: { id: data.id } }">
                         <div class="works-list-image" :style="{ backgroundImage: `url(${data.images_url})` }">
                         </div>
-                    </div>
+                    </router-link>
                     <div class="works-list-context">
                         <p>ID:{{ data.id }}</p>
                         <p>中文名稱:{{ data.title }}</p>
                         <p>日文名稱:{{ data.title_jp }}</p>
                         <p>季度:{{ data.season }}</p>
+                        <p>播映方式:{{ data.media }}</p>
                         <p>日本首播日:{{ !data.StartedAt_jp || data.StartedAt_jp === "" ? "Null" : data.StartedAt_jp }}</p>
                         <p>台灣首播日:{{ !data.StartedAt_tw || data.StartedAt_tw === "" ? "Null" : data.StartedAt_tw }}</p>
                         <p>建立時間:{{ dateConvert(data.createdAt) }}</p>
@@ -68,7 +65,7 @@ onMounted(async () => {
     flex-wrap: wrap;
 
     .works-list-card {
-        height: 12em;
+        height: auto; //12em
         margin: 8px 8px;
         display: flex;
         background: #5a5a5a;
