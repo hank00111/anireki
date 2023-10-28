@@ -108,7 +108,7 @@ const yearListOpen = () => {
 
 const yearWheel = (event: any) => {
     if (event.deltaY > 0) {
-        goToSeason(selectItem.value + 1);
+        selectItem.value >= yearList.value.length - 1 ? 0 : goToSeason(selectItem.value + 1);
     } else {
         selectItem.value <= 0 ? 0 : goToSeason(selectItem.value - 1);
     }
