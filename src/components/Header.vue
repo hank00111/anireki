@@ -106,11 +106,18 @@ const yearListOpen = () => {
     yearListShow.value = !yearListShow.value;
 }
 
+const yearWheel = (event: any) => {
+    if (event.deltaY > 0) {
+        goToSeason(selectItem.value + 1);
+    } else {
+        selectItem.value <= 0 ? 0 : goToSeason(selectItem.value - 1);
+    }
+}
+
 
 onMounted(() => {
     checkMobile();
     window.addEventListener("resize", checkMobile, true);
-
     yearList.value.forEach((year, index) => {
         if (year.seasonID == animeWorks.seasonID) {
             selectItem.value = index;
@@ -132,7 +139,7 @@ onUnmounted(() => {
             <div v-if="!isMobile" class="anime-panel-container">
                 <div class="all-anime" @click="getAllAnime" :class="{ selectedH: selectItem === -1 }">所有動畫
                 </div>
-                <div class="year-nav">
+                <div class="year-nav" @wheel="yearWheel">
                     <div v-for="(year, index) in yearList" class="year-items"
                         :style="{ transform: `translate(${getLeft()}px,0)` }" :class="{ selected: selectItem === index }"
                         @click="goToSeason(index)">
