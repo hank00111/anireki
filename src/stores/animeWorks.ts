@@ -140,7 +140,6 @@ export const useAnimeWorks = defineStore("animeWorks", {
       } catch (error) {
         console.log(error);
       }
-      // setTimeout(() => (this.isLoaded = true), 2000);
     },
     async getWorks(worksID: string) {
       await axios.get(`/works/${worksID}`).then((res) => {
@@ -296,7 +295,6 @@ export const useAnimeWorks = defineStore("animeWorks", {
     },
     async deleteWatchHistory(worksId: string) {
       try {
-        // console.log(worksId);
         await axios.delete("/user/watchistory", { data: { worksID: worksId } })
           .then((res) => {
             this.watchData = [];
@@ -307,7 +305,6 @@ export const useAnimeWorks = defineStore("animeWorks", {
                 (anime) => anime.id === hValue.worksID
               );
               if (matchingAnime) {
-                // const index = this.animeData.indexOf(matchingAnime);
                 const wData = {
                   worksID: matchingAnime.id,
                   title: matchingAnime.title,
@@ -337,6 +334,18 @@ export const useAnimeWorks = defineStore("animeWorks", {
       } else {
         return false;
       }
+    },
+    async checkWorks(worksTitle_jp: string) {
+      //.post("/console/add", data, worksConfig)
+      await axios.post("/console/checkWorks", worksTitle_jp).then((res) => {
+        console.log(res.data);
+        // const data = JSON.parse(LZString.decompressFromUTF16(res.data));
+        // this.worksData = data[0];
+        // this.worksLoaded = true
+      }).catch((error) => {
+        console.log(error);
+        // this.worksLoaded = false;
+      });
     },
     SysSeason() {
       const thisYear = new Date().getFullYear();

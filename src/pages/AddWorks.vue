@@ -102,8 +102,15 @@ watch(thisSeason, (thisSeason) => {
     // console.log(refSeason.value);
 });
 
+watch(refTitle_jp, (refTitle_jp) => {
+    if (refTitle_jp.length >= 1) {
+        console.log(refTitle_jp);
+        animeWorks.checkWorks(refTitle_jp);
+    }
+});
+
 watchEffect(() => {
-    // console.log(thisYear.value)
+    // console.log(refTitle_jp.value);
     // if (dataStaus.value) {
     //     setTimeout(() => {
     //         dataStaus.value = !dataStaus.value
@@ -120,7 +127,7 @@ watchEffect(() => {
         <Header class="console-header"></Header>
         <div class="content console-content">
             <Transition>
-                <div v-if="animeWorks.isLoaded" class="console-container">
+                <div v-if="!animeWorks.isLoaded" class="console-container">
                     <div class="card">
                         <div class="card-item">
                             <p>ID</p>
@@ -144,12 +151,12 @@ watchEffect(() => {
                             </div>
                         </div>
                         <div class="card-item">
-                            <p>中文名稱</p>
-                            <input type="text" v-model="refTitle">
-                        </div>
-                        <div class="card-item">
                             <p>日文名稱</p>
                             <input type="text" v-model="refTitle_jp">
+                        </div>
+                        <div class="card-item">
+                            <p>中文名稱</p>
+                            <input type="text" v-model="refTitle">
                         </div>
                         <div class="card-item">
                             <p>Copyright</p>
