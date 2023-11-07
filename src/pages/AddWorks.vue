@@ -39,6 +39,11 @@ const refMedia = ref<string>('TV');
 const refCopyRight = ref<string>('');
 
 const refSel = ref<string>('');
+const refSendNow = ref<number>(Date.now());
+const refSendPrev = ref<number>(0);
+const refSendLimit = ref<number>(10);
+
+
 
 
 const imageSel = (e: any) => {
@@ -79,6 +84,10 @@ const selControl = (e: string) => {
     refSel.value = e;
 }
 
+const titleCheck = () => {
+
+}
+
 onBeforeMount(() => {
     animeWorks.getWorksCount();
 });
@@ -103,9 +112,20 @@ watch(thisSeason, (thisSeason) => {
 });
 
 watch(refTitle_jp, (refTitle_jp) => {
-    if (refTitle_jp.length >= 1) {
-        console.log(refTitle_jp);
+    refSendNow.value = Date.now();
+    if (refTitle_jp.length >= 1 && refSendNow.value - refSendPrev.value >= 1000) {
+        console.log(Date.now());
+        refSendLimit.value += 1;
+        refSendPrev.value = Date.now();
         animeWorks.checkWorks(refTitle_jp);
+    }
+
+    if (refSendLimit.value >= 10) {
+        refSendLimit.value = 0;
+        setTimeout(() => {
+            refSendPrev.value = Date.now();
+            animeWorks.checkWorks(refTitle_jp);
+        }, 5000);
     }
 });
 
@@ -118,6 +138,7 @@ watchEffect(() => {
     // }
     // console.log(thisYear.value);
 });
+
 </script>
 
 <template>
@@ -127,7 +148,7 @@ watchEffect(() => {
         <Header class="console-header"></Header>
         <div class="content console-content">
             <Transition>
-                <div v-if="animeWorks.isLoaded" class="console-container">
+                <div v-if="!animeWorks.isLoaded" class="console-container">
                     <div class="card">
                         <div class="card-item">
                             <p>ID</p>
@@ -152,7 +173,7 @@ watchEffect(() => {
                         </div>
                         <div class="card-item">
                             <p>日文名稱</p>
-                            <input type="text" v-model="refTitle_jp">
+                            <input type="text" v-model="refTitle_jp" @input="titleCheck()">
                         </div>
                         <div class="card-item">
                             <p>中文名稱</p>

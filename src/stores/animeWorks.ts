@@ -336,7 +336,6 @@ export const useAnimeWorks = defineStore("animeWorks", {
       }
     },
     async checkWorks(worksTitle_jp: string) {
-      //.post("/console/add", data, worksConfig)
       await axios.post("/console/checkWorks", { WorksTitle_jp: worksTitle_jp }).then((res) => {
         console.log(res.data);
         // const data = JSON.parse(LZString.decompressFromUTF16(res.data));
