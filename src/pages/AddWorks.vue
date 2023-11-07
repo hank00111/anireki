@@ -148,7 +148,7 @@ watchEffect(() => {
         <Header class="console-header"></Header>
         <div class="content console-content">
             <Transition>
-                <div v-if="!animeWorks.isLoaded" class="console-container">
+                <div v-if="animeWorks.isLoaded" class="console-container">
                     <div class="card">
                         <div class="card-item">
                             <p>ID</p>
