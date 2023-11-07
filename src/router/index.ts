@@ -5,7 +5,7 @@ import Console from "../pages/Console.vue";
 import NotFound from "../pages/NotFound.vue";
 import AddWorks from "../pages/AddWorks.vue";
 import Works from "../pages/Works.vue";
-import WorksList from "../pages/WorksList.vue";
+import WorksList from "../pages/WorksList.vue"; 
 import WatchList from "../pages/WatchList.vue";
 import { useUserControl } from "../stores/userControl";
 
