@@ -340,7 +340,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
       await axios.post("/console/checkWorks", { WorksTitle_jp: worksTitle_jp }).then((res) => {
         const data = JSON.parse(LZString.decompressFromUTF16(res.data));
         data.Code === '10' ? this.worksCheck = false : this.worksCheck = true;
-        console.log(this.worksCheck);
+        console.log(data);
       }).catch((error) => {
         console.log(error);
       });
