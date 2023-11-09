@@ -112,6 +112,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
       StartedAt_tw: "",
       createdAt: "",
     } as originDataModel,
+    worksCheck: false,
   }),
   actions: {
     async getAnimeData() {
@@ -337,13 +338,11 @@ export const useAnimeWorks = defineStore("animeWorks", {
     },
     async checkWorks(worksTitle_jp: string) {
       await axios.post("/console/checkWorks", { WorksTitle_jp: worksTitle_jp }).then((res) => {
-        console.log(res.data);
-        // const data = JSON.parse(LZString.decompressFromUTF16(res.data));
-        // this.worksData = data[0];
-        // this.worksLoaded = true
+        const data = JSON.parse(LZString.decompressFromUTF16(res.data));
+        data.Code === '10' ? this.worksCheck = false : this.worksCheck = true;
+        console.log(this.worksCheck);
       }).catch((error) => {
         console.log(error);
-        // this.worksLoaded = false;
       });
     },
     SysSeason() {
