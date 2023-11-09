@@ -113,7 +113,7 @@ watch(thisSeason, (thisSeason) => {
 
 watch(refTitle_jp, (refTitle_jp) => {
     refSendNow.value = Date.now();
-    if (refTitle_jp.length >= 1 && refSendNow.value - refSendPrev.value >= 1000) {
+    if (refTitle_jp.length >= 1 && refSendNow.value - refSendPrev.value >= 500) {
         console.log(Date.now());
         refSendLimit.value += 1;
         refSendPrev.value = Date.now();
