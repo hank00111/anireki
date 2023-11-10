@@ -74,7 +74,7 @@ onMounted(() => {
         .home-works-images {
             height: 0;
             overflow: hidden;
-            padding-bottom: 137%;
+            padding-bottom: 140%;
             background-size: 100% 100%;
             background-position: center;
             background-color: #6b6363;
