@@ -41,7 +41,7 @@ const refCopyRight = ref<string>('');
 const refSel = ref<string>('');
 const refSendNow = ref<number>(Date.now());
 const refSendPrev = ref<number>(0);
-const refSendLimit = ref<number>(10);
+const refSendLimit = ref<number>(0);
 
 
 
