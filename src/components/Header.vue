@@ -260,6 +260,7 @@ onUnmounted(() => {
 
     .year-items {
         color: #ffffff5a;
+        height: 36px;
         display: block;
         white-space: nowrap;
         font-size: 18px;
