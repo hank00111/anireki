@@ -3,6 +3,9 @@ import { defineStore } from "pinia";
 export const useAnimeYears = defineStore("animeYears", {
     state: () => ({
         animeYearsObj: [
+            { name: '2024年10月新番', name_jp: '2024 秋', seasonID: '2024-autumn' },
+            { name: '2024年7月新番', name_jp: '2024 夏', seasonID: '2024-summer' },
+            { name: '2024年4月新番', name_jp: '2024 春', seasonID: '2024-spring' },
             { name: '2024年1月新番', name_jp: '2024 冬', seasonID: '2024-winter' },
             { name: '2023年10月新番', name_jp: '2023 秋', seasonID: '2023-autumn' },
             { name: '2023年7月新番', name_jp: '2023 夏', seasonID: '2023-summer' },

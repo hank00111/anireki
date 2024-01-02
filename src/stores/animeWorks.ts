@@ -100,7 +100,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
     watchDay: new Date().getDate(),
     userControll: useUserControl(),
     seasonSel: 1,
-    seasonID: '2023-autumn',
+    seasonID: '2024-winter',
     worksLoaded: false,
     worksData: {
       id: "",
