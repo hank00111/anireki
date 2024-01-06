@@ -1,16 +1,13 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
+
 import Header from '../components/Header.vue'
 import Sidebar from '../components/Sidebar.vue'
 import WorksCard from '../components/WorksCard.vue';
-import { useAnimeWorks } from '../stores/animeWorks'
 
-const animeWorks = useAnimeWorks();
 
 onMounted(() => {
-    document.title = 'History - Anireki';
-    animeWorks.getAnimeData();
-    animeWorks.getWatchHistory();
+    document.title = 'WatchLater - Anireki';
 })
 
 </script>
@@ -20,8 +17,7 @@ onMounted(() => {
     <div class="main">
         <Header></Header>
         <div class="content">
-            <!-- <div class="home-title">Time Line</div> -->
-            <WorksCard :from-Page="2"></WorksCard>
+            <WorksCard :from-Page="3"></WorksCard>
         </div>
     </div>
 </template>

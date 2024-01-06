@@ -6,7 +6,7 @@ import NotFound from "../pages/NotFound.vue";
 import AddWorks from "../pages/AddWorks.vue";
 import Works from "../pages/Works.vue";
 import WorksList from "../pages/WorksList.vue"; 
-import WatchList from "../pages/WatchList.vue";
+import WatchLater from "../pages/WatchLater.vue";
 import { useUserControl } from "../stores/userControl";
 
 const routes = [
@@ -23,9 +23,9 @@ const routes = [
     meta: { title: "觀看紀錄 - Anireki" },
   },
   {
-    path: "/watchlist",
-    name: "watchlist",
-    component: WatchList,
+    path: "/watchlater",
+    name: "watchlater",
+    component: WatchLater,
     meta: { title: "待看清單 - Anireki" },
   },
   {

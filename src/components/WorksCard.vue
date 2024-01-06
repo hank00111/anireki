@@ -4,7 +4,7 @@ import { useAnimeWorks } from '../stores/animeWorks'
 import WorksDialog from './WorksDialog.vue'
 //const props = 
 const props = defineProps({
-    isHome: Boolean
+    fromPage: Number
 })
 
 const animeWorks = useAnimeWorks();
@@ -20,7 +20,7 @@ const dialogClose = () => {
 }
 
 onMounted(() => {
-    if (props.isHome) {
+    if (props.fromPage == 1) {
         animeWorks.getWatchHistory()
     }
 })
@@ -28,8 +28,8 @@ onMounted(() => {
 
 <template>
     <Transition name="works-card">
-        <div v-if="isHome" class="home-card">
-            <div v-for="data in  animeWorks.animeData " class="home-works-card" v-on:click="dialogOpen(data.id)">
+        <div v-if="fromPage == 1" class="home-card">
+            <div v-for="data in animeWorks.animeData" class="home-works-card" v-on:click="dialogOpen(data.id)">
                 <div class="home-works-images" :class="{ imagesCover: data.imagesCover }"
                     :style="{ backgroundImage: `url(${data.images_url})` }">
                 </div>
@@ -38,8 +38,8 @@ onMounted(() => {
                 </div>
             </div>
         </div>
-        <div v-else class="history-card">
-            <div v-for="data  in  animeWorks.watchData " class="history-works-card" v-on:click="dialogOpen(data.worksID)">
+        <div v-else-if="fromPage == 2" class="history-card">
+            <div v-for="data  in animeWorks.watchData " class="history-works-card" v-on:click="dialogOpen(data.worksID)">
                 <div class="history-works-images" :class="{ imagesCover: data.imagesCover }"
                     :style="{ backgroundImage: `url(${data.images_url})` }">
                 </div>
@@ -48,6 +48,16 @@ onMounted(() => {
                     <p class="history-works-context-date">觀看日期:{{ data.watchDate }}</p>
                 </div>
             </div>
+        </div>
+        <div v-else class="home-card">
+            <!-- <div v-for="data in animeWorks.animeData" class="home-works-card" v-on:click="dialogOpen(data.id)">
+                <div class="home-works-images" :class="{ imagesCover: data.imagesCover }"
+                    :style="{ backgroundImage: `url(${data.images_url})` }">
+                </div>
+                <div class="home-works-context">
+                    <p>{{ data.title === "" ? data.title_jp : data.title }}</p>
+                </div>
+            </div> -->
         </div>
     </Transition>
     <WorksDialog :diaLogShow="refDialog" :worksID="refDialogID" @wokrs-dialog-close="dialogClose"

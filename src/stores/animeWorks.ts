@@ -49,6 +49,12 @@ interface originDataModel {
   createdAt: string;
 };
 
+interface watchLaterModel {
+  worksID: string;
+  createdAt: string;
+}
+
+
 export const useAnimeWorks = defineStore("animeWorks", {
   state: () => ({
     animeData: [
@@ -113,6 +119,8 @@ export const useAnimeWorks = defineStore("animeWorks", {
       createdAt: "",
     } as originDataModel,
     worksCheck: false,
+    watchLater: [] as watchLaterModel[],
+    watchLaterData: [],
   }),
   actions: {
     async getAnimeData() {
@@ -336,6 +344,8 @@ export const useAnimeWorks = defineStore("animeWorks", {
         return false;
       }
     },
+    //watchLater
+    //
     async checkWorks(worksTitle_jp: string) {
       await axios.post("/console/checkWorks", { WorksTitle_jp: worksTitle_jp }).then((res) => {
         const data = JSON.parse(LZString.decompressFromUTF16(res.data));

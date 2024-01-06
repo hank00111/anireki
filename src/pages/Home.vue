@@ -31,7 +31,7 @@ onBeforeMount(() => {
         <Header :is-home="true"></Header>
         <div class="content">
             <div class="home-title"></div>
-            <WorksCard :is-home="true"></WorksCard>
+            <WorksCard :from-Page="1"></WorksCard>
         </div>
     </div>
 </template>
