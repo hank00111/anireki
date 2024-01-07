@@ -345,10 +345,10 @@ export const useAnimeWorks = defineStore("animeWorks", {
       }
     },
     //watchLater
-    async getWatchLater() { },
-    async addWatchLater(worksId: string) { },
-    async deleteWatchLater(worksId: string) { },
-    checkWatchLater(worksId: string) { },
+    // async getWatchLater() { },
+    // async addWatchLater(worksId: string) { },
+    // async deleteWatchLater(worksId: string) { },
+    // checkWatchLater(worksId: string) { },
     //
     async checkWorks(worksTitle_jp: string) {
       await axios.post("/console/checkWorks", { WorksTitle_jp: worksTitle_jp }).then((res) => {
