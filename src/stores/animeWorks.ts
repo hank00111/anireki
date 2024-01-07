@@ -92,7 +92,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
     //   StartedAt_tw: "",
     //   createdAt: "",
     //   imagesCover: false
-    // },],
+    // }],
     historyData: [] as historyDataModel[],
     watchData: [] as watchDataModel[],
     worksCount: "",
@@ -345,6 +345,10 @@ export const useAnimeWorks = defineStore("animeWorks", {
       }
     },
     //watchLater
+    async getWatchLater() { },
+    async addWatchLater(worksId: string) { },
+    async deleteWatchLater(worksId: string) { },
+    checkWatchLater(worksId: string) { },
     //
     async checkWorks(worksTitle_jp: string) {
       await axios.post("/console/checkWorks", { WorksTitle_jp: worksTitle_jp }).then((res) => {

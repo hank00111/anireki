@@ -8,13 +8,15 @@ const props = defineProps({
     diaLogShow: Boolean,
     worksID: String
 })
+
 const animeWorks = useAnimeWorks();
 const userControll = useUserControl();
 const showAnime = ref();
 const dateShow = ref(false);
 const deleteShow = ref(false);
 const seasonCoverClass = ref('');
-const Viewed = ref(false);
+const viewed = ref(false);
+const isWatchLater = ref(false);
 
 
 const dateOpen = () => {
@@ -58,11 +60,19 @@ const seasonCover = (season: string) => {
     }
 }
 
+const addToWatchLater = () => {
+    isWatchLater.value = true;
+}
+
+const deleteWatchLater = () => {
+    isWatchLater.value = false;
+}
+
 watchEffect(() => {
     if (props.diaLogShow) {
         showAnime.value = animeWorks.originData.find((anime) => anime.id === props.worksID);
         if (props.worksID) {
-            Viewed.value = animeWorks.checkWatchHistory(props.worksID);
+            viewed.value = animeWorks.checkWatchHistory(props.worksID);
         }
     } else {
         dateShow.value = false;
@@ -132,7 +142,20 @@ watchEffect(() => {
                         </div>
                     </div>
                     <div class="works-dialog-control-bt">
-                        <button v-if="!Viewed" @click="dateOpen">新增至觀看紀錄</button>
+                        <div v-if="!isWatchLater" class="works-dialog-control-watchlater" @click="addToWatchLater">
+                            <svg height="34" width="34" viewBox="0 -1020 960 960" fill="currentColor">
+                                <path
+                                    d="M200-120v-640q0-33 23.5-56.5T280-840h400q33 0 56.5 23.5T760-760v640L480-240 200-120Zm80-122 200-86 200 86v-518H280v518Zm0-518h400-400Z" />
+                            </svg>
+                        </div>
+                        <div v-else class="works-dialog-control-watchlater" :class="{ isWatchlater: isWatchLater }"
+                            @click="deleteWatchLater">
+                            <svg height="34" width="34" viewBox="0 -1020 960 960" fill="currentColor">
+                                <path
+                                    d="M200-120v-640q0-33 23.5-56.5T280-840h400q33 0 56.5 23.5T760-760v640L480-240 200-120Z" />
+                            </svg>
+                        </div>
+                        <button v-if="!viewed" @click="dateOpen">新增至觀看紀錄</button>
                         <button v-else class="works-dialog-control-bt-delete" @click="deleteOpen">刪除觀看紀錄</button>
                     </div>
                 </div>
@@ -257,6 +280,7 @@ watchEffect(() => {
         .works-dialog-control-bt {
             display: flex;
             justify-content: right;
+            user-select: none;
 
             >button {
                 color: #fff;
@@ -281,155 +305,171 @@ watchEffect(() => {
                 }
             }
 
-            .works-dialog-control-bt-delete {
-                background: hsla(0, 100%, 50%, 0.5);
+            .works-dialog-control-watchlater {
+                display: flex;
+                margin-right: 10px;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                transition: all 0.3s;
+
+                &:hover {
+                    color: #ffb429;
+                }
+            }
+
+            .isWatchlater {
+                color: #ffb429;
             }
         }
 
+        .works-dialog-control-bt-delete {
+            background: hsla(0, 100%, 50%, 0.5);
+        }
     }
 
-    .works-dialog-date-container {
-        position: fixed;
+}
+
+.works-dialog-date-container {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3000;
+    backdrop-filter: blur(5px);
+
+    .wokrs-dialog-date-ch {
         width: 100%;
         height: 100%;
         display: flex;
         align-items: center;
         justify-content: center;
-        z-index: 3000;
-        backdrop-filter: blur(5px);
+    }
 
-        .wokrs-dialog-date-ch {
-            width: 100%;
-            height: 100%;
+    .wokrs-dialog-delete {
+        color: #fff;
+        padding: 16px;
+        font-size: 1.3em;
+        border-radius: 10px;
+        background: #232932;
+        filter: drop-shadow(0 0em 0.8em black);
+
+        >p {
+            margin-top: 4px;
+        }
+
+        .works-dialog-delete-bt {
             display: flex;
             align-items: center;
             justify-content: center;
-        }
+            height: 100%;
 
-        .wokrs-dialog-delete {
-            color: #fff;
-            padding: 16px;
-            font-size: 1.3em;
-            border-radius: 10px;
-            background: #232932;
-            filter: drop-shadow(0 0em 0.8em black);
+            >button {
+                color: #fff;
+                border: 0;
+                padding: 0;
+                width: 96px;
+                height: 44px;
+                font-size: 1.1em;
+                font-weight: 600;
+                border-radius: 10px;
+                background: hsla(0, 0%, 100%, .2);
+                transition: all 0.3s;
 
-            >p {
-                margin-top: 4px;
-            }
+                &:hover {
+                    background: #fff;
+                    color: #000;
+                }
 
-            .works-dialog-delete-bt {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                height: 100%;
-
-                >button {
-                    color: #fff;
-                    border: 0;
-                    padding: 0;
-                    width: 96px;
-                    height: 44px;
-                    font-size: 1.1em;
-                    font-weight: 600;
-                    border-radius: 10px;
-                    background: hsla(0, 0%, 100%, .2);
-                    transition: all 0.3s;
-
-                    &:hover {
-                        background: #fff;
-                        color: #000;
-                    }
-
-                    &:active {
-                        transition: all 0.2s;
-                        transform: scale(0.9);
-                    }
+                &:active {
+                    transition: all 0.2s;
+                    transform: scale(0.9);
                 }
             }
         }
+    }
 
-        .wokrs-dialog-login {
+    .wokrs-dialog-login {
+        color: #fff;
+        width: 120px;
+        height: 50px;
+        background: hsla(0, 0%, 100%, .2);
+        user-select: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        border-radius: 5px;
+
+        >a {
+            font-size: 1.2em;
+            display: block;
+            width: 100%;
             color: #fff;
-            width: 120px;
-            height: 50px;
-            background: hsla(0, 0%, 100%, .2);
-            user-select: none;
-            cursor: pointer;
+            line-height: 50px;
+            text-decoration: none;
+        }
+    }
+
+    .works-dialog-date {
+        position: relative;
+        min-width: 35%;
+        display: flex;
+        border-radius: 10px;
+        flex-direction: column;
+        background: #232932;
+        padding: 4px;
+        filter: drop-shadow(0 0em 0.8em black);
+
+        >p {
+            color: #fff;
+            margin: 0;
+            padding: 12px;
+            font-size: 1.5em;
+        }
+
+        .works-dialog-date-context {
+            min-height: 100px;
             display: flex;
             align-items: center;
             justify-content: center;
-            text-align: center;
-            border-radius: 5px;
-
-            >a {
-                font-size: 1.2em;
-                display: block;
-                width: 100%;
-                color: #fff;
-                line-height: 50px;
-                text-decoration: none;
-            }
         }
 
-        .works-dialog-date {
-            position: relative;
-            min-width: 35%;
+        .works-dialog-date-bt {
             display: flex;
-            border-radius: 10px;
-            flex-direction: column;
-            background: #232932;
-            padding: 4px;
-            filter: drop-shadow(0 0em 0.8em black);
+            align-items: end;
+            justify-content: flex-end;
+            height: 100%;
+            padding: 10px 10px 10px 0;
 
-            >p {
+            >button {
                 color: #fff;
-                margin: 0;
-                padding: 12px;
-                font-size: 1.5em;
-            }
+                border: 0;
+                padding: 0;
+                width: 120px;
+                height: 54px;
+                font-size: 1.2em;
+                font-weight: 600;
+                border-radius: 10px;
+                background: hsla(0, 0%, 100%, .2);
+                transition: all 0.3s;
 
-            .works-dialog-date-context {
-                min-height: 100px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
+                &:hover {
+                    background: #fff;
+                    color: #000;
+                }
 
-            .works-dialog-date-bt {
-                display: flex;
-                align-items: end;
-                justify-content: flex-end;
-                height: 100%;
-                padding: 10px 10px 10px 0;
-
-                >button {
-                    color: #fff;
-                    border: 0;
-                    padding: 0;
-                    width: 120px;
-                    height: 54px;
-                    font-size: 1.2em;
-                    font-weight: 600;
-                    border-radius: 10px;
-                    background: hsla(0, 0%, 100%, .2);
-                    transition: all 0.3s;
-
-                    &:hover {
-                        background: #fff;
-                        color: #000;
-                    }
-
-                    &:active {
-                        transition: all 0.2s;
-                        transform: scale(0.9);
-                    }
+                &:active {
+                    transition: all 0.2s;
+                    transform: scale(0.9);
                 }
             }
         }
     }
 }
-
 
 .works-dialog-enter-from {
     opacity: 0;
