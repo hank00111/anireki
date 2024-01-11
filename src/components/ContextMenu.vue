@@ -12,10 +12,9 @@ const animeWorks = useAnimeWorks();
 const menu = ref();
 const w = ref(0);
 const h = ref(0);
+
 const addWatchHistory = () => {
     animeWorks.addWatchHistory(props?.id || '0');
-    console.log("add")
-
 }
 
 watchEffect(() => {

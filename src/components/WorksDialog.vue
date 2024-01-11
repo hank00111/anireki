@@ -73,6 +73,7 @@ watchEffect(() => {
         showAnime.value = animeWorks.originData.find((anime) => anime.id === props.worksID);
         if (props.worksID) {
             viewed.value = animeWorks.checkWatchHistory(props.worksID);
+            // isWatchLater.value = animeWorks.checkWatchLater(props.worksID);
         }
     } else {
         dateShow.value = false;
