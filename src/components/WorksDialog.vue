@@ -327,6 +327,7 @@ watchEffect(() => {
         .works-dialog-control-bt-delete {
             background: hsla(0, 100%, 50%, 0.5);
         }
+
     }
 
 }
