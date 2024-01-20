@@ -306,6 +306,10 @@ watchEffect(() => {
                 }
             }
 
+            .works-dialog-control-bt-delete {
+                background: hsla(0, 100%, 50%, 0.5) !important;
+            }
+
             .works-dialog-control-watchlater {
                 display: flex;
                 margin-right: 10px;
@@ -322,11 +326,9 @@ watchEffect(() => {
             .isWatchlater {
                 color: #ffb429;
             }
+
         }
 
-        .works-dialog-control-bt-delete {
-            background: hsla(0, 100%, 50%, 0.5);
-        }
 
     }
 
