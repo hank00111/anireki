@@ -1,5 +1,4 @@
 <script setup lang="ts">
-//import { watch, ref } from 'vue';
 import { useDrakModeStore } from '../stores/drakMode'
 const darkMode = useDrakModeStore();
 
@@ -40,7 +39,6 @@ const SwichDarkMode = () => {
                     <span>新增動畫</span>
                 </router-link>
             </li>
-
         </ul>
 
         <div class="sidebar-switch-darkmode" style="display: none;">
