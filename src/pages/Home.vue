@@ -1,23 +1,23 @@
 <script setup lang="ts">
-import { onMounted, onBeforeMount } from 'vue';
-import Header from '../components/Header.vue'
-import Sidebar from '../components/Sidebar.vue'
-import WorksCard from '../components/WorksCard.vue';
-import { useAnimeWorks } from '../stores/animeWorks'
-import Notifications from '../components/Notifications.vue'
+import { onMounted, onBeforeMount } from "vue";
+import Header from "../components/Header.vue";
+import Sidebar from "../components/Sidebar.vue";
+import WorksCard from "../components/WorksCard.vue";
+import { useAnimeWorks } from "../stores/animeWorks";
+import Notifications from "../components/Notifications.vue";
 
 const animeWorks = useAnimeWorks();
-const rightEventClose = (e: { preventDefault: () => void; }) => {
-    e.preventDefault();
-}
+const rightEventClose = (e: { preventDefault: () => void }) => {
+	e.preventDefault();
+};
 onMounted(() => {
-    document.title = 'Home - Anireki';
-
-})
+	document.title = "Home - Anireki";
+	console.log(import.meta.env.VITE_API_BASE_URL);
+});
 onBeforeMount(() => {
-    animeWorks.SysSeason();
-    animeWorks.getAnimeData();
-})
+	animeWorks.SysSeason();
+	animeWorks.getAnimeData();
+});
 
 // watchEffect(() => {
 //animeWorks.infoMsg
@@ -25,25 +25,25 @@ onBeforeMount(() => {
 </script>
 
 <template>
-    <Sidebar @click.right="rightEventClose($event)"></Sidebar>
-    <div class="main" @click.right="rightEventClose($event)">
-        <Notifications :show="animeWorks.infoStatus" :info="animeWorks.infoMsg"></Notifications>
-        <Header :is-home="true"></Header>
-        <div class="content">
-            <div class="home-title"></div>
-            <WorksCard :from-Page="1"></WorksCard>
-        </div>
-    </div>
+	<Sidebar @click.right="rightEventClose($event)"></Sidebar>
+	<div class="main" @click.right="rightEventClose($event)">
+		<Notifications :show="animeWorks.infoStatus" :info="animeWorks.infoMsg"></Notifications>
+		<Header :is-home="true"></Header>
+		<div class="content">
+			<div class="home-title"></div>
+			<WorksCard :from-Page="1"></WorksCard>
+		</div>
+	</div>
 </template>
 
-<style scoped lang="scss" >
+<style scoped lang="scss">
 .home-title {
-    margin-left: 18px;
-    font-weight: bold;
-    font-size: 2.5em;
-    line-height: normal;
-    color: #fff;
-    user-select: none;
+	margin-left: 18px;
+	font-weight: bold;
+	font-size: 2.5em;
+	line-height: normal;
+	color: #fff;
+	user-select: none;
 }
 
 // .home-info {
