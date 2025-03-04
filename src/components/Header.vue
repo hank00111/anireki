@@ -1,19 +1,19 @@
 <script setup lang="ts">
-import { useRouter } from 'vue-router'
-import { ref, onMounted, onUnmounted } from 'vue';
-import { useAnimeWorks } from '../stores/animeWorks'
-import { useAnimeYears } from '../stores/animeYears'
-import { useUserControl } from '../stores/userControl'
+import { useRouter } from "vue-router";
+import { ref, onMounted, onUnmounted } from "vue";
+import { useAnimeWorks } from "../stores/animeWorks";
+import { useAnimeYears } from "../stores/animeYears";
+import { useUserControl } from "../stores/userControl";
 
 const props = defineProps({
-    isHome: Boolean,
-    isConsole: Boolean,
-})
+	isHome: Boolean,
+	isConsole: Boolean,
+});
 
 const router = useRouter();
 const animeWorks = useAnimeWorks();
 const animeYears = useAnimeYears();
-const userControll = useUserControl();
+const userControl = useUserControl();
 
 const showMenu = ref<boolean>(false);
 const selectItem = ref(animeWorks.seasonSel);
@@ -27,334 +27,350 @@ const yearListShow = ref<boolean>(false);
 
 const yearList = ref(animeYears.animeYearsObj);
 
-
 const userLogout = () => {
-    showMenu.value = !showMenu;
-    yearListShow.value = false;
-    userControll.logout();
-}
+	showMenu.value = !showMenu;
+	yearListShow.value = false;
+	userControl.logout();
+};
 
 const goToSeason = (index: number) => {
-    selectItem.value = index;
-    animeWorks.seasonSel = index;
-    animeWorks.seasonID = yearList.value[index].seasonID;
-    animeWorks.getSeason(yearList.value[index].seasonID);
-}
+	selectItem.value = index;
+	animeWorks.seasonSel = index;
+	animeWorks.seasonID = yearList.value[index].seasonID;
+	animeWorks.getSeason(yearList.value[index].seasonID);
+	// console.log(yearList.value[index].seasonID);
+};
 
 const getAllAnime = () => {
-    selectItem.value = -1;
-    animeWorks.getSeason('all');
-}
+	selectItem.value = -1;
+	animeWorks.getSeason("all");
+};
 
 const getLeft = () => {
-    let left = 0;
+	let left = 0;
 
-    left = (selectItem.value - 1) * -148;
-    if (selectItem.value <= 1) {
-        left = 0;
-    }
-    return left;
-}
+	left = (selectItem.value - 1) * -148;
+	if (selectItem.value <= 1) {
+		left = 0;
+	}
+	return left;
+};
 
 const toConsole = () => {
-    showMenu.value = !showMenu.value;
-    router.push('/console');
-}
+	showMenu.value = !showMenu.value;
+	router.push("/console");
+};
 
 const toForm = () => {
-    window.location.href = "https://forms.gle/mq6hLwdMR4i6e9Mh8";
-}
+	window.location.href = "https://forms.gle/mq6hLwdMR4i6e9Mh8";
+};
 
 const yearNavCenter = () => {
-    const c = window.innerWidth / 2;
-    const y_c = (window.innerWidth - 32 - userPanel.value.offsetWidth) / 2;
-    navCenter.value = c - y_c + 20;
-}
+	const c = window.innerWidth / 2;
+	const y_c = (window.innerWidth - 32 - userPanel.value.offsetWidth) / 2;
+	navCenter.value = c - y_c + 20;
+};
 
 const checkMobile = () => {
-    yearNavCenter();
-    window.innerWidth < 768 ? isMobile.value = true : isMobile.value = false;
-}
+	yearNavCenter();
+	window.innerWidth < 768 ? (isMobile.value = true) : (isMobile.value = false);
+};
 
 const yearAnime = () => {
-    yearTextOpacity.value = 0;
-    setTimeout(() => {
-        yearTextOpacity.value = 1;
-    }, 180)
-}
+	yearTextOpacity.value = 0;
+	setTimeout(() => {
+		yearTextOpacity.value = 1;
+	}, 180);
+};
 
 const yearControl = (next: boolean, isDown: boolean, index: number) => {
-    if (isDown) {
-        yearListShow.value = false;
-        goToSeason(index);
-    } else {
-        if (next) {
-            selectItem.value -= 1;
-            goToSeason(selectItem.value);
-        } else {
-            selectItem.value += 1;
-            goToSeason(selectItem.value);
-        }
-    }
-    yearAnime();
-    selectItem.value <= 0 ? nextEnd.value = true : nextEnd.value = false;
-    selectItem.value >= yearList.value.length - 1 ? prevEnd.value = true : prevEnd.value = false;
-}
+	if (isDown) {
+		yearListShow.value = false;
+		goToSeason(index);
+	} else {
+		if (next) {
+			selectItem.value -= 1;
+			goToSeason(selectItem.value);
+		} else {
+			selectItem.value += 1;
+			goToSeason(selectItem.value);
+		}
+	}
+	yearAnime();
+	selectItem.value <= 0 ? (nextEnd.value = true) : (nextEnd.value = false);
+	selectItem.value >= yearList.value.length - 1 ? (prevEnd.value = true) : (prevEnd.value = false);
+};
 
 const yearListOpen = () => {
-    showMenu.value = false;
-    yearListShow.value = !yearListShow.value;
-}
+	showMenu.value = false;
+	yearListShow.value = !yearListShow.value;
+};
 
 const yearWheel = (event: any) => {
-    if (event.deltaY > 0) {
-        selectItem.value >= yearList.value.length - 1 ? 0 : goToSeason(selectItem.value + 1);
-    } else {
-        selectItem.value <= 0 ? 0 : goToSeason(selectItem.value - 1);
-    }
-}
-
+	if (event.deltaY > 0) {
+		selectItem.value >= yearList.value.length - 1 ? 0 : goToSeason(selectItem.value + 1);
+	} else {
+		selectItem.value <= 0 ? 0 : goToSeason(selectItem.value - 1);
+	}
+};
 
 onMounted(() => {
-    checkMobile();
-    window.addEventListener("resize", checkMobile, true);
-    yearList.value.forEach((year, index) => {
-        if (year.seasonID == animeWorks.seasonID) {
-            selectItem.value = index;
-            animeWorks.seasonSel = index;
-        }
-    })
-})
-
-onUnmounted(() => {
-    window.removeEventListener("resize", checkMobile, true);
+	checkMobile();
+	window.addEventListener("resize", checkMobile, true);
+	if (yearList.value && yearList.value.length > 0) {
+		const foundIndex = yearList.value.findIndex((year) => year.seasonID === animeWorks.seasonID);
+		if (foundIndex !== -1) {
+			selectItem.value = foundIndex;
+			animeWorks.seasonSel = foundIndex;
+		}
+	}
 });
 
-
+onUnmounted(() => {
+	window.removeEventListener("resize", checkMobile, true);
+});
 </script>
 
 <template>
-    <div class="header">
-        <div v-if="props.isHome" class="anime-panel">
-            <div v-if="!isMobile" class="anime-panel-container">
-                <div class="all-anime" @click="getAllAnime" :class="{ selectedH: selectItem === -1 }">所有動畫
-                </div>
-                <div class="year-nav" @wheel="yearWheel">
-                    <div v-for="(year, index) in yearList" class="year-items"
-                        :style="{ transform: `translate(${getLeft()}px,0)` }" :class="{ selected: selectItem === index }"
-                        @click="goToSeason(index)">
-                        {{ year.name }}
-                    </div>
-                </div>
-            </div>
-            <div v-else class="anime-panel-container">
-                <div class="mobile-year-nav" :style="{ marginLeft: `${navCenter}px` }">
-                    <div class="year-next">
-                        <svg v-if="!nextEnd" @click="yearControl(true, false, 0)" width="32" height="32"
-                            viewBox="0 -960 960 800" fill="#5c9291">
-                            <path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z" />
-                        </svg>
-                    </div>
-                    <div class="mobile-year" :style="{ opacity: `${yearTextOpacity}` }" @click="yearListOpen">
-                        {{ yearList[selectItem].name_jp }}</div>
-                    <div v-show="yearListShow" class="mobile-year-nav-list">
-                        <ul>
-                            <li v-for="(year, index) in yearList" @click="yearControl(false, true, index)">
-                                {{ year.name_jp }}
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="year-prev">
-                        <svg v-if="!prevEnd" @click="yearControl(false, false, 0)" width="32" height="32"
-                            viewBox="0 -960 960 800" fill="#5c9291">
-                            <path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z" />
-                        </svg>
-                    </div>
-                </div>
+	<div class="header">
+		<div v-if="props.isHome" class="anime-panel">
+			<div v-if="!isMobile" class="anime-panel-container">
+				<div class="all-anime" @click="getAllAnime" :class="{ selectedH: selectItem === -1 }">所有動畫</div>
+				<div class="year-nav" @wheel="yearWheel">
+					<div
+						v-for="(year, index) in yearList"
+						class="year-items"
+						:style="{ transform: `translate(${getLeft()}px,0)` }"
+						:class="{ selected: selectItem === index }"
+						@click="goToSeason(index)"
+					>
+						{{ year.name }}
+					</div>
+				</div>
+			</div>
+			<div v-else class="anime-panel-container">
+				<div class="mobile-year-nav" :style="{ marginLeft: `${navCenter}px` }">
+					<div class="year-next">
+						<svg
+							v-if="!nextEnd"
+							@click="yearControl(true, false, 0)"
+							width="32"
+							height="32"
+							viewBox="0 -960 960 800"
+							fill="#5c9291"
+						>
+							<path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z" />
+						</svg>
+					</div>
+					<div class="mobile-year" :style="{ opacity: `${yearTextOpacity}` }" @click="yearListOpen">
+						{{ yearList[selectItem].name_jp }}
+					</div>
+					<div v-show="yearListShow" class="mobile-year-nav-list">
+						<ul>
+							<li v-for="(year, index) in yearList" @click="yearControl(false, true, index)">
+								{{ year.name_jp }}
+							</li>
+						</ul>
+					</div>
+					<div class="year-prev">
+						<svg
+							v-if="!prevEnd"
+							@click="yearControl(false, false, 0)"
+							width="32"
+							height="32"
+							viewBox="0 -960 960 800"
+							fill="#5c9291"
+						>
+							<path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z" />
+						</svg>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div v-else></div>
 
-            </div>
-        </div>
-        <div v-else></div>
-
-        <div class="userPanel" ref="userPanel">
-            <div v-if="userControll.name.length != 0 ? true : false" class="userLoggedin">
-                <button @click="showMenu = !showMenu; yearListShow = false;">
-                    <img draggable="false" :src=userControll.picture alt="">
-                </button>
-                <div v-if="showMenu" class="userMenu">
-                    <div class="contextMenu">
-                        <ul>
-                            <li @click="toForm()">
-                                <button>
-                                    <span>聯絡我們</span>
-                                </button>
-                            </li>
-                            <li v-if="userControll.consoleAccess" @click="toConsole()">
-                                <button>
-                                    <span>控制台</span>
-                                </button>
-                            </li>
-                            <li @click="showMenu = !showMenu">
-                                <button>
-                                    <span>設定</span>
-                                </button>
-                            </li>
-                            <li @click="userLogout"><button><span>登出</span></button></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div v-else class="userLogin">
-                <button @click="userControll.getUser(1)">
-                    <span>登入</span>
-                </button>
-            </div>
-        </div>
-    </div>
+		<div class="userPanel" ref="userPanel">
+			<div v-if="userControl.name.length != 0 ? true : false" class="userLoggedin">
+				<button
+					@click="
+						showMenu = !showMenu;
+						yearListShow = false;
+					"
+				>
+					<img draggable="false" :src="userControl.picture" alt="" />
+				</button>
+				<div v-if="showMenu" class="userMenu">
+					<div class="contextMenu">
+						<ul>
+							<li @click="toForm()">
+								<button>
+									<span>聯絡我們</span>
+								</button>
+							</li>
+							<li v-if="userControl.consoleAccess" @click="toConsole()">
+								<button>
+									<span>控制台</span>
+								</button>
+							</li>
+							<li @click="showMenu = !showMenu">
+								<button>
+									<span>設定</span>
+								</button>
+							</li>
+							<li @click="userLogout">
+								<button><span>登出</span></button>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div v-else class="userLogin">
+				<button @click="userControl.getUser(1)">
+					<span>登入</span>
+				</button>
+			</div>
+		</div>
+	</div>
 </template>
 
 <style lang="scss">
 .anime-panel {
-    width: calc(100% - 70px);
-    display: flex;
-    align-items: center;
+	width: calc(100% - 70px);
+	display: flex;
+	align-items: center;
 }
 
 .anime-panel-container {
-    display: flex;
-    width: 100%;
-    overflow: hidden;
+	display: flex;
+	width: 100%;
+	gap: 4px;
+	overflow: hidden;
 }
 
 .all-anime {
-    font-size: 18px;
-    padding: 4px 0px;
-    color: #ffffff5a;
-    user-select: none;
-    cursor: pointer;
-    transition: transform .4s, color .4s;
+	font-size: 18px;
+	padding: 4px 0px;
+	color: #ffffff5a;
+	user-select: none;
+	cursor: pointer;
+	transition: transform 0.4s, color 0.4s;
 
-
-    &:hover {
-        color: #fff;
-    }
+	&:hover {
+		color: #fff;
+	}
 }
 
 .selectedH {
-    color: #fff;
-    background-color: #23262b;
-    box-sizing: border-box;
-    font-weight: 700;
-    border-bottom: solid 2px #89c3eb;
-    transition: transform .4s, color .4s;
+	color: #fff;
+	background-color: #23262b;
+	box-sizing: border-box;
+	font-weight: 700;
+	border-bottom: solid 2px #89c3eb;
+	transition: transform 0.4s, color 0.4s;
 }
 
 .year-nav {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    overflow: hidden;
-    max-width: 90%;
-    height: 100%;
-    overflow-x: auto;
+	flex: 1;
+	display: flex;
+	align-items: center;
+	overflow: hidden;
+	max-width: 90%;
+	height: 100%;
+	overflow-x: auto;
 
-    .year-items {
-        color: #ffffff5a;
-        height: 36px;
-        display: block;
-        white-space: nowrap;
-        font-size: 18px;
-        padding: 4px 0px;
-        margin: 0px 2px;
-        min-width: 144px;
-        text-align: center;
-        user-select: none;
-        cursor: pointer;
-        transition: transform .4s, color .4s;
+	.year-items {
+		color: #ffffff5a;
+		height: 36px;
+		display: block;
+		white-space: nowrap;
+		font-size: 18px;
+		padding: 4px 0px;
+		margin: 0px 2px;
+		min-width: 144px;
+		text-align: center;
+		user-select: none;
+		cursor: pointer;
+		transition: transform 0.4s, color 0.4s;
 
-        &:hover {
-            color: #fff;
-        }
-    }
+		&:hover {
+			color: #fff;
+		}
+	}
 
-    .selected {
-        color: #fff;
-        background-color: #23262b;
-        box-sizing: border-box;
-        font-weight: 700;
-        border-bottom: solid 2px #89c3eb;
-        transition: transform .4s, color .4s;
-    }
+	.selected {
+		color: #fff;
+		background-color: #23262b;
+		box-sizing: border-box;
+		font-weight: 700;
+		border-bottom: solid 2px #89c3eb;
+		transition: transform 0.4s, color 0.4s;
+	}
 }
 
 .year-nav::-webkit-scrollbar {
-    display: none;
+	display: none;
 }
 
 .mobile-year-nav {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    align-items: center;
-    justify-content: center;
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+	align-items: center;
+	justify-content: center;
 
-    .year-next {
-        width: 32px;
-        height: 32px;
-        user-select: none;
-        transform-origin: 49.2% 58.5%;
-        transform: rotate(-180deg);
-    }
+	.year-next {
+		width: 32px;
+		height: 32px;
+		user-select: none;
+		transform-origin: 49.2% 58.5%;
+		transform: rotate(-180deg);
+	}
 
-    .year-prev {
-        width: 32px;
-        height: 32px;
-        user-select: none;
-    }
+	.year-prev {
+		width: 32px;
+		height: 32px;
+		user-select: none;
+	}
 
-    .mobile-year {
-        color: #fff;
-        width: 100px;
-        height: 32px;
-        line-height: 32px;
-        text-align: center;
-        font-size: 19px;
-        transition: opacity 0.1s ease-in-out;
-    }
+	.mobile-year {
+		color: #fff;
+		width: 100px;
+		height: 32px;
+		line-height: 32px;
+		text-align: center;
+		font-size: 19px;
+		transition: opacity 0.1s ease-in-out;
+	}
 }
 
 .mobile-year-nav-list {
-    z-index: 100;
-    position: absolute;
-    max-height: 340px;
-    inset: 0px auto auto auto;
-    transform: translate(0px, 50px);
+	z-index: 100;
+	position: absolute;
+	max-height: 340px;
+	inset: 0px auto auto auto;
+	transform: translate(0px, 50px);
 
-    >ul {
-        margin: 0;
-        padding: 0;
-        background-color: #525657;
-        border-radius: 4px;
-        -webkit-box-shadow: 0 16px 24px rgba(0, 0, 0, 0.3),
-            0 6px 8px rgba(0, 0, 0, 0.2);
-        box-shadow: 0 16px 24px rgba(0, 0, 0, 0.3),
-            0 6px 8px rgba(0, 0, 0, 0.2);
-        width: 160px;
-        max-height: 340px;
-        overflow: hidden;
-        overflow-y: scroll;
+	> ul {
+		margin: 0;
+		padding: 0;
+		background-color: #525657;
+		border-radius: 4px;
+		-webkit-box-shadow: 0 16px 24px rgba(0, 0, 0, 0.3), 0 6px 8px rgba(0, 0, 0, 0.2);
+		box-shadow: 0 16px 24px rgba(0, 0, 0, 0.3), 0 6px 8px rgba(0, 0, 0, 0.2);
+		width: 160px;
+		max-height: 340px;
+		overflow: hidden;
+		overflow-y: scroll;
 
-        >li {
-            font-size: 19px;
-            line-height: 34px;
-            text-align: center;
-        }
-    }
+		> li {
+			font-size: 19px;
+			line-height: 34px;
+			text-align: center;
+		}
+	}
 
-    >ul::-webkit-scrollbar {
-        display: none;
-    }
-
-
+	> ul::-webkit-scrollbar {
+		display: none;
+	}
 }
 </style>

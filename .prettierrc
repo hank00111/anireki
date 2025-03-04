@@ -2,5 +2,5 @@
 	"semi": true,
 	"useTabs": true,
 	"printWidth": 110,
-	"endOfLine": "lf"
+	"endOfLine": "crlf"
 }
