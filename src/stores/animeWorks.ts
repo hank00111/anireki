@@ -1,4 +1,5 @@
 import axios from "axios";
+import axiosInstance from '../common/axiosRequest';
 import LZString from "lz-string";
 import { defineStore } from "pinia";
 import { useUserControl } from "./userControl";
@@ -132,7 +133,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
 	actions: {
 		async getAnimeData() {
 			try {
-				let res = await axios.get("/works/all");
+				let res = await axiosInstance.get("/works/all");
 				const data = JSON.parse(LZString.decompressFromUTF16(res.data));
 				this.originData = data;
 				this.getSeason(this.seasonID);

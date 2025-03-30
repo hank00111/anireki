@@ -12,6 +12,7 @@ import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError } f
 const service: AxiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL || '/api',
   timeout: 30000, // 請求超時時間 (毫秒)
+  withCredentials: true, // 允許跨域請求時發送 cookies
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json',

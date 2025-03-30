@@ -1,4 +1,5 @@
 import axios from "axios";
+import axiosInstance from "../common/axiosRequest";
 import LZString from "lz-string";
 import { defineStore } from "pinia";
 axios.defaults.baseURL = "https://a2.anireki.com/v2";
@@ -17,7 +18,7 @@ export const useUserControl = defineStore("login", {
     async getUser(src: number) {
       try {
         if (this.name.length === 0) {
-          let res = await axios.get("/auth/user");
+          let res = await axiosInstance.get("/auth/user");
           if (res.status === 200) {
             const data = JSON.parse(LZString.decompressFromUTF16(res.data));
             this.isLogin = true;
@@ -35,7 +36,7 @@ export const useUserControl = defineStore("login", {
     },
     async getConsole() {
       try {
-        let res = await axios.get("/auth/console");
+        let res = await axiosInstance.get("/auth/console");
         if (res.status === 200) {
           // console.log(this.name);
           this.checkConsole = true;
@@ -51,7 +52,7 @@ export const useUserControl = defineStore("login", {
     },
     logout() {
       try {
-        axios.post("/auth/logout");
+        axiosInstance.post("/auth/logout");
         this.name = "";
         this.picture = "";
         this.isLogin = false;
