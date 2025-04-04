@@ -1,10 +1,7 @@
-import axios from "axios";
 import axiosInstance from '../common/axiosRequest';
 import LZString from "lz-string";
 import { defineStore } from "pinia";
 import { useUserControl } from "./userControl";
-axios.defaults.baseURL = "https://a2.anireki.com/v2";
-axios.defaults.withCredentials = true;
 
 // const jsonConfig = {
 //   headers: {
@@ -116,6 +113,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
 		seasonSel: 1,
 		seasonID: "2024-winter",
 		worksLoaded: false,
+		allWorksLoaded: false,
 		worksData: {
 			id: "",
 			title: "",
@@ -137,13 +135,15 @@ export const useAnimeWorks = defineStore("animeWorks", {
 				const data = JSON.parse(LZString.decompressFromUTF16(res.data));
 				this.originData = data;
 				this.getSeason(this.seasonID);
+				this.allWorksLoaded = true;
 			} catch (error) {
+				this.allWorksLoaded = false;
 				console.log(error);
 			}
 		},
 		// async getCurrentSeason() {
 		//   try {
-		//     let res = await axios.get("/works/season/2023-summer");
+		//     let res = await axiosInstance.get("/works/season/2023-summer");
 		//     this.animeData = res.data;
 		//   } catch (error) {
 		//     console.log(error);
@@ -151,7 +151,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
 		// },
 		async getWorksCount() {
 			try {
-				let res = await axios.get("/console/workscount");
+				let res = await axiosInstance.get("/console/workscount");
 				this.worksCount = LZString.decompressFromUTF16(res.data);
 				this.isLoaded = true;
 			} catch (error) {
@@ -159,7 +159,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
 			}
 		},
 		async getWorks(worksID: string) {
-			await axios
+			await axiosInstance
 				.get(`/works/${worksID}`)
 				.then((res) => {
 					const data = JSON.parse(LZString.decompressFromUTF16(res.data));
@@ -188,7 +188,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
 		async addWorks(data: object) {
 			try {
 				this.sendStatus = true;
-				await axios
+				await axiosInstance
 					.post("/console/add", data, worksConfig)
 					.then((res) => {
 						const d = JSON.parse(LZString.decompressFromUTF16(res.data));
@@ -211,7 +211,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
 		},
 		async updateWorks(data: object) {
 			this.sendStatus = true;
-			await axios
+			await axiosInstance
 				.post("/console/update", data, worksConfig)
 				.then((res) => {
 					const d = JSON.parse(LZString.decompressFromUTF16(res.data));
@@ -230,7 +230,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
 		},
 		async getWatchHistory() {
 			try {
-				await axios
+				await axiosInstance
 					.get("/user/watchistory")
 					.then((res) => {
 						this.watchData = [];
@@ -271,13 +271,12 @@ export const useAnimeWorks = defineStore("animeWorks", {
 					watchData: [
 						{
 							worksID: worksId,
-							watchDate: `${this.watchYear}.${
-								this.watchMonth < 10 ? "0" + this.watchMonth.toString() : this.watchMonth.toString()
-							}.${this.watchDay < 10 ? "0" + this.watchDay.toString() : this.watchDay.toString()}`,
+							watchDate: `${this.watchYear}.${this.watchMonth < 10 ? "0" + this.watchMonth.toString() : this.watchMonth.toString()
+								}.${this.watchDay < 10 ? "0" + this.watchDay.toString() : this.watchDay.toString()}`,
 						},
 					],
 				};
-				await axios
+				await axiosInstance
 					.post("/user/watchistory", addData)
 					.then((res) => {
 						this.watchData = [];
@@ -316,7 +315,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
 		},
 		async deleteWatchHistory(worksId: string) {
 			try {
-				await axios
+				await axiosInstance
 					.delete("/user/watchistory", { data: { worksID: worksId } })
 					.then((res) => {
 						this.watchData = [];
@@ -358,7 +357,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
 		//watchLater
 		async getWatchLater() {
 			try {
-				await axios
+				await axiosInstance
 					.get("/user/watchlater")
 					.then((res) => {
 						this.watchLater = [];
@@ -381,7 +380,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
 					.catch((error) => {
 						console.log(error);
 					});
-			} catch (error) {}
+			} catch (error) { }
 		},
 		async addWatchLater(worksId: string) {
 			if (this.userControll.name.length < 1) {
@@ -392,7 +391,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
 						worksID: worksId,
 					},
 				};
-				await axios
+				await axiosInstance
 					.post("/user/watchlater", addData)
 					.then((res) => {
 						this.watchLater = [];
@@ -431,7 +430,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
 			}
 		},
 		async checkWorks(worksTitle_jp: string) {
-			await axios
+			await axiosInstance
 				.post("/console/checkWorks", { WorksTitle_jp: worksTitle_jp })
 				.then((res) => {
 					const data = JSON.parse(LZString.decompressFromUTF16(res.data));

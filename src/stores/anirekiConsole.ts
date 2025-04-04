@@ -1,10 +1,7 @@
-import axios from "axios";
 import axiosInstance from "../common/axiosRequest";
 import LZString from "lz-string";
 import { defineStore } from "pinia";
 // import { useUserControl } from "./userControl";
-axios.defaults.baseURL = "https://a2.anireki.com/v2";
-axios.defaults.withCredentials = true;
 
 interface logDataModel {
 	user: string;

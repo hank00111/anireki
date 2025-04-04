@@ -29,7 +29,7 @@ onMounted(() => {
 <template>
     <Transition name="works-card">
         <div v-if="fromPage == 1" class="home-card">
-            <div v-for="data in animeWorks.animeData" class="home-works-card" v-on:click="dialogOpen(data.id)">
+            <div v-for="data in animeWorks.animeData" class="home-works-card" @click="dialogOpen(data.id)">
                 <div class="home-works-images" :class="{ imagesCover: data.imagesCover }"
                     :style="{ backgroundImage: `url(${data.images_url})` }">
                 </div>
@@ -39,7 +39,7 @@ onMounted(() => {
             </div>
         </div>
         <div v-else-if="fromPage == 2" class="history-card">
-            <div v-for="data  in animeWorks.watchData " class="history-works-card" v-on:click="dialogOpen(data.worksID)">
+            <div v-for="data in animeWorks.watchData" class="history-works-card" @click="dialogOpen(data.worksID)">
                 <div class="history-works-images" :class="{ imagesCover: data.imagesCover }"
                     :style="{ backgroundImage: `url(${data.images_url})` }">
                 </div>
@@ -64,7 +64,7 @@ onMounted(() => {
         @close-dialog="dialogClose" />
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .home-card {
     gap: 12px;
     padding: 12px 10px 12px 15px;
@@ -97,13 +97,15 @@ onMounted(() => {
         .home-works-context {
             >p {
                 margin: 0;
-                padding: 8px 6px;
-                font-size: 1.1em;
-                font-weight: 700;
-                color: #eee;
+                padding: 6px 6px;
+                font-size: 1.10em;
+                font-weight: 600;
+                color: #ffffff;
                 white-space: nowrap;
                 text-overflow: ellipsis;
                 overflow: hidden;
+                letter-spacing: 0.02em;
+                text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
             }
         }
 

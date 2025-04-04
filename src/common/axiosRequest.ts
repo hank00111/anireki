@@ -10,9 +10,9 @@ import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError } f
 
 // 創建 axios 實例
 const service: AxiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || '/api',
-  timeout: 30000, // 請求超時時間 (毫秒)
-  withCredentials: true, // 允許跨域請求時發送 cookies
+  baseURL: import.meta.env.VITE_API_BASE_URL,
+  timeout: 30000,
+  withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
@@ -43,7 +43,7 @@ const service: AxiosInstance = axios.create({
 // service.interceptors.response.use(
 //   (response: AxiosResponse): AxiosResponse['data'] => {
 //     const res = response.data;
-    
+
 //     // 如果 API 回傳的是自訂的成功/失敗結構
 //     if (res && typeof res.success !== 'undefined') {
 //       if (res.success) {
@@ -60,13 +60,13 @@ const service: AxiosInstance = axios.create({
 //         return Promise.reject(new Error(res.message || '未知錯誤'));
 //       }
 //     }
-    
+
 //     // 如果 API 回傳的是標準回應，直接返回
 //     return res;
 //   },
 //   (error: AxiosError) => {
 //     const { response } = error;
-    
+
 //     if (response) {
 //       // 處理 HTTP 狀態碼錯誤
 //       switch (response.status) {
@@ -113,7 +113,7 @@ const service: AxiosInstance = axios.create({
 //         console.error('網路異常，請檢查網路連接');
 //       }
 //     }
-    
+
 //     return Promise.reject(error);
 //   }
 // );
