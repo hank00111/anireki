@@ -94,8 +94,7 @@ const titleCheck = () => {
 }
 
 // 添加貼上事件處理函數
-const handlePaste = async (event: ClipboardEvent) => {
-    console.log("處理貼上事件");
+const handlePaste = async () => {
     // 延遲一點執行搜索，確保輸入框的值已經更新
     setTimeout(async () => {
         if (refTitle_jp.value && refTitle_jp.value.length >= 2) {
