@@ -2,7 +2,6 @@
 import { onMounted } from 'vue';
 import { useDrakModeStore } from './stores/drakMode'
 import { useUserControl } from './stores/userControl'
-import { useErrorStore } from './stores/errorStore'
 import ErrorNotifications from './components/ErrorNotifications.vue'
 
 const drakMode = useDrakModeStore();

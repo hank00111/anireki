@@ -1,5 +1,5 @@
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
-
+import axios, { AxiosInstance } from 'axios';
+//, AxiosRequestConfig, AxiosResponse, AxiosError
 // API 回應的介面
 // interface ApiResponse<T = any> {
 //   success: boolean;
