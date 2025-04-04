@@ -6,9 +6,11 @@ import ConsoleSidebar from '../components/ConsoleSidebar.vue'
 import { ref, reactive, onMounted, onBeforeMount, watchEffect, watch } from 'vue';
 import { useAnimeWorks } from '../stores/animeWorks'
 import { useRouter } from 'vue-router';
+import { useErrorStore } from '../stores/errorStore';
 
 const animeWorks = useAnimeWorks();
 const router = useRouter();
+const errorStore = useErrorStore();
 
 interface seasonModel {
     [key: number]: any;
@@ -43,8 +45,8 @@ const refSendNow = ref<number>(Date.now());
 const refSendPrev = ref<number>(0);
 const refSendLimit = ref<number>(0);
 
-
-
+const showAnnictResults = ref<boolean>(false);
+const selectedAnnictWorkId = ref<number | null>(null);
 
 const imageSel = (e: any) => {
     refImages.value = e.target.files[0];
@@ -74,9 +76,11 @@ const sendData = () => {
             if (animeWorks.sendCode === 0) {
                 router.push('/console')
             }
+        }).catch((error: any) => {
+            errorStore.addError(`新增作品失敗: ${error.message || error}`, 'error');
         });
     } else {
-        console.log(`SEND ERROR ${animeWorks.worksCount} ${refTitle_jp.value}`)
+        errorStore.addError('請檢查日文名稱', 'error');
     }
 };
 
@@ -85,11 +89,82 @@ const selControl = (e: string) => {
 }
 
 const titleCheck = () => {
+    // 由於我們已經在 paste 事件和 watch 中處理，這裡可以留空或做額外處理
+    console.log("輸入檢查中");
+}
 
+// 添加貼上事件處理函數
+const handlePaste = async (event: ClipboardEvent) => {
+    console.log("處理貼上事件");
+    // 延遲一點執行搜索，確保輸入框的值已經更新
+    setTimeout(async () => {
+        if (refTitle_jp.value && refTitle_jp.value.length >= 2) {
+            try {
+                refSendPrev.value = Date.now();
+                await animeWorks.checkWorks(refTitle_jp.value);
+                showAnnictResults.value = animeWorks.annictWorks.length > 0;
+                console.log(`貼上後搜索結果: ${animeWorks.annictWorks.length} 個結果`);
+            } catch (error: any) {
+                errorStore.addError(`貼上後搜尋失敗: ${error.message || error}`, 'error');
+            }
+        }
+    }, 100);
+}
+
+const selectAnnictWork = (work: any) => {
+    if (!work) return;
+    refTitle_jp.value = work.title;
+    selectedAnnictWorkId.value = work.id;
+
+    const mediaType = work.media ? work.media.toUpperCase() : '';
+    if (mediaType === 'TV') {
+        refMedia.value = 'TV';
+    } else if (mediaType === 'MOVIE') {
+        refMedia.value = '映画';
+    } else if (mediaType === 'OVA') {
+        refMedia.value = 'OVA';
+    } else {
+        refMedia.value = '其他';
+    }
+
+    if (work.season_name) {
+        const seasonParts = work.season_name.split('-');
+        const year = seasonParts[0];
+        const season = seasonParts[1];
+
+        if (year) {
+            thisYear.value = year;
+        }
+
+        if (season) {
+            const seasonMap: { [key: string]: number } = {
+                'winter': 1,
+                'spring': 2,
+                'summer': 3,
+                'autumn': 4,
+                'fall': 4
+            };
+
+            if (seasonMap[season.toLowerCase()]) {
+                refSeason.value = seasonMap[season.toLowerCase()];
+                thisSeason.value = seaSon[refSeason.value];
+            }
+        }
+    } else if (work.season_year) {
+        thisYear.value = work.season_year.toString();
+    }
+
+    if (work.released_on) {
+        refStartedAt_jp.value = work.released_on;
+    }
+
+    showAnnictResults.value = false;
+    animeWorks.selectAnnictWork(work);
 }
 
 onBeforeMount(() => {
     animeWorks.getWorksCount();
+    animeWorks.clearAnnictWorks();
 });
 
 onMounted(() => {
@@ -111,20 +186,45 @@ watch(thisSeason, (thisSeason) => {
     // console.log(refSeason.value);
 });
 
-watch(refTitle_jp, (refTitle_jp) => {
-    refSendNow.value = Date.now();
-    if (refTitle_jp.length >= 1 && refSendNow.value - refSendPrev.value >= 500) {
-        console.log(Date.now());
-        refSendLimit.value += 1;
+watch(refTitle_jp, async (newValue, oldValue) => {
+    // 如果是突變的大量文本（例如黏貼），直接處理
+    if (newValue && newValue.length > 5 && (!oldValue || newValue.length - oldValue.length > 3)) {
+        console.log("檢測到可能的貼上操作");
         refSendPrev.value = Date.now();
-        animeWorks.checkWorks(refTitle_jp);
+        try {
+            await animeWorks.checkWorks(newValue);
+            showAnnictResults.value = animeWorks.annictWorks.length > 0;
+        } catch (error: any) {            
+            errorStore.addError(`處理文字失敗: ${error.message || error}`, 'error');
+        }
+        return;
     }
 
+    // 普通輸入的節流處理
+    refSendNow.value = Date.now();
+    if (newValue.length >= 2 && refSendNow.value - refSendPrev.value >= 500) {
+        refSendLimit.value += 1;
+        refSendPrev.value = Date.now();
+
+        try {
+            await animeWorks.checkWorks(newValue);
+            showAnnictResults.value = animeWorks.annictWorks.length > 0;
+        } catch (error: any) {
+            errorStore.addError(`搜尋失敗: ${error.message || error}`, 'error');
+        }
+    }
+
+    // 處理搜索限制
     if (refSendLimit.value >= 10) {
         refSendLimit.value = 0;
-        setTimeout(() => {
+        setTimeout(async () => {
             refSendPrev.value = Date.now();
-            animeWorks.checkWorks(refTitle_jp);
+            try {
+                await animeWorks.checkWorks(newValue);
+                showAnnictResults.value = animeWorks.annictWorks.length > 0;
+            } catch (error: any) {
+                errorStore.addError(`延遲搜尋失敗: ${error.message || error}`, 'error');
+            }
         }, 5000);
     }
 });
@@ -173,8 +273,49 @@ watchEffect(() => {
                         </div>
                         <div class="card-item">
                             <p>日文名稱</p>
-                            <input type="text" v-model="refTitle_jp" @input="titleCheck()">
+                            <input type="text" v-model="refTitle_jp" @input="titleCheck()" @paste="handlePaste">
+                            <Transition>
+                                <div v-if="showAnnictResults && animeWorks.annictWorks.length > 0"
+                                    class="annict-results">
+                                    <div v-for="work in animeWorks.annictWorks" :key="work.id" class="annict-work"
+                                        @click="selectAnnictWork(work)">
+                                        <div class="annict-work-image">
+                                            <img v-if="work.images && work.images.recommended_url"
+                                                :src="work.images.recommended_url" alt="作品封面">
+                                            <img v-else-if="work.images && work.images.facebook && work.images.facebook.og_image_url"
+                                                :src="work.images.facebook.og_image_url" alt="作品封面">
+                                            <div v-else class="no-image">暫無圖片</div>
+                                        </div>
+                                        <div class="annict-work-info">
+                                            <p class="annict-work-title">{{ work.title }}</p>
+                                            <div class="annict-work-details">
+                                                <span v-if="work.season_name && work.season_year">{{ work.season_year }}
+                                                    {{ work.season_name }}</span>
+                                                <span v-if="work.media">{{ work.media }}</span>
+                                                <span v-if="work.released_on" class="annict-work-date">放送日: {{
+                                                    work.released_on }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="annict-source">source from annict</div>
+                                </div>
+                            </Transition>
                         </div>
+                        <div v-if="selectedAnnictWorkId" class="card-item external-links-container">
+                            <div class="external-links">
+                                <a :href="`https://annict.com/works/${selectedAnnictWorkId}`" target="_blank"
+                                    class="external-link annict-link">
+                                    https://annict.com/works/{{ selectedAnnictWorkId }}
+                                    <span class="external-link-icon">↗</span>
+                                </a>
+                                <a :href="`https://abema.tv/search?q=${encodeURIComponent(refTitle_jp)}`"
+                                    target="_blank" class="external-link abema-link">
+                                    https://abema.tv/search?q={{ refTitle_jp }}
+                                    <span class="external-link-icon">↗</span>
+                                </a>
+                            </div>
+                        </div>
+
                         <div class="card-item">
                             <p>中文名稱</p>
                             <input type="text" v-model="refTitle">
@@ -229,6 +370,7 @@ watchEffect(() => {
     }
 
     .card-item {
+        position: relative;
         display: flex;
         flex-direction: column;
         color: #ffffff;
@@ -259,7 +401,7 @@ watchEffect(() => {
             color: #ffffff;
             font-size: 1.4em;
             margin-top: 10px;
-            margin-bottom: 20px;
+            margin-bottom: 30px; // 增加底部間距，為懸浮視窗留空間
             max-width: 100%;
             padding: 10px;
             vertical-align: middle;
@@ -354,5 +496,182 @@ watchEffect(() => {
         margin-bottom: 20px;
     }
 
+}
+
+.annict-results {
+    position: absolute;
+    width: 100%;
+    max-height: 350px;
+    overflow-y: auto;
+    border: 2px solid #57595d;
+    border-radius: 10px;
+    background-color: #1a1a1a;
+    z-index: 10;
+    padding: 10px;
+    margin-top: 0; // 移除上邊距
+    top: calc(100% - 20px); // 調整頂部位置，減去輸入框底部的 margin
+    left: 0; // 保持左邊對齊
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); // 保持陰影效果
+
+    .annict-source {
+        font-size: 0.75em;
+        color: #888888;
+        text-align: right;
+        margin-top: 5px;
+        padding-right: 5px;
+        font-weight: 500; // 增加字重使文字更清晰
+        letter-spacing: 0.02em; // 增加字距提高可讀性
+        opacity: 0.85; // 稍微調整透明度
+        font-family: 'Noto Sans JP', sans-serif;
+    }
+
+    .annict-work {
+        display: flex;
+        padding: 10px;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+
+        &:hover {
+            background-color: #2a2a2a;
+        }
+
+        .annict-work-image {
+            width: 60px;
+            height: 60px;
+            overflow: hidden;
+            margin-right: 10px;
+            border-radius: 5px;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            .no-image {
+                width: 100%;
+                height: 100%;
+                background-color: #333;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: #aaa;
+                font-size: 0.8em;
+                text-align: center;
+            }
+        }
+
+        .annict-work-info {
+            .annict-work-title {
+                margin: 0 0 5px 0;
+                color: #ffffff;
+                font-size: 1em;
+            }
+
+            .annict-work-details {
+                font-size: 0.85em;
+                color: #c0c0c0;
+
+                span {
+                    margin-right: 10px;
+                }
+
+                .annict-work-date {
+                    color: #91ccff; // 凸顯放送日期
+                }
+            }
+        }
+    }
+}
+
+// 新增相對定位使Annict結果顯示在正確位置
+.card-item {
+    position: relative;
+    // ...existing code...
+}
+
+.annict-link-container {
+    margin-top: -15px;
+    margin-bottom: 15px;
+
+    .annict-link {
+        display: inline-flex;
+        align-items: center;
+        color: #91ccff;
+        font-size: 0.9em;
+        text-decoration: none;
+        padding: 6px 10px;
+        border-radius: 6px;
+        background-color: rgba(30, 30, 30, 0.5);
+        transition: all 0.2s ease;
+
+        &:hover {
+            background-color: rgba(50, 50, 50, 0.7);
+            color: #b3daff;
+            text-decoration: underline;
+        }
+
+        .annict-link-icon {
+            margin-left: 5px;
+            font-size: 0.9em;
+        }
+    }
+}
+
+.ml-10 {
+    margin-left: 10px;
+}
+
+.external-links-container {
+    margin-top: -15px;
+    margin-bottom: 15px;
+
+    .external-links {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .external-link {
+        display: inline-flex;
+        align-items: center;
+        color: #91ccff;
+        font-size: 0.9em;
+        text-decoration: none;
+        padding: 6px 10px;
+        border-radius: 6px;
+        background-color: rgba(30, 30, 30, 0.5);
+        transition: all 0.2s ease;
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+
+        &:hover {
+            background-color: rgba(50, 50, 50, 0.7);
+            color: #b3daff;
+            text-decoration: underline;
+        }
+
+        .external-link-icon {
+            margin-left: 5px;
+            font-size: 0.9em;
+            flex-shrink: 0;
+        }
+    }
+
+    .abema-link {
+        color: #ff8e8e; // Abema.tv 的顏色偏紅，使用紅色系
+
+        &:hover {
+            color: #ffaeae;
+        }
+    }
+
+    .annict-link {
+        // 沿用藍色
+    }
 }
 </style>

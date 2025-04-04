@@ -1,8 +1,7 @@
-import axios from "axios";
+import axiosInstance from "../common/axiosRequest";
 import LZString from "lz-string";
 import { defineStore } from "pinia";
-axios.defaults.baseURL = "https://a2.anireki.com/v2";
-axios.defaults.withCredentials = true;
+import { useErrorStore } from "./errorStore";
 //a1.anireki.com/v2/
 
 export const useUserControl = defineStore("login", {
@@ -14,30 +13,41 @@ export const useUserControl = defineStore("login", {
     consoleAccess: false,
   }),
   actions: {
+    resetUserState() {
+      this.name = "";
+      this.picture = "";
+      this.isLogin = false;
+      this.consoleAccess = false;
+      this.checkConsole = false;
+    },
     async getUser(src: number) {
       try {
         if (this.name.length === 0) {
-          let res = await axios.get("/auth/user");
+          const res = await axiosInstance.get("/auth/user");
           if (res.status === 200) {
             const data = JSON.parse(LZString.decompressFromUTF16(res.data));
             this.isLogin = true;
             this.name = data.name;
             this.picture = data.picture;
             this.consoleAccess = data.console || false;
-            // console.log(this.name);
-          } else if (res.status === 204 && src === 1) {
-            window.location.href = "https://a2.anireki.com/v2/auth/google";
+          } else if (res.status === 204) {
+            this.resetUserState();
+            if (src === 1) {
+              window.location.href = "https://a2.anireki.com/v2/auth/google";
+            }
           }
         }
       } catch (error) {
-        // console.log(error);
+        this.resetUserState();
+        const errorStore = useErrorStore();
+        errorStore.addError('無法取得使用者資訊', 'error');
+        console.error('Failed to get user info:', error);
       }
     },
     async getConsole() {
       try {
-        let res = await axios.get("/auth/console");
+        let res = await axiosInstance.get("/auth/console");
         if (res.status === 200) {
-          // console.log(this.name);
           this.checkConsole = true;
           return true;
         } else {
@@ -46,19 +56,21 @@ export const useUserControl = defineStore("login", {
         }
       } catch (error) {
         this.checkConsole = false;
+        const errorStore = useErrorStore();
+        errorStore.addError('無法取得控制台權限', 'error');
         return false;
       }
     },
-    logout() {
+    async logout() {
       try {
-        axios.post("/auth/logout");
-        this.name = "";
-        this.picture = "";
-        this.isLogin = false;
+        await axiosInstance.post("/auth/logout");
+        this.resetUserState();
       } catch (error) {
-        // console.log(error);
+        const errorStore = useErrorStore();
+        errorStore.addError('登出失敗', 'error');
+        console.error('Failed to logout:', error);
       }
-    },
+    }
   },
   // persist: true,
 });

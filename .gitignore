@@ -23,3 +23,8 @@ dist-ssr
 *.sln
 *.sw?
 package-lock.json
+
+# 環境變數
+.env
+.env.local
+.env.*.local

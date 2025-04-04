@@ -7,21 +7,19 @@ import { useAnimeWorks } from "../stores/animeWorks";
 import Notifications from "../components/Notifications.vue";
 
 const animeWorks = useAnimeWorks();
+
 const rightEventClose = (e: { preventDefault: () => void }) => {
 	e.preventDefault();
 };
+
 onMounted(() => {
 	document.title = "Home - Anireki";
-	console.log(import.meta.env.VITE_API_BASE_URL);
 });
+
 onBeforeMount(() => {
 	animeWorks.SysSeason();
 	animeWorks.getAnimeData();
 });
-
-// watchEffect(() => {
-//animeWorks.infoMsg
-// })
 </script>
 
 <template>

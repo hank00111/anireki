@@ -2,6 +2,9 @@
 import { onMounted } from 'vue';
 import { useDrakModeStore } from './stores/drakMode'
 import { useUserControl } from './stores/userControl'
+import { useErrorStore } from './stores/errorStore'
+import ErrorNotifications from './components/ErrorNotifications.vue'
+
 const drakMode = useDrakModeStore();
 const userControll = useUserControl();
 
@@ -12,11 +15,13 @@ onMounted(() => {
     document.documentElement.setAttribute('data-theme', 'dark')
   }
   document.title = 'Home - Anireki';
+
   userControll.getUser(0);
 })
 </script>
 
 <template>
+  <ErrorNotifications />
   <router-view />
 </template>
 

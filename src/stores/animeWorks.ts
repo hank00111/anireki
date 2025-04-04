@@ -1,9 +1,7 @@
-import axios from "axios";
+import axiosInstance from "../common/axiosRequest";
 import LZString from "lz-string";
 import { defineStore } from "pinia";
 import { useUserControl } from "./userControl";
-axios.defaults.baseURL = "https://a2.anireki.com/v2";
-axios.defaults.withCredentials = true;
 
 // const jsonConfig = {
 //   headers: {
@@ -62,6 +60,32 @@ interface watchLaterDataModel {
 	createdAt: string;
 }
 
+interface AnnictWork {
+	id: number;
+	title: string;
+	title_en: string;
+	title_kana: string;
+	media: string;
+	season_name: string;
+	season_year: number;
+	official_site_url: string;
+	images: {
+		recommended_url?: string;
+		facebook?: {
+			og_image_url?: string;
+		};
+		twitter?: {
+			mini_avatar_url?: string;
+			normal_avatar_url?: string;
+			bigger_avatar_url?: string;
+			original_avatar_url?: string;
+			image_url?: string;
+		};
+	};
+	episodes_count: number;
+	released_on: string;
+}
+
 export const useAnimeWorks = defineStore("animeWorks", {
 	state: () => ({
 		animeData: [
@@ -115,6 +139,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
 		seasonSel: 1,
 		seasonID: "2024-winter",
 		worksLoaded: false,
+		allWorksLoaded: false,
 		worksData: {
 			id: "",
 			title: "",
@@ -126,23 +151,27 @@ export const useAnimeWorks = defineStore("animeWorks", {
 			createdAt: "",
 		} as originDataModel,
 		worksCheck: false,
+		annictWorks: [] as AnnictWork[],
+		selectedAnnictWork: null as AnnictWork | null,
 		watchLater: [] as watchLaterModel[],
 		watchLaterData: [] as watchLaterDataModel[],
 	}),
 	actions: {
 		async getAnimeData() {
 			try {
-				let res = await axios.get("/works/all");
+				let res = await axiosInstance.get("/works/all");
 				const data = JSON.parse(LZString.decompressFromUTF16(res.data));
 				this.originData = data;
 				this.getSeason(this.seasonID);
+				this.allWorksLoaded = true;
 			} catch (error) {
+				this.allWorksLoaded = false;
 				console.log(error);
 			}
 		},
 		// async getCurrentSeason() {
 		//   try {
-		//     let res = await axios.get("/works/season/2023-summer");
+		//     let res = await axiosInstance.get("/works/season/2023-summer");
 		//     this.animeData = res.data;
 		//   } catch (error) {
 		//     console.log(error);
@@ -150,7 +179,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
 		// },
 		async getWorksCount() {
 			try {
-				let res = await axios.get("/console/workscount");
+				let res = await axiosInstance.get("/console/workscount");
 				this.worksCount = LZString.decompressFromUTF16(res.data);
 				this.isLoaded = true;
 			} catch (error) {
@@ -158,7 +187,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
 			}
 		},
 		async getWorks(worksID: string) {
-			await axios
+			await axiosInstance
 				.get(`/works/${worksID}`)
 				.then((res) => {
 					const data = JSON.parse(LZString.decompressFromUTF16(res.data));
@@ -187,7 +216,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
 		async addWorks(data: object) {
 			try {
 				this.sendStatus = true;
-				await axios
+				await axiosInstance
 					.post("/console/add", data, worksConfig)
 					.then((res) => {
 						const d = JSON.parse(LZString.decompressFromUTF16(res.data));
@@ -210,7 +239,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
 		},
 		async updateWorks(data: object) {
 			this.sendStatus = true;
-			await axios
+			await axiosInstance
 				.post("/console/update", data, worksConfig)
 				.then((res) => {
 					const d = JSON.parse(LZString.decompressFromUTF16(res.data));
@@ -229,7 +258,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
 		},
 		async getWatchHistory() {
 			try {
-				await axios
+				await axiosInstance
 					.get("/user/watchistory")
 					.then((res) => {
 						this.watchData = [];
@@ -276,7 +305,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
 						},
 					],
 				};
-				await axios
+				await axiosInstance
 					.post("/user/watchistory", addData)
 					.then((res) => {
 						this.watchData = [];
@@ -315,7 +344,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
 		},
 		async deleteWatchHistory(worksId: string) {
 			try {
-				await axios
+				await axiosInstance
 					.delete("/user/watchistory", { data: { worksID: worksId } })
 					.then((res) => {
 						this.watchData = [];
@@ -357,7 +386,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
 		//watchLater
 		async getWatchLater() {
 			try {
-				await axios
+				await axiosInstance
 					.get("/user/watchlater")
 					.then((res) => {
 						this.watchLater = [];
@@ -391,7 +420,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
 						worksID: worksId,
 					},
 				};
-				await axios
+				await axiosInstance
 					.post("/user/watchlater", addData)
 					.then((res) => {
 						this.watchLater = [];
@@ -430,23 +459,48 @@ export const useAnimeWorks = defineStore("animeWorks", {
 			}
 		},
 		async checkWorks(worksTitle_jp: string) {
-			await axios
-				.post("/console/checkWorks", { WorksTitle_jp: worksTitle_jp })
-				.then((res) => {
-					const data = JSON.parse(LZString.decompressFromUTF16(res.data));
-					data.Code === 10 ? (this.worksCheck = false) : (this.worksCheck = true);
-					console.log(this.worksCheck);
-				})
-				.catch((error) => {
-					console.log(error);
-				});
+			try {
+				if (!worksTitle_jp || worksTitle_jp.trim() === "") {
+					this.annictWorks = [];
+					return;
+				}
+				
+				console.log(`發送檢查請求: ${worksTitle_jp}`);
+				const response = await axiosInstance.post("/console/checkWorks", { WorksTitle_jp: worksTitle_jp });
+				const data = JSON.parse(LZString.decompressFromUTF16(response.data));
+				
+				data.Code === 10 ? (this.worksCheck = false) : (this.worksCheck = true);
+				
+				if (data.annictWorks && data.annictWorks.length > 0) {
+					console.log(`接收到 ${data.annictWorks.length} 個結果`);
+					this.annictWorks = data.annictWorks;
+				} else {
+					console.log("沒有找到結果");
+					this.annictWorks = [];
+				}
+				
+				return data;
+			} catch (error) {
+				console.error(`檢查作品錯誤: ${error}`);
+				this.annictWorks = [];
+				throw error;
+			}
 		},
+
+		selectAnnictWork(work: AnnictWork | null) {
+			this.selectedAnnictWork = work;
+		},
+
+		clearAnnictWorks() {
+			this.annictWorks = [];
+			this.selectedAnnictWork = null;
+		},
+
 		SysSeason() {
 			const thisYear = new Date().getFullYear();
 			const season = Math.ceil((new Date().getMonth() + 1) / 3);
 			const seasons = ["winter", "spring", "summer", "autumn"];
 			this.seasonID = `${thisYear}-${seasons[season - 1]}`;
-			// return `${thisYear}-${seasons[season - 1]}`;
 		},
 	},
 });

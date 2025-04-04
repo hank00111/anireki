@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useRouter } from "vue-router";
-import { ref, onMounted, onUnmounted } from "vue";
+import { ref, onMounted, onUnmounted, computed } from "vue";
 import { useAnimeWorks } from "../stores/animeWorks";
 import { useAnimeYears } from "../stores/animeYears";
 import { useUserControl } from "../stores/userControl";
@@ -27,8 +27,22 @@ const yearListShow = ref<boolean>(false);
 
 const yearList = ref(animeYears.animeYearsObj);
 
+// 使用computed優化getLeft計算
+const yearNavLeft = computed(() => {
+	if (selectItem.value <= 1) return 0;
+	return (selectItem.value - 1) * -148;
+});
+
+// 優化nextEnd和prevEnd的計算
+const navigationState = computed(() => {
+	return {
+		nextEnd: selectItem.value <= 0,
+		prevEnd: selectItem.value >= yearList.value.length - 1,
+	};
+});
+
 const userLogout = () => {
-	showMenu.value = !showMenu;
+	showMenu.value = false;
 	yearListShow.value = false;
 	userControl.logout();
 };
@@ -44,16 +58,6 @@ const goToSeason = (index: number) => {
 const getAllAnime = () => {
 	selectItem.value = -1;
 	animeWorks.getSeason("all");
-};
-
-const getLeft = () => {
-	let left = 0;
-
-	left = (selectItem.value - 1) * -148;
-	if (selectItem.value <= 1) {
-		left = 0;
-	}
-	return left;
 };
 
 const toConsole = () => {
@@ -83,22 +87,21 @@ const yearAnime = () => {
 	}, 180);
 };
 
-const yearControl = (next: boolean, isDown: boolean, index: number) => {
-	if (isDown) {
+// 簡化yearControl邏輯
+const yearControl = (direction: "next" | "prev", index?: number) => {
+	if (index !== undefined) {
 		yearListShow.value = false;
 		goToSeason(index);
 	} else {
-		if (next) {
-			selectItem.value -= 1;
-			goToSeason(selectItem.value);
-		} else {
-			selectItem.value += 1;
-			goToSeason(selectItem.value);
+		const newIndex = direction === "next" ? selectItem.value - 1 : selectItem.value + 1;
+
+		if (newIndex >= 0 && newIndex < yearList.value.length) {
+			goToSeason(newIndex);
 		}
 	}
 	yearAnime();
-	selectItem.value <= 0 ? (nextEnd.value = true) : (nextEnd.value = false);
-	selectItem.value >= yearList.value.length - 1 ? (prevEnd.value = true) : (prevEnd.value = false);
+	nextEnd.value = navigationState.value.nextEnd;
+	prevEnd.value = navigationState.value.prevEnd;
 };
 
 const yearListOpen = () => {
@@ -114,10 +117,21 @@ const yearWheel = (event: any) => {
 	}
 };
 
+// 添加debounce處理window resize
+let resizeTimeout: number | null = null;
+const handleResize = () => {
+	if (resizeTimeout) {
+		window.clearTimeout(resizeTimeout);
+	}
+	resizeTimeout = window.setTimeout(() => {
+		checkMobile();
+	}, 250);
+};
+
 onMounted(() => {
 	checkMobile();
-	window.addEventListener("resize", checkMobile, true);
-	if (yearList.value && yearList.value.length > 0) {
+	window.addEventListener("resize", handleResize);
+	if (yearList.value?.length > 0) {
 		const foundIndex = yearList.value.findIndex((year) => year.seasonID === animeWorks.seasonID);
 		if (foundIndex !== -1) {
 			selectItem.value = foundIndex;
@@ -127,7 +141,10 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
-	window.removeEventListener("resize", checkMobile, true);
+	window.removeEventListener("resize", handleResize);
+	if (resizeTimeout) {
+		window.clearTimeout(resizeTimeout);
+	}
 });
 </script>
 
@@ -140,7 +157,7 @@ onUnmounted(() => {
 					<div
 						v-for="(year, index) in yearList"
 						class="year-items"
-						:style="{ transform: `translate(${getLeft()}px,0)` }"
+						:style="{ transform: `translate(${yearNavLeft}px,0)` }"
 						:class="{ selected: selectItem === index }"
 						@click="goToSeason(index)"
 					>
@@ -152,8 +169,8 @@ onUnmounted(() => {
 				<div class="mobile-year-nav" :style="{ marginLeft: `${navCenter}px` }">
 					<div class="year-next">
 						<svg
-							v-if="!nextEnd"
-							@click="yearControl(true, false, 0)"
+							v-if="!navigationState.nextEnd"
+							@click="yearControl('next')"
 							width="32"
 							height="32"
 							viewBox="0 -960 960 800"
@@ -167,15 +184,15 @@ onUnmounted(() => {
 					</div>
 					<div v-show="yearListShow" class="mobile-year-nav-list">
 						<ul>
-							<li v-for="(year, index) in yearList" @click="yearControl(false, true, index)">
+							<li v-for="(year, index) in yearList" @click="yearControl('prev', index)">
 								{{ year.name_jp }}
 							</li>
 						</ul>
 					</div>
 					<div class="year-prev">
 						<svg
-							v-if="!prevEnd"
-							@click="yearControl(false, false, 0)"
+							v-if="!navigationState.prevEnd"
+							@click="yearControl('prev')"
 							width="32"
 							height="32"
 							viewBox="0 -960 960 800"
