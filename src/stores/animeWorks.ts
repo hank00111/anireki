@@ -1,4 +1,4 @@
-import axiosInstance from '../common/axiosRequest';
+import axiosInstance from "../common/axiosRequest";
 import LZString from "lz-string";
 import { defineStore } from "pinia";
 import { useUserControl } from "./userControl";
@@ -58,6 +58,32 @@ interface watchLaterModel {
 interface watchLaterDataModel {
 	worksID: string;
 	createdAt: string;
+}
+
+interface AnnictWork {
+	id: number;
+	title: string;
+	title_en: string;
+	title_kana: string;
+	media: string;
+	season_name: string;
+	season_year: number;
+	official_site_url: string;
+	images: {
+		recommended_url?: string;
+		facebook?: {
+			og_image_url?: string;
+		};
+		twitter?: {
+			mini_avatar_url?: string;
+			normal_avatar_url?: string;
+			bigger_avatar_url?: string;
+			original_avatar_url?: string;
+			image_url?: string;
+		};
+	};
+	episodes_count: number;
+	released_on: string;
 }
 
 export const useAnimeWorks = defineStore("animeWorks", {
@@ -125,6 +151,8 @@ export const useAnimeWorks = defineStore("animeWorks", {
 			createdAt: "",
 		} as originDataModel,
 		worksCheck: false,
+		annictWorks: [] as AnnictWork[],
+		selectedAnnictWork: null as AnnictWork | null,
 		watchLater: [] as watchLaterModel[],
 		watchLaterData: [] as watchLaterDataModel[],
 	}),
@@ -271,8 +299,9 @@ export const useAnimeWorks = defineStore("animeWorks", {
 					watchData: [
 						{
 							worksID: worksId,
-							watchDate: `${this.watchYear}.${this.watchMonth < 10 ? "0" + this.watchMonth.toString() : this.watchMonth.toString()
-								}.${this.watchDay < 10 ? "0" + this.watchDay.toString() : this.watchDay.toString()}`,
+							watchDate: `${this.watchYear}.${
+								this.watchMonth < 10 ? "0" + this.watchMonth.toString() : this.watchMonth.toString()
+							}.${this.watchDay < 10 ? "0" + this.watchDay.toString() : this.watchDay.toString()}`,
 						},
 					],
 				};
@@ -380,7 +409,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
 					.catch((error) => {
 						console.log(error);
 					});
-			} catch (error) { }
+			} catch (error) {}
 		},
 		async addWatchLater(worksId: string) {
 			if (this.userControll.name.length < 1) {
@@ -430,23 +459,48 @@ export const useAnimeWorks = defineStore("animeWorks", {
 			}
 		},
 		async checkWorks(worksTitle_jp: string) {
-			await axiosInstance
-				.post("/console/checkWorks", { WorksTitle_jp: worksTitle_jp })
-				.then((res) => {
-					const data = JSON.parse(LZString.decompressFromUTF16(res.data));
-					data.Code === 10 ? (this.worksCheck = false) : (this.worksCheck = true);
-					console.log(this.worksCheck);
-				})
-				.catch((error) => {
-					console.log(error);
-				});
+			try {
+				if (!worksTitle_jp || worksTitle_jp.trim() === "") {
+					this.annictWorks = [];
+					return;
+				}
+				
+				console.log(`發送檢查請求: ${worksTitle_jp}`);
+				const response = await axiosInstance.post("/console/checkWorks", { WorksTitle_jp: worksTitle_jp });
+				const data = JSON.parse(LZString.decompressFromUTF16(response.data));
+				
+				data.Code === 10 ? (this.worksCheck = false) : (this.worksCheck = true);
+				
+				if (data.annictWorks && data.annictWorks.length > 0) {
+					console.log(`接收到 ${data.annictWorks.length} 個結果`);
+					this.annictWorks = data.annictWorks;
+				} else {
+					console.log("沒有找到結果");
+					this.annictWorks = [];
+				}
+				
+				return data;
+			} catch (error) {
+				console.error(`檢查作品錯誤: ${error}`);
+				this.annictWorks = [];
+				throw error;
+			}
 		},
+
+		selectAnnictWork(work: AnnictWork | null) {
+			this.selectedAnnictWork = work;
+		},
+
+		clearAnnictWorks() {
+			this.annictWorks = [];
+			this.selectedAnnictWork = null;
+		},
+
 		SysSeason() {
 			const thisYear = new Date().getFullYear();
 			const season = Math.ceil((new Date().getMonth() + 1) / 3);
 			const seasons = ["winter", "spring", "summer", "autumn"];
 			this.seasonID = `${thisYear}-${seasons[season - 1]}`;
-			// return `${thisYear}-${seasons[season - 1]}`;
 		},
 	},
 });
