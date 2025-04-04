@@ -464,8 +464,6 @@ export const useAnimeWorks = defineStore("animeWorks", {
 					this.annictWorks = [];
 					return;
 				}
-				
-				console.log(`發送檢查請求: ${worksTitle_jp}`);
 				const response = await axiosInstance.post("/console/checkWorks", { WorksTitle_jp: worksTitle_jp });
 				const data = JSON.parse(LZString.decompressFromUTF16(response.data));
 				

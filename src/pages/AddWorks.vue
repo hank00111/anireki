@@ -96,18 +96,18 @@ const titleCheck = () => {
 // 添加貼上事件處理函數
 const handlePaste = async () => {
     // 延遲一點執行搜索，確保輸入框的值已經更新
-    setTimeout(async () => {
-        if (refTitle_jp.value && refTitle_jp.value.length >= 2) {
-            try {
-                refSendPrev.value = Date.now();
-                await animeWorks.checkWorks(refTitle_jp.value);
-                showAnnictResults.value = animeWorks.annictWorks.length > 0;
-                console.log(`貼上後搜索結果: ${animeWorks.annictWorks.length} 個結果`);
-            } catch (error: any) {
-                errorStore.addError(`貼上後搜尋失敗: ${error.message || error}`, 'error');
-            }
-        }
-    }, 100);
+    // setTimeout(async () => {
+    //     if (refTitle_jp.value && refTitle_jp.value.length >= 2) {
+    //         try {
+    //             refSendPrev.value = Date.now();
+    //             await animeWorks.checkWorks(refTitle_jp.value);
+    //             showAnnictResults.value = animeWorks.annictWorks.length > 0;
+    //             console.log(`貼上後搜索結果: ${animeWorks.annictWorks.length} 個結果`);
+    //         } catch (error: any) {
+    //             errorStore.addError(`貼上後搜尋失敗: ${error.message || error}`, 'error');
+    //         }
+    //     }
+    // }, 100);
 }
 
 const selectAnnictWork = (work: any) => {
@@ -182,24 +182,10 @@ watch(refImages, (refImages) => {
 
 watch(thisSeason, (thisSeason) => {
     refSeason.value = parseInt(Object.keys(seaSon).find(key => seaSon[key] === thisSeason) || '5')
-    // console.log(refSeason.value);
 });
 
-watch(refTitle_jp, async (newValue, oldValue) => {
-    // 如果是突變的大量文本（例如黏貼），直接處理
-    if (newValue && newValue.length > 5 && (!oldValue || newValue.length - oldValue.length > 3)) {
-        console.log("檢測到可能的貼上操作");
-        refSendPrev.value = Date.now();
-        try {
-            await animeWorks.checkWorks(newValue);
-            showAnnictResults.value = animeWorks.annictWorks.length > 0;
-        } catch (error: any) {            
-            errorStore.addError(`處理文字失敗: ${error.message || error}`, 'error');
-        }
-        return;
-    }
-
-    // 普通輸入的節流處理
+watch(refTitle_jp, async (newValue) => {
+  
     refSendNow.value = Date.now();
     if (newValue.length >= 2 && refSendNow.value - refSendPrev.value >= 500) {
         refSendLimit.value += 1;
@@ -213,7 +199,6 @@ watch(refTitle_jp, async (newValue, oldValue) => {
         }
     }
 
-    // 處理搜索限制
     if (refSendLimit.value >= 10) {
         refSendLimit.value = 0;
         setTimeout(async () => {
