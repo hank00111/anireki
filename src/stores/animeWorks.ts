@@ -88,16 +88,7 @@ interface AnnictWork {
 
 export const useAnimeWorks = defineStore("animeWorks", {
 	state: () => ({
-		animeData: [
-			{
-				id: "",
-				title: "",
-				title_jp: "",
-				season: "",
-				copyright: "",
-				images_url: "",
-				imagesCover: false,
-			},
+		animeData: [			
 		] as originDataModel[],
 		originData: [] as originDataModel[],
 		// animeData: [

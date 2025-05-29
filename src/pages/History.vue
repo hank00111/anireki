@@ -9,8 +9,9 @@ const animeWorks = useAnimeWorks();
 
 onMounted(() => {
     document.title = 'History - Anireki';
-    animeWorks.getAnimeData();
-    animeWorks.getWatchHistory();
+    animeWorks.getAnimeData().then(() => {
+        animeWorks.getWatchHistory();
+    });
 })
 
 </script>
