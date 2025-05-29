@@ -119,14 +119,14 @@ const yearWheel = (event: any) => {
 
 // 添加debounce處理window resize
 let resizeTimeout: number | null = null;
-const handleResize = () => {
-	if (resizeTimeout) {
-		window.clearTimeout(resizeTimeout);
-	}
-	resizeTimeout = window.setTimeout(() => {
-		checkMobile();
-	}, 250);
-};
+// const handleResize = () => {
+// 	if (resizeTimeout) {
+// 		window.clearTimeout(resizeTimeout);
+// 	}
+// 	resizeTimeout = window.setTimeout(() => {
+// 		checkMobile();
+// 	}, 250);
+// };
 
 onMounted(() => {
 	checkMobile();
