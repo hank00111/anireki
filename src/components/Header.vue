@@ -130,7 +130,7 @@ const handleResize = () => {
 
 onMounted(() => {
 	checkMobile();
-	window.addEventListener("resize", handleResize);
+	window.addEventListener("resize", checkMobile, true);
 	if (yearList.value?.length > 0) {
 		const foundIndex = yearList.value.findIndex((year) => year.seasonID === animeWorks.seasonID);
 		if (foundIndex !== -1) {
@@ -141,7 +141,7 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
-	window.removeEventListener("resize", handleResize);
+	window.removeEventListener("resize", checkMobile, true);
 	if (resizeTimeout) {
 		window.clearTimeout(resizeTimeout);
 	}
@@ -154,13 +154,9 @@ onUnmounted(() => {
 			<div v-if="!isMobile" class="anime-panel-container">
 				<div class="all-anime" @click="getAllAnime" :class="{ selectedH: selectItem === -1 }">所有動畫</div>
 				<div class="year-nav" @wheel="yearWheel">
-					<div
-						v-for="(year, index) in yearList"
-						class="year-items"
+					<div v-for="(year, index) in yearList" class="year-items"
 						:style="{ transform: `translate(${yearNavLeft}px,0)` }"
-						:class="{ selected: selectItem === index }"
-						@click="goToSeason(index)"
-					>
+						:class="{ selected: selectItem === index }" @click="goToSeason(index)">
 						{{ year.name }}
 					</div>
 				</div>
@@ -168,14 +164,8 @@ onUnmounted(() => {
 			<div v-else class="anime-panel-container">
 				<div class="mobile-year-nav" :style="{ marginLeft: `${navCenter}px` }">
 					<div class="year-next">
-						<svg
-							v-if="!navigationState.nextEnd"
-							@click="yearControl('next')"
-							width="32"
-							height="32"
-							viewBox="0 -960 960 800"
-							fill="#5c9291"
-						>
+						<svg v-if="!navigationState.nextEnd" @click="yearControl('next')" width="32" height="32"
+							viewBox="0 -960 960 800" fill="#5c9291">
 							<path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z" />
 						</svg>
 					</div>
@@ -190,14 +180,8 @@ onUnmounted(() => {
 						</ul>
 					</div>
 					<div class="year-prev">
-						<svg
-							v-if="!navigationState.prevEnd"
-							@click="yearControl('prev')"
-							width="32"
-							height="32"
-							viewBox="0 -960 960 800"
-							fill="#5c9291"
-						>
+						<svg v-if="!navigationState.prevEnd" @click="yearControl('prev')" width="32" height="32"
+							viewBox="0 -960 960 800" fill="#5c9291">
 							<path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z" />
 						</svg>
 					</div>
@@ -208,12 +192,10 @@ onUnmounted(() => {
 
 		<div class="userPanel" ref="userPanel">
 			<div v-if="userControl.name.length != 0 ? true : false" class="userLoggedin">
-				<button
-					@click="
-						showMenu = !showMenu;
-						yearListShow = false;
-					"
-				>
+				<button @click="
+					showMenu = !showMenu;
+				yearListShow = false;
+				">
 					<img draggable="false" :src="userControl.picture" alt="" />
 				</button>
 				<div v-if="showMenu" class="userMenu">
@@ -367,7 +349,7 @@ onUnmounted(() => {
 	inset: 0px auto auto auto;
 	transform: translate(0px, 50px);
 
-	> ul {
+	>ul {
 		margin: 0;
 		padding: 0;
 		background-color: #525657;
@@ -379,14 +361,14 @@ onUnmounted(() => {
 		overflow: hidden;
 		overflow-y: scroll;
 
-		> li {
+		>li {
 			font-size: 19px;
 			line-height: 34px;
 			text-align: center;
 		}
 	}
 
-	> ul::-webkit-scrollbar {
+	>ul::-webkit-scrollbar {
 		display: none;
 	}
 }
