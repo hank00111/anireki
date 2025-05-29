@@ -4,10 +4,11 @@ import { onMounted } from 'vue';
 import Header from '../components/Header.vue'
 import Sidebar from '../components/Sidebar.vue'
 import WorksCard from '../components/WorksCard.vue';
+import { updateSEO } from '../utils/seo';
 
 
 onMounted(() => {
-    document.title = 'WatchLater - Anireki';
+    updateSEO('watchlater');
 })
 
 </script>

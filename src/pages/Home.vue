@@ -5,6 +5,7 @@ import Sidebar from "../components/Sidebar.vue";
 import WorksCard from "../components/WorksCard.vue";
 import { useAnimeWorks } from "../stores/animeWorks";
 import Notifications from "../components/Notifications.vue";
+import { updateSEO, generateWebsiteSchema } from "../utils/seo";
 
 const animeWorks = useAnimeWorks();
 
@@ -13,7 +14,10 @@ const rightEventClose = (e: { preventDefault: () => void }) => {
 };
 
 onMounted(() => {
-	document.title = "Home - Anireki";
+	// Update SEO data for home page
+	updateSEO('home');
+	// Generate structured data
+	generateWebsiteSchema();
 });
 
 onBeforeMount(() => {

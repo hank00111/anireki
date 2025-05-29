@@ -8,49 +8,86 @@ import Works from "../pages/Works.vue";
 import WorksList from "../pages/WorksList.vue"; 
 import WatchLater from "../pages/WatchLater.vue";
 import { useUserControl } from "../stores/userControl";
+import { updateSEO } from "../utils/seo";
 
 const routes = [
   {
     path: "/",
     name: "home",
     component: Home,
-    meta: { title: "首頁 - Anireki", keepAlive: true },
+    meta: { 
+      title: "首頁 - Anireki", 
+      titleEn: "Home - Anireki | Anime Tracker",
+      titleJa: "ホーム - Anireki | アニメトラッカー",
+      keepAlive: true,
+      seoKey: "home"
+    },
   },
   {
     path: "/history",
     name: "history",
     component: History,
-    meta: { title: "觀看紀錄 - Anireki" },
+    meta: { 
+      title: "觀看紀錄 - Anireki",
+      titleEn: "Watch History - Anireki",
+      titleJa: "視聴履歴 - Anireki",
+      seoKey: "history"
+    },
   },
   {
     path: "/watchlater",
     name: "watchlater",
     component: WatchLater,
-    meta: { title: "待看清單 - Anireki" },
+    meta: { 
+      title: "待看清單 - Anireki",
+      titleEn: "Watch Later - Anireki", 
+      titleJa: "後で見る - Anireki",
+      seoKey: "watchlater"
+    },
   },
   {
     path: "/console",
     name: "console",
     component: Console,
-    meta: { title: "Console - Anireki", requiresAuth: true },
+    meta: { 
+      title: "Console - Anireki", 
+      titleEn: "Console - Anireki",
+      titleJa: "コンソール - Anireki",
+      requiresAuth: true 
+    },
   },
   {
     path: "/console/addworks",
     name: "addworks",
     component: AddWorks,
-    meta: { title: "AddWorks - Anireki", requiresAuth: true },
+    meta: { 
+      title: "AddWorks - Anireki",
+      titleEn: "Add Works - Anireki", 
+      titleJa: "作品追加 - Anireki",
+      requiresAuth: true 
+    },
   },
   {
     path: "/console/works/:id",
     name: "works",
     component: Works,
-    meta: { title: "Works - Anireki", requiresAuth: true },
+    meta: { 
+      title: "Works - Anireki",
+      titleEn: "Works - Anireki",
+      titleJa: "作品 - Anireki", 
+      requiresAuth: true 
+    },
   },
   {
     path: "/console/works",
     name: "workslist",
     component: WorksList,
-    meta: { title: "Works - Anireki", requiresAuth: true },
+    meta: { 
+      title: "Works - Anireki",
+      titleEn: "Works List - Anireki",
+      titleJa: "作品リスト - Anireki",
+      requiresAuth: true 
+    },
   },
   {
     path: "/:pathMatch(.*)*",
@@ -74,4 +111,13 @@ router.beforeEach(async (to) => {
     }
   }
 });
+
+// After each route navigation, update SEO
+router.afterEach((to) => {
+  // Update SEO data if available
+  if (to.meta.seoKey) {
+    updateSEO(to.meta.seoKey as string);
+  }
+});
+
 export default router;

@@ -4,11 +4,12 @@ import Header from '../components/Header.vue'
 import Sidebar from '../components/Sidebar.vue'
 import WorksCard from '../components/WorksCard.vue';
 import { useAnimeWorks } from '../stores/animeWorks'
+import { updateSEO } from '../utils/seo';
 
 const animeWorks = useAnimeWorks();
 
 onMounted(() => {
-    document.title = 'History - Anireki';
+    updateSEO('history');
     animeWorks.getAnimeData().then(() => {
         animeWorks.getWatchHistory();
     });
