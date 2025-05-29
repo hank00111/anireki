@@ -161,7 +161,7 @@ export function getLocalizedMetaDescription(
   locale: SupportedLocale, 
   type: 'home' | 'history' | 'watchLater' | 'anime' = 'home'
 ): string {
-  const descriptions = {
+  const descriptions: Record<SupportedLocale, Record<'home' | 'history' | 'watchLater' | 'anime', string>> = {
     'zh-TW': {
       home: '專業的動畫觀看記錄平台，讓您輕鬆追蹤每季新番，記錄觀看進度，發現更多精彩動畫作品。',
       history: '查看您的動畫觀看歷史記錄，追蹤已完成的作品和觀看進度。',
@@ -187,7 +187,7 @@ export function getLocalizedMetaDescription(
 
 
 export function getLocalizedKeywords(locale: SupportedLocale, type: 'home' | 'history' | 'watchLater' | 'anime' = 'home'): string {
-  const keywords = {
+  const keywords: Record<SupportedLocale, Record<'home' | 'history' | 'watchLater' | 'anime', string>> = {
     'zh-TW': {
       home: '動畫觀看記錄,季番追蹤,日本動畫,anime,番劇清單,動漫記錄,新番推薦,動畫資料庫',
       history: '動畫觀看記錄,觀看歷史,追番記錄,動畫進度',
@@ -223,8 +223,7 @@ export function generateMultilingualAnimeJsonLd(anime: {
   copyright?: string
 }, locale: SupportedLocale) {
   const baseSchema = generateAnimeJsonLd(anime)
-  
-  const localizedContent = {
+    const localizedContent: Record<SupportedLocale, { name: string; description: string; inLanguage: string }> = {
     'zh-TW': {
       name: anime.title || anime.title_jp,
       description: anime.description || `${anime.title || anime.title_jp} - 日本動畫作品`,
@@ -255,8 +254,7 @@ export function generateMultilingualAnimeJsonLd(anime: {
 }
 
 
-export function generateMultilingualWebsiteJsonLd(locale: SupportedLocale) {
-  const content = {
+export function generateMultilingualWebsiteJsonLd(locale: SupportedLocale) {  const content: Record<SupportedLocale, { name: string; description: string; inLanguage: string }> = {
     'zh-TW': {
       name: 'Anireki',
       description: '專業的動畫觀看記錄平台',
