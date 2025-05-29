@@ -89,13 +89,11 @@ const selControl = (e: string) => {
 }
 
 const titleCheck = () => {
-    // 由於我們已經在 paste 事件和 watch 中處理，這裡可以留空或做額外處理
     console.log("輸入檢查中");
 }
 
-// 添加貼上事件處理函數
+
 const handlePaste = async () => {
-    // 延遲一點執行搜索，確保輸入框的值已經更新
     setTimeout(async () => {
         if (refTitle_jp.value && refTitle_jp.value.length >= 2) {
             try {
@@ -186,7 +184,6 @@ watch(thisSeason, (thisSeason) => {
 });
 
 watch(refTitle_jp, async (newValue, oldValue) => {
-    // 如果是突變的大量文本（例如黏貼），直接處理
     if (newValue && newValue.length > 5 && (!oldValue || newValue.length - oldValue.length > 3)) {
         console.log("檢測到可能的貼上操作");
         refSendPrev.value = Date.now();
@@ -199,7 +196,6 @@ watch(refTitle_jp, async (newValue, oldValue) => {
         return;
     }
 
-    // 普通輸入的節流處理
     refSendNow.value = Date.now();
     if (newValue.length >= 2 && refSendNow.value - refSendPrev.value >= 500) {
         refSendLimit.value += 1;
@@ -213,7 +209,6 @@ watch(refTitle_jp, async (newValue, oldValue) => {
         }
     }
 
-    // 處理搜索限制
     if (refSendLimit.value >= 10) {
         refSendLimit.value = 0;
         setTimeout(async () => {
@@ -400,7 +395,7 @@ watchEffect(() => {
             color: #ffffff;
             font-size: 1.4em;
             margin-top: 10px;
-            margin-bottom: 30px; // 增加底部間距，為懸浮視窗留空間
+            margin-bottom: 30px; 
             max-width: 100%;
             padding: 10px;
             vertical-align: middle;
@@ -507,10 +502,10 @@ watchEffect(() => {
     background-color: #1a1a1a;
     z-index: 10;
     padding: 10px;
-    margin-top: 0; // 移除上邊距
-    top: calc(100% - 20px); // 調整頂部位置，減去輸入框底部的 margin
-    left: 0; // 保持左邊對齊
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); // 保持陰影效果
+    margin-top: 0;
+    top: calc(100% - 20px);
+    left: 0; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); 
 
     .annict-source {
         font-size: 0.75em;
@@ -518,9 +513,9 @@ watchEffect(() => {
         text-align: right;
         margin-top: 5px;
         padding-right: 5px;
-        font-weight: 500; // 增加字重使文字更清晰
-        letter-spacing: 0.02em; // 增加字距提高可讀性
-        opacity: 0.85; // 稍微調整透明度
+        font-weight: 500;
+        letter-spacing: 0.02em; 
+        opacity: 0.85;
         font-family: 'Noto Sans JP', sans-serif;
     }
 
@@ -578,14 +573,13 @@ watchEffect(() => {
                 }
 
                 .annict-work-date {
-                    color: #91ccff; // 凸顯放送日期
+                    color: #91ccff;
                 }
             }
         }
     }
 }
 
-// 新增相對定位使Annict結果顯示在正確位置
 .card-item {
     position: relative;
     // ...existing code...
@@ -662,15 +656,12 @@ watchEffect(() => {
     }
 
     .abema-link {
-        color: #ff8e8e; // Abema.tv 的顏色偏紅，使用紅色系
+        color: #ff8e8e;
 
         &:hover {
             color: #ffaeae;
         }
     }
 
-    .annict-link {
-        // 沿用藍色
-    }
 }
 </style>

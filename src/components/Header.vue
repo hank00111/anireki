@@ -27,13 +27,11 @@ const yearListShow = ref<boolean>(false);
 
 const yearList = ref(animeYears.animeYearsObj);
 
-// 使用computed優化getLeft計算
 const yearNavLeft = computed(() => {
 	if (selectItem.value <= 1) return 0;
 	return (selectItem.value - 1) * -148;
 });
 
-// 優化nextEnd和prevEnd的計算
 const navigationState = computed(() => {
 	return {
 		nextEnd: selectItem.value <= 0,

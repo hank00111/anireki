@@ -125,7 +125,6 @@ function updateOGMeta(property: string, content: string) {
   meta.content = content;
 }
 
-// Generate JSON-LD structured data
 export function generateWebsiteSchema() {
   const schema = {
     "@context": "https://schema.org",
@@ -142,7 +141,6 @@ export function generateWebsiteSchema() {
     }
   };
   
-  // Add or update JSON-LD script
   let existingScript = document.querySelector('script[type="application/ld+json"]');
   if (existingScript) {
     existingScript.textContent = JSON.stringify(schema);
