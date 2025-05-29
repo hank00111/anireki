@@ -1,0 +1,37 @@
+User-agent: *
+Allow: /
+
+Disallow: /console/
+Disallow: /api/
+Disallow: /admin/
+Disallow: /_/
+
+
+Disallow: /*?*utm_source=
+Disallow: /*?*utm_medium=
+Disallow: /*?*utm_campaign=
+Disallow: /*?preview=
+Disallow: /*?debug=
+
+Allow: /
+Allow: /history
+Allow: /watchlater
+Allow: /works/
+
+
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 2
+
+
+User-agent: BadBot
+Disallow: /
+
+User-agent: ScrapeBot
+Disallow: /
+
+Sitemap: https://anireki.com/sitemap.xml
