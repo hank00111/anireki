@@ -24,7 +24,15 @@ dist-ssr
 *.sw?
 package-lock.json
 
-# 環境變數
+
 .env
 .env.local
 .env.*.local
+prompts.md
+
+
+coverage/
+*.lcov
+.nyc_output/
+test-results/
+/coverage

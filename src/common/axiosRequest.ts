@@ -1,6 +1,6 @@
-import axios, { AxiosInstance } from 'axios';
+import axios, { AxiosInstance } from "axios";
 //, AxiosRequestConfig, AxiosResponse, AxiosError
-// API 回應的介面
+
 // interface ApiResponse<T = any> {
 //   success: boolean;
 //   data?: T;
@@ -8,18 +8,17 @@ import axios, { AxiosInstance } from 'axios';
 //   code?: number;
 // }
 
-// 創建 axios 實例
 const service: AxiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL,
-  timeout: 30000,
-  withCredentials: true,
-  headers: {
-    'Content-Type': 'application/json',
-    'Accept': 'application/json',
-  },
+	baseURL: import.meta.env.VITE_API_BASE_URL,
+	timeout: 30000,
+	withCredentials: true,
+	headers: {
+		"Content-Type": "application/json",
+		Accept: "application/json",
+		"Referrer-Policy": "strict-origin-when-cross-origin",
+	},
 });
 
-// 請求攔截器
 // service.interceptors.request.use(
 //   (config: AxiosRequestConfig) => {
 //     // 從 localStorage 獲取 token
@@ -39,7 +38,6 @@ const service: AxiosInstance = axios.create({
 //   }
 // );
 
-// // 響應攔截器
 // service.interceptors.response.use(
 //   (response: AxiosResponse): AxiosResponse['data'] => {
 //     const res = response.data;
@@ -61,7 +59,7 @@ const service: AxiosInstance = axios.create({
 //       }
 //     }
 
-//     // 如果 API 回傳的是標準回應，直接返回
+//
 //     return res;
 //   },
 //   (error: AxiosError) => {
@@ -106,7 +104,7 @@ const service: AxiosInstance = axios.create({
 //           console.error(`連接錯誤 ${response.status}`);
 //       }
 //     } else {
-//       // 處理請求被取消或網路問題
+//
 //       if (error.message && error.message.includes('timeout')) {
 //         console.error('請求超時，請檢查網路');
 //       } else {
@@ -118,25 +116,24 @@ const service: AxiosInstance = axios.create({
 //   }
 // );
 
-// // 封裝 GET 方法
+//
 // export const get = <T = any>(url: string, params?: any): Promise<ApiResponse<T>> => {
 //   return service.get(url, { params });
 // };
 
-// // 封裝 POST 方法
+//
 // export const post = <T = any>(url: string, data?: any): Promise<ApiResponse<T>> => {
 //   return service.post(url, data);
 // };
 
-// // 封裝 PUT 方法
+//
 // export const put = <T = any>(url: string, data?: any): Promise<ApiResponse<T>> => {
 //   return service.put(url, data);
 // };
 
-// // 封裝 DELETE 方法
+//
 // export const del = <T = any>(url: string, params?: any): Promise<ApiResponse<T>> => {
 //   return service.delete(url, { params });
 // };
 
-// 導出 axios 實例
 export default service;

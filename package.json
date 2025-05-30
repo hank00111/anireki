@@ -2,11 +2,14 @@
   "name": "anireki",
   "private": true,
   "version": "0.0.0",
-  "type": "module",
-  "scripts": {
+  "type": "module",  "scripts": {
     "dev": "vite --port=3000 --mode development",
     "build": "vue-tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "vitest --config tests/vitest.config.ts",
+    "test:run": "vitest run --config tests/vitest.config.ts",
+    "test:watch": "vitest --config tests/vitest.config.ts --watch",
+    "test:coverage": "vitest run --config tests/vitest.config.ts --coverage"
   },
   "dependencies": {
     "axios": "^1.8.4",
@@ -18,9 +21,12 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.2.3",
+    "@vue/test-utils": "^2.4.6",
+    "jsdom": "^26.1.0",
     "sass": "^1.86.0",
     "typescript": "^5.8.2",
     "vite": "^6.2.3",
+    "vitest": "^3.1.4",
     "vue-tsc": "^2.2.8"
   }
 }

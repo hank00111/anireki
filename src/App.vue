@@ -2,10 +2,13 @@
 import { onMounted } from 'vue';
 import { useDrakModeStore } from './stores/drakMode'
 import { useUserControl } from './stores/userControl'
+import { useLoginModalStore } from './stores/loginModalStore'
 import ErrorNotifications from './components/ErrorNotifications.vue'
+import LoginModal from './components/LoginModal.vue'
 
 const drakMode = useDrakModeStore();
 const userControll = useUserControl();
+const loginModalStore = useLoginModalStore();
 
 onMounted(() => {
   if (drakMode.drakState) {
@@ -21,6 +24,12 @@ onMounted(() => {
 
 <template>
   <ErrorNotifications />
+  <LoginModal 
+    :isVisible="loginModalStore.isVisible"
+    :title="loginModalStore.title"
+    :message="loginModalStore.message"
+    @close="loginModalStore.hideModal"
+  />
   <router-view />
 </template>
 

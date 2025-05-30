@@ -25,7 +25,7 @@ export const useErrorStore = defineStore("errorStore", {
       };
       
       this.errors.push(error);
-      setTimeout(() => this.removeError(error.id), 3000);
+      setTimeout(() => this.removeError(error.id), 5000);
     },
 
     removeError(id: number) {
