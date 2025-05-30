@@ -11,11 +11,12 @@ import axios, { AxiosInstance } from "axios";
 const service: AxiosInstance = axios.create({
 	baseURL: import.meta.env.VITE_API_BASE_URL,
 	timeout: 30000,
-	withCredentials: true,
-	headers: {
+	withCredentials: true,	headers: {
 		"Content-Type": "application/json",
-		Accept: "application/json",
+		"Accept": "application/json",
 		"Referrer-Policy": "strict-origin-when-cross-origin",
+		"X-Content-Type-Options": "nosniff",
+		"X-Frame-Options": "DENY",
 	},
 });
 
