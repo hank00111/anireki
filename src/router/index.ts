@@ -112,8 +112,9 @@ router.beforeEach(async (to) => {
 			const loginModalStore = useLoginModalStore();
 			const title = to.name === "history" ? "視聴履歴" : "後で見る";
 			const message = to.name === "history" ? "視聴履歴を確認するにはログインが必要です" : "視聴予定リストを確認するにはログインが必要です";
+			
 			loginModalStore.showModal(title, message);
-			return false;
+			return { name: "home" };
 		}
 	}
 
