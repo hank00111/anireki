@@ -35,8 +35,8 @@ const SwichDarkMode = () => {
                 </router-link>
             </li>
             <li>
-                <router-link to="/console/addworks" class="router-link">
-                    <span>新增動畫</span>
+                <router-link to="/console/works" class="router-link">
+                    <span>用戶管理</span>
                 </router-link>
             </li>
         </ul>

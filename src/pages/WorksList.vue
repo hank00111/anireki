@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref, computed } from "vue";
+import { useRouter } from "vue-router";
 import Header from "../components/Header.vue";
 import Loading from "../components/Loading.vue";
 import Notifications from "../components/Notifications.vue";
@@ -10,6 +11,7 @@ import { useAnimeWorks } from "../stores/animeWorks";
 import { useUserControl } from "../stores/userControl";
 import { useAnirekiConsole } from "../stores/anirekiConsole";
 
+const router = useRouter();
 const animeWorks = useAnimeWorks();
 const userControll = useUserControl();
 const anirekiConsole = useAnirekiConsole();
@@ -18,7 +20,7 @@ const searchQuery = ref("");
 const selectedMedia = ref("all");
 const selectedSeason = ref("all");
 const selectedYear = ref("all");
-const sortBy = ref("newest"); 
+const sortBy = ref("newest");
 
 const showContextMenu = ref(false);
 const contextMenuX = ref(0);
@@ -37,7 +39,7 @@ const seasonOptions = computed(() => {
 		{ label: "冬", value: "winter" },
 		{ label: "春", value: "spring" },
 		{ label: "夏", value: "summer" },
-		{ label: "秋", value: "autumn" }
+		{ label: "秋", value: "autumn" },
 	];
 });
 
@@ -45,8 +47,8 @@ const yearOptions = computed(() => {
 	const years = [
 		...new Set(
 			animeWorks.originData.map((item) => {
-				if (item.season && item.season.includes('-')) {
-					const year = parseInt(item.season.split('-')[0]);
+				if (item.season && item.season.includes("-")) {
+					const year = parseInt(item.season.split("-")[0]);
 					return isNaN(year) ? null : year;
 				}
 				return null;
@@ -58,11 +60,9 @@ const yearOptions = computed(() => {
 	return years;
 });
 
-// Filtered and sorted data
 const filteredData = computed(() => {
 	let filtered = animeWorks.originData;
 
-	// Text search filter
 	if (searchQuery.value) {
 		const query = searchQuery.value.toLowerCase();
 		filtered = filtered.filter(
@@ -81,13 +81,9 @@ const filteredData = computed(() => {
 			if (selectedYear.value !== "all" && selectedSeason.value !== "all") {
 				const targetSeason = `${selectedYear.value}-${selectedSeason.value}`;
 				return item.season === targetSeason;
-			}
-
-			else if (selectedYear.value !== "all" && selectedSeason.value === "all") {
+			} else if (selectedYear.value !== "all" && selectedSeason.value === "all") {
 				return item.season && item.season.startsWith(`${selectedYear.value}-`);
-			}
-
-			else if (selectedYear.value === "all" && selectedSeason.value !== "all") {
+			} else if (selectedYear.value === "all" && selectedSeason.value !== "all") {
 				return item.season && item.season.endsWith(`-${selectedSeason.value}`);
 			}
 			return true;
@@ -154,6 +150,11 @@ const clearFilters = () => {
 	sortBy.value = "newest";
 };
 
+// 新增作品導航方法
+const navigateToAddWorks = () => {
+	router.push({ name: "addworks" });
+};
+
 onMounted(async () => {
 	await animeWorks.getAnimeData();
 });
@@ -161,16 +162,18 @@ onMounted(async () => {
 
 <template>
 	<Loading :console-show="false" :show="!userControll.checkConsole && anirekiConsole.logLoading" />
-	<ConsoleSidebar></ConsoleSidebar>	<div class="main" @click="hideContextMenu">
+	<ConsoleSidebar></ConsoleSidebar>
+	<div class="main" @click="hideContextMenu">
 		<Notifications :show="animeWorks.infoStatus" :info="animeWorks.infoMsg"></Notifications>
-		<Header class="console-header" :is-console="true"></Header>
-		
+		<!-- <Header class="console-header" :is-console="true"></Header> -->
+
 		<div class="filter-container">
 			<div class="filter-row">
 				<div class="filter-group">
 					<label>検索</label>
 					<input v-model="searchQuery" placeholder="作品名・ID で検索..." class="search-input" />
-				</div>				<div class="filter-group">
+				</div>
+				<div class="filter-group">
 					<label>メディア</label>
 					<select v-model="selectedMedia" class="filter-select">
 						<option value="all">すべて</option>
@@ -189,7 +192,8 @@ onMounted(async () => {
 				</div>
 
 				<div class="filter-group">
-					<label>シーズン</label>					<select v-model="selectedSeason" class="filter-select">
+					<label>シーズン</label>
+					<select v-model="selectedSeason" class="filter-select">
 						<option value="all">すべて</option>
 						<option v-for="season in seasonOptions" :key="season.value" :value="season.value">
 							{{ season.label }}
@@ -206,8 +210,8 @@ onMounted(async () => {
 						<option value="title-desc">タイトル降順</option>
 					</select>
 				</div>
-
 				<div class="filter-actions">
+					<button @click="navigateToAddWorks" class="add-works-btn">作品を追加</button>
 					<button @click="clearFilters" class="clear-btn">フィルターをクリア</button>
 					<span class="result-count"> {{ filteredData.length }} 件の作品 </span>
 				</div>
@@ -263,7 +267,7 @@ onMounted(async () => {
 <style lang="scss">
 .filter-container {
 	background: #232932;
-	padding: 0px 20px 6px 20px;
+	padding: 10px 20px 10px 20px;
 	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
@@ -345,6 +349,36 @@ onMounted(async () => {
 	margin-left: auto;
 }
 
+.add-works-btn {
+	padding: 8px 16px;
+	background: #4a9eff;
+	color: white;
+	border: none;
+	border-radius: 6px;
+	cursor: pointer;
+	font-size: 13px;
+	font-weight: 500;
+	transition: all 0.2s ease;
+	display: flex;
+	align-items: center;
+	gap: 6px;
+
+	.add-icon {
+		font-size: 16px;
+		font-weight: bold;
+		line-height: 1;
+	}
+
+	&:hover {
+		background: #3a8bef;
+		transform: translateY(-1px);
+	}
+
+	&:active {
+		transform: translateY(0);
+	}
+}
+
 .clear-btn {
 	padding: 8px 16px;
 	background: #d64545;
@@ -373,7 +407,6 @@ onMounted(async () => {
 	white-space: nowrap;
 }
 
-// Responsive design
 @media (max-width: 768px) {
 	.filter-row {
 		flex-direction: column;
@@ -383,6 +416,19 @@ onMounted(async () => {
 	.filter-actions {
 		margin-left: 0;
 		justify-content: space-between;
+		flex-wrap: wrap;
+		gap: 12px;
+	}
+
+	.add-works-btn,
+	.clear-btn {
+		flex: 1;
+		min-width: 120px;
+	}
+
+	.result-count {
+		flex-basis: 100%;
+		text-align: center;
 	}
 
 	.search-input {
@@ -390,7 +436,6 @@ onMounted(async () => {
 	}
 }
 
-// Existing styles
 .works-list-container {
 	width: 100%;
 	height: 100%;
