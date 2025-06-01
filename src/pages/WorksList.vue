@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref, computed } from "vue";
 import { useRouter } from "vue-router";
-import Header from "../components/Header.vue";
 import Loading from "../components/Loading.vue";
 import Notifications from "../components/Notifications.vue";
 import ConsoleSidebar from "../components/ConsoleSidebar.vue";
