@@ -159,6 +159,12 @@ const selectAnnictWork = (work: any) => {
     animeWorks.selectAnnictWork(work);
 }
 
+// Close Annict results window
+const closeAnnictResults = () => {
+    showAnnictResults.value = false;
+    animeWorks.clearAnnictWorks();
+}
+
 onBeforeMount(() => {
     animeWorks.getWorksCount();
     animeWorks.clearAnnictWorks();
@@ -267,10 +273,15 @@ watchEffect(() => {
                         </div>
                         <div class="card-item">
                             <p>日文名稱</p>
-                            <input type="text" v-model="refTitle_jp" @input="titleCheck()" @paste="handlePaste">
-                            <Transition>
+                            <input type="text" v-model="refTitle_jp" @input="titleCheck()" @paste="handlePaste">                            <Transition>
                                 <div v-if="showAnnictResults && animeWorks.annictWorks.length > 0"
                                     class="annict-results">
+                                    <button class="annict-close-btn" @click="closeAnnictResults">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                                        </svg>
+                                    </button>
                                     <div v-for="work in animeWorks.annictWorks" :key="work.id" class="annict-work"
                                         @click="selectAnnictWork(work)">
                                         <div class="annict-work-image">
@@ -505,7 +516,39 @@ watchEffect(() => {
     margin-top: 0;
     top: calc(100% - 20px);
     left: 0; 
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+
+    .annict-close-btn {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        width: 28px;
+        height: 28px;
+        border: none;
+        background: rgba(255, 255, 255, 0.1);
+        color: #ffffff;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        z-index: 11;
+        
+        &:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
+        }
+        
+        &:active {
+            transform: scale(0.95);
+        }
+        
+        svg {
+            width: 14px;
+            height: 14px;
+        }
+    }
 
     .annict-source {
         font-size: 0.75em;

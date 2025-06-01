@@ -88,8 +88,7 @@ interface AnnictWork {
 
 export const useAnimeWorks = defineStore("animeWorks", {
 	state: () => ({
-		animeData: [			
-		] as originDataModel[],
+		animeData: [] as originDataModel[],
 		originData: [] as originDataModel[],
 		// animeData: [
 		//   {
@@ -455,13 +454,13 @@ export const useAnimeWorks = defineStore("animeWorks", {
 					this.annictWorks = [];
 					return;
 				}
-				
+
 				console.log(`發送檢查請求: ${worksTitle_jp}`);
 				const response = await axiosInstance.post("/console/checkWorks", { WorksTitle_jp: worksTitle_jp });
 				const data = JSON.parse(LZString.decompressFromUTF16(response.data));
-				
+
 				data.Code === 10 ? (this.worksCheck = false) : (this.worksCheck = true);
-				
+
 				if (data.annictWorks && data.annictWorks.length > 0) {
 					console.log(`接收到 ${data.annictWorks.length} 個結果`);
 					this.annictWorks = data.annictWorks;
@@ -469,12 +468,40 @@ export const useAnimeWorks = defineStore("animeWorks", {
 					console.log("沒有找到結果");
 					this.annictWorks = [];
 				}
-				
+
 				return data;
 			} catch (error) {
 				console.error(`檢查作品錯誤: ${error}`);
 				this.annictWorks = [];
 				throw error;
+			}
+		},
+
+		async deleteWorks(id: string) {
+			this.sendStatus = true;
+			try {
+				await axiosInstance
+					.delete(`/console/works/${id}`)
+					.then((res) => {
+						const d = JSON.parse(LZString.decompressFromUTF16(res.data));
+						this.sendCode = d.Code;
+						this.sendStatus = false;
+						this.infoMsg = d.Msg;
+						this.infoStatus = true;
+						this.getAnimeData();
+					})
+					.catch((error) => {
+						this.sendCode = 1;
+						this.sendStatus = false;
+						this.infoMsg = "削除に失敗しました";
+						this.infoStatus = true;
+						console.log(`deleteWorks-1 ${error}`);
+					});
+			} catch (error) {
+				this.sendStatus = false;
+				this.infoMsg = "削除に失敗しました";
+				this.infoStatus = true;
+				console.log(`deleteWorks-2 ${error}`);
 			}
 		},
 

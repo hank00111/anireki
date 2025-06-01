@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref, watchEffect } from "vue";
-import { useAnimeWorks } from "../stores/animeWorks";
 
 const props = defineProps({
 	show: Boolean,
@@ -8,13 +7,14 @@ const props = defineProps({
 	Y: Number,
 	id: String,
 });
-const animeWorks = useAnimeWorks();
+
+const emit = defineEmits(['delete']);
 const menu = ref();
 const w = ref(0);
 const h = ref(0);
 
-const addWatchHistory = () => {
-	animeWorks.addWatchHistory(props?.id || "0");
+const handleDelete = () => {
+	emit('delete');
 };
 
 watchEffect(() => {
@@ -26,16 +26,12 @@ watchEffect(() => {
 
 		if (w.value + dw >= window.innerWidth) {
 			w.value = w.value - dw;
-			console.log(w);
 		}
 		if (h.value + dh >= window.innerHeight) {
 			h.value = h.value - dh;
-			console.log(h);
 		}
 	}
 });
-// onMounted(() => window.addEventListener('mousemove', update))
-// onUnmounted(() => window.removeEventListener('mousemove', update))
 </script>
 
 <template>
@@ -43,8 +39,8 @@ watchEffect(() => {
 		<div class="context-menu">
 			<ul class="context-menu-ul">
 				<li>
-					<button class="context-menu-ul-li-button" @click="addWatchHistory">
-						<span> 新增至觀看紀錄 </span>
+					<button class="context-menu-ul-li-button delete-button" @click="handleDelete">
+						<span> 削除 </span>
 					</button>
 				</li>
 			</ul>
@@ -110,9 +106,24 @@ watchEffect(() => {
 			color: #fff;
 			text-decoration: none;
 		}
-
 		> span {
 			font-size: 1.1em;
+		}
+	}
+
+	// Delete button specific styling with Japanese design influence
+	.delete-button {
+		&:hover {
+			background-color: rgba(229, 62, 62, 0.15);
+			color: #ff6b6b;
+		}
+
+		> span {
+			color: #ff8a80;
+		}
+
+		&:hover > span {
+			color: #ff6b6b;
 		}
 	}
 }
