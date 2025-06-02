@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from 'vue';
-import Header from '../components/Header.vue'
-import Loading from '../components/Loading.vue'
-import Notifications from '../components/Notifications.vue'
-import ConsoleSidebar from '../components/ConsoleSidebar.vue'
-import { useAnimeWorks } from '../stores/animeWorks'
-import { useUserControl } from '../stores/userControl'
-import { useAnirekiConsole } from '../stores/anirekiConsole'
+import Header from '../../components/Header.vue'
+import Loading from '../../components/Loading.vue'
+import Notifications from '../../components/Notifications.vue'
+import ConsoleSidebar from '../../components/ConsoleSidebar.vue'
+import { useAnimeWorks } from '../../stores/animeWorks'
+import { useUserControl } from '../../stores/userControl'
+import { useAnirekiConsole } from '../../stores/anirekiConsole'
 
 const animeWorks = useAnimeWorks();
 const userControll = useUserControl();
@@ -26,7 +26,7 @@ const actionCheck = (str: string) => {
             return 'Error'
     }
 }
-const headerCheck = (str: string) => {
+const headerCheck = (str: string | number) => {
     switch (str) {
         case 'StartedAt_jp':
             return '日本首播日'

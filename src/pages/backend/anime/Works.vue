@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { useRoute, useRouter } from 'vue-router';
 import { ref, watch, onMounted } from 'vue';
-import SelBar from '../components/SelBar.vue';
-import Header from '../components/Header.vue';
-import Loading from '../components/Loading.vue';
-import ConsoleSidebar from '../components/ConsoleSidebar.vue';
+import SelBar from '../../../components/SelBar.vue';
+import Header from '../../../components/Header.vue';
+import Loading from '../../../components/Loading.vue';
+import ConsoleSidebar from '../../../components/ConsoleSidebar.vue';
 // import WorksCard from '../components/WorksCard.vue';
-import { useAnimeWorks } from '../stores/animeWorks';
+import { useAnimeWorks } from '../../../stores/animeWorks';
 
 const route = useRoute();
 const router = useRouter();

@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { onMounted, ref, computed } from "vue";
 import { useRouter } from "vue-router";
-import Loading from "../components/Loading.vue";
-import Notifications from "../components/Notifications.vue";
-import ConsoleSidebar from "../components/ConsoleSidebar.vue";
-import ContextMenu from "../components/ContextMenu.vue";
-import DeleteConfirmModal from "../components/DeleteConfirmModal.vue";
-import { useAnimeWorks } from "../stores/animeWorks";
-import { useUserControl } from "../stores/userControl";
-import { useAnirekiConsole } from "../stores/anirekiConsole";
+import Loading from "../../../components/Loading.vue";
+import Notifications from "../../../components/Notifications.vue";
+import ConsoleSidebar from "../../../components/ConsoleSidebar.vue";
+import ContextMenu from "../../../components/ContextMenu.vue";
+import DeleteConfirmModal from "../../../components/DeleteConfirmModal.vue";
+import { useAnimeWorks } from "../../../stores/animeWorks";
+import { useUserControl } from "../../../stores/userControl";
+import { useAnirekiConsole } from "../../../stores/anirekiConsole";
 
 const router = useRouter();
 const animeWorks = useAnimeWorks();
@@ -29,7 +29,7 @@ const selectedWorksTitle = ref("");
 const showDeleteModal = ref(false);
 
 const mediaOptions = computed(() => {
-	const media = [...new Set(animeWorks.originData.map((item) => item.media))];
+	const media = [...new Set(animeWorks.originData.map((item: any) => item.media))];
 	return media.filter((m) => m && m !== "");
 });
 
@@ -45,7 +45,7 @@ const seasonOptions = computed(() => {
 const yearOptions = computed(() => {
 	const years = [
 		...new Set(
-			animeWorks.originData.map((item) => {
+			animeWorks.originData.map((item: any) => {
 				if (item.season && item.season.includes("-")) {
 					const year = parseInt(item.season.split("-")[0]);
 					return isNaN(year) ? null : year;
@@ -54,18 +54,17 @@ const yearOptions = computed(() => {
 			})
 		),
 	]
-		.filter((y) => y !== null)
-		.sort((a, b) => b - a);
+		.filter((y: number | null) => y !== null)
+		.sort((a: number, b: number) => b - a);
 	return years;
 });
 
 const filteredData = computed(() => {
 	let filtered = animeWorks.originData;
-
 	if (searchQuery.value) {
 		const query = searchQuery.value.toLowerCase();
 		filtered = filtered.filter(
-			(item) =>
+			(item: any) =>
 				item.title.toLowerCase().includes(query) ||
 				item.title_jp.toLowerCase().includes(query) ||
 				item.id.includes(query)
@@ -73,10 +72,10 @@ const filteredData = computed(() => {
 	}
 
 	if (selectedMedia.value !== "all") {
-		filtered = filtered.filter((item) => item.media === selectedMedia.value);
+		filtered = filtered.filter((item: any) => item.media === selectedMedia.value);
 	}
 	if (selectedYear.value !== "all" || selectedSeason.value !== "all") {
-		filtered = filtered.filter((item) => {
+		filtered = filtered.filter((item: any) => {
 			if (selectedYear.value !== "all" && selectedSeason.value !== "all") {
 				const targetSeason = `${selectedYear.value}-${selectedSeason.value}`;
 				return item.season === targetSeason;
@@ -89,7 +88,7 @@ const filteredData = computed(() => {
 		});
 	}
 
-	return filtered.sort((a, b) => {
+	return filtered.sort((a: any, b: any) => {
 		switch (sortBy.value) {
 			case "newest":
 				return parseInt(b.createdAt) - parseInt(a.createdAt);
@@ -175,8 +174,7 @@ onMounted(async () => {
 				<div class="filter-group">
 					<label>メディア</label>
 					<select v-model="selectedMedia" class="filter-select">
-						<option value="all">すべて</option>
-						<option v-for="media in mediaOptions" :key="media" :value="media">
+						<option value="all">すべて</option>						<option v-for="media in mediaOptions" :key="String(media)" :value="media">
 							{{ media }}
 						</option>
 					</select>
@@ -186,7 +184,7 @@ onMounted(async () => {
 					<label>年度</label>
 					<select v-model="selectedYear" class="filter-select">
 						<option value="all">すべて</option>
-						<option v-for="year in yearOptions" :key="year" :value="year">{{ year }}年</option>
+						<option v-for="year in yearOptions" :key="String(year)" :value="year">{{ year }}年</option>
 					</select>
 				</div>
 
@@ -329,7 +327,7 @@ onMounted(async () => {
 	cursor: pointer;
 	position: relative;
 	appearance: none;
-	background-image: url(../assets/sel.svg);
+	background-image: url(../../../assets/sel.svg);
 	background-repeat: no-repeat;
 	background-position: right 12px center;
 	background-size: 12px 12px;
