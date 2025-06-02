@@ -71,7 +71,8 @@ export const useAnirekiConsole = defineStore("anirekiConsole", {
 			} catch (error) {
 				this.sendStatus = false;
 				console.log(`addWorks-2 ${error}`);
-			}		},
+			}
+		},
 		async updateWorks(data: object) {
 			this.sendStatus = true;
 			await axiosInstance
@@ -89,6 +90,32 @@ export const useAnirekiConsole = defineStore("anirekiConsole", {
 					this.infoStatus = true;
 					console.log(`updateWorks-1 ${error}`);
 				});
+		},
+		async deleteWorks(id: string) {
+			this.sendStatus = true;
+			try {
+				await axiosInstance
+					.delete(`/console/works/${id}`)
+					.then((res) => {
+						const d = JSON.parse(LZString.decompressFromUTF16(res.data));
+						this.sendCode = d.Code;
+						this.sendStatus = false;
+						this.infoMsg = d.Msg;
+						this.infoStatus = true;
+					})
+					.catch((error) => {
+						this.sendCode = 1;
+						this.sendStatus = false;
+						this.infoMsg = "削除に失敗しました";
+						this.infoStatus = true;
+						console.log(`deleteWorks-1 ${error}`);
+					});
+			} catch (error) {
+				this.sendStatus = false;
+				this.infoMsg = "削除に失敗しました";
+				this.infoStatus = true;
+				console.log(`deleteWorks-2 ${error}`);
+			}
 		},
 	},
 });

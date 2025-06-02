@@ -133,7 +133,10 @@ const handleDeleteRequest = () => {
 
 const confirmDelete = async () => {
 	showDeleteModal.value = false;
-	await animeWorks.deleteWorks(selectedWorksId.value);
+	await anirekiConsole.deleteWorks(selectedWorksId.value);
+	if (anirekiConsole.sendCode === 0) {
+		await animeWorks.getAnimeData();
+	}
 };
 
 const cancelDelete = () => {
@@ -174,7 +177,8 @@ onMounted(async () => {
 				<div class="filter-group">
 					<label>メディア</label>
 					<select v-model="selectedMedia" class="filter-select">
-						<option value="all">すべて</option>						<option v-for="media in mediaOptions" :key="String(media)" :value="media">
+						<option value="all">すべて</option>
+						<option v-for="media in mediaOptions" :key="String(media)" :value="media">
 							{{ media }}
 						</option>
 					</select>

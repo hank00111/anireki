@@ -196,7 +196,8 @@ export const useAnimeWorks = defineStore("animeWorks", {
 					// console.log(hValue);
 					this.animeData.push(hValue);
 				}
-			}		},
+			}
+		},
 		async getWatchHistory() {
 			try {
 				await axiosInstance
@@ -427,44 +428,13 @@ export const useAnimeWorks = defineStore("animeWorks", {
 				throw error;
 			}
 		},
-
-		async deleteWorks(id: string) {
-			this.sendStatus = true;
-			try {
-				await axiosInstance
-					.delete(`/console/works/${id}`)
-					.then((res) => {
-						const d = JSON.parse(LZString.decompressFromUTF16(res.data));
-						this.sendCode = d.Code;
-						this.sendStatus = false;
-						this.infoMsg = d.Msg;
-						this.infoStatus = true;
-						this.getAnimeData();
-					})
-					.catch((error) => {
-						this.sendCode = 1;
-						this.sendStatus = false;
-						this.infoMsg = "削除に失敗しました";
-						this.infoStatus = true;
-						console.log(`deleteWorks-1 ${error}`);
-					});
-			} catch (error) {
-				this.sendStatus = false;
-				this.infoMsg = "削除に失敗しました";
-				this.infoStatus = true;
-				console.log(`deleteWorks-2 ${error}`);
-			}
-		},
-
 		selectAnnictWork(work: AnnictWork | null) {
 			this.selectedAnnictWork = work;
 		},
-
 		clearAnnictWorks() {
 			this.annictWorks = [];
 			this.selectedAnnictWork = null;
 		},
-
 		SysSeason() {
 			const thisYear = new Date().getFullYear();
 			const season = Math.ceil((new Date().getMonth() + 1) / 3);
