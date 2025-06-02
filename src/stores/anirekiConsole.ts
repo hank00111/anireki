@@ -1,4 +1,4 @@
-import axiosInstance from "../api";
+import axiosInstance from "@/api";
 import LZString from "lz-string";
 import { defineStore } from "pinia";
 // import { useUserControl } from "./userControl";

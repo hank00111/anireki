@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { onMounted } from "vue";
-import Sidebar from "../../../components/Sidebar.vue";
-import WorksCard from "../../../components/WorksCard.vue";
-import { useAnimeWorks } from "../../../stores/animeWorks";
-import { updateSEO } from "../../../utils/seo";
+import Sidebar from "@/components/Sidebar.vue";
+import WorksCard from "@/components/WorksCard.vue";
+import { useAnimeWorks } from "@/stores/animeWorks";
+import { updateSEO } from "@/utils/seo";
 
 const animeWorks = useAnimeWorks();
 

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 //import { watch, ref } from 'vue';
-import { useDrakModeStore } from '../stores/drakMode'
+import { useDrakModeStore } from '@/stores/drakMode'
 const darkMode = useDrakModeStore();
 
 

@@ -1,4 +1,4 @@
-import type { SupportedLocale } from '../locales'
+import type { SupportedLocale } from '@/locales'
 
 
 export function generateAnimeJsonLd(anime: {

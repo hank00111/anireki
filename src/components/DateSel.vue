@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, watchEffect } from "vue";
-import { useAnimeWorks } from "../stores/animeWorks";
+import { useAnimeWorks } from "@/stores/animeWorks";
 const animeWorks = useAnimeWorks();
 
 const yearOpen = ref(false);

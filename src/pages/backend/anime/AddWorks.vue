@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import Header from '../../../components/Header.vue'
-import Loading from '../../../components/Loading.vue'
-import SelBar from '../../../components/SelBar.vue';
-import ConsoleSidebar from '../../../components/ConsoleSidebar.vue'
+import Header from '@/components/Header.vue'
+import Loading from '@/components/Loading.vue'
+import SelBar from '@/components/SelBar.vue';
+import ConsoleSidebar from '@/components/ConsoleSidebar.vue'
 import { ref, reactive, onMounted, onBeforeMount, watchEffect, watch } from 'vue';
-import { useAnimeWorks } from '../../../stores/animeWorks'
+import { useAnimeWorks } from '@/stores/animeWorks'
 import { useRouter } from 'vue-router';
-import { useErrorStore } from '../../../stores/errorStore';
+import { useErrorStore } from '@/stores/errorStore';
 
 const animeWorks = useAnimeWorks();
 const router = useRouter();

@@ -1,15 +1,15 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Home from "../pages/frontend/Home.vue";
-import History from "../pages/frontend/user/History.vue";
-import Console from "../pages/backend/Console.vue";
-import NotFound from "../pages/NotFound.vue";
-import AddWorks from "../pages/backend/anime/AddWorks.vue";
-import Works from "../pages/backend/anime/Works.vue";
-import WorksList from "../pages/backend/anime/WorksList.vue"; 
-import WatchLater from "../pages/frontend/user/WatchLater.vue";
-import { useUserControl } from "../stores/userControl";
-import { useLoginModalStore } from "../stores/loginModalStore";
-import { updateSEO } from "../utils/seo";
+import Home from "@/pages/frontend/Home.vue";
+import History from "@/pages/frontend/user/History.vue";
+import Console from "@/pages/backend/Console.vue";
+import NotFound from "@/pages/NotFound.vue";
+import AddWorks from "@/pages/backend/anime/AddWorks.vue";
+import Works from "@/pages/backend/anime/Works.vue";
+import WorksList from "@/pages/backend/anime/WorksList.vue"; 
+import WatchLater from "@/pages/frontend/user/WatchLater.vue";
+import { useUserControl } from "@/stores/userControl";
+import { useLoginModalStore } from "@/stores/loginModalStore";
+import { updateSEO } from "@/utils/seo";
 
 const routes = [
 	{

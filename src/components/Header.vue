@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { useRouter } from "vue-router";
 import { ref, onMounted, onUnmounted, computed } from "vue";
-import { useAnimeWorks } from "../stores/animeWorks";
-import { useAnimeYears } from "../stores/animeYears";
-import { useUserControl } from "../stores/userControl";
+import { useAnimeWorks } from "@/stores/animeWorks";
+import { useAnimeYears } from "@/stores/animeYears";
+import { useUserControl } from "@/stores/userControl";
 
 const props = defineProps({
 	isHome: Boolean,

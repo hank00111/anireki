@@ -17,7 +17,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useErrorStore } from '../stores/errorStore'
+import { useErrorStore } from '@/stores/errorStore'
 
 const errorStore = useErrorStore()
 const errors = computed(() => errorStore.errors)

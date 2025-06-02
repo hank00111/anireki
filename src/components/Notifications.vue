@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { watchEffect } from 'vue';
-import { useAnimeWorks } from '../stores/animeWorks'
+import { useAnimeWorks } from '@/stores/animeWorks'
 const animeWorks = useAnimeWorks();
 defineProps({
     show: Boolean,

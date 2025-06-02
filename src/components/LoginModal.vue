@@ -41,7 +41,7 @@
 
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted } from 'vue'
-import { useUserControl } from '../stores/userControl'
+import { useUserControl } from '@/stores/userControl'
 
 interface Props {
   isVisible: boolean

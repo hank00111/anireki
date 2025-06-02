@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { onMounted, ref, computed } from "vue";
 import { useRouter } from "vue-router";
-import Loading from "../../../components/Loading.vue";
-import Notifications from "../../../components/Notifications.vue";
-import ConsoleSidebar from "../../../components/ConsoleSidebar.vue";
-import ContextMenu from "../../../components/ContextMenu.vue";
-import DeleteConfirmModal from "../../../components/DeleteConfirmModal.vue";
-import { useAnimeWorks } from "../../../stores/animeWorks";
-import { useUserControl } from "../../../stores/userControl";
-import { useAnirekiConsole } from "../../../stores/anirekiConsole";
+import Loading from "@/components/Loading.vue";
+import Notifications from "@/components/Notifications.vue";
+import ConsoleSidebar from "@/components/ConsoleSidebar.vue";
+import ContextMenu from "@/components/ContextMenu.vue";
+import DeleteConfirmModal from "@/components/DeleteConfirmModal.vue";
+import { useAnimeWorks } from "@/stores/animeWorks";
+import { useUserControl } from "@/stores/userControl";
+import { useAnirekiConsole } from "@/stores/anirekiConsole";
 
 const router = useRouter();
 const animeWorks = useAnimeWorks();

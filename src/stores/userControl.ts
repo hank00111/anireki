@@ -1,8 +1,7 @@
-import axiosInstance from "../api";
+import axiosInstance from "@/api";
 import LZString from "lz-string";
 import { defineStore } from "pinia";
-import { useErrorStore } from "./errorStore";
-//a1.anireki.com/v2/
+import { useErrorStore } from "@/stores/errorStore";
 
 export const useUserControl = defineStore("login", {
   state: () => ({

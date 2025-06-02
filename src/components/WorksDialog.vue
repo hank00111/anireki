@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref, watchEffect } from 'vue';
-import { useAnimeWorks } from '../stores/animeWorks'
-import { useUserControl } from '../stores/userControl';
-import DateSel from './DateSel.vue'
+import { useAnimeWorks } from '@/stores/animeWorks'
+import { useUserControl } from '@/stores/userControl';
+import DateSel from '@/components/DateSel.vue'
 
 const props = defineProps({
     diaLogShow: Boolean,
