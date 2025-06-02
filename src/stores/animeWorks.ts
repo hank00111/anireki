@@ -9,11 +9,6 @@ import { useUserControl } from "@/stores/userControl";
 //   },
 // };
 
-const worksConfig = {
-	headers: {
-		"Content-Type": "multipart/form-data",
-	},
-};
 // { id: "1", watchDate: "2023.09.10" },
 // { id: "2", watchDate: "2023.09.11" },
 interface historyDataModel {
@@ -201,51 +196,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
 					// console.log(hValue);
 					this.animeData.push(hValue);
 				}
-			}
-		},
-		async addWorks(data: object) {
-			try {
-				this.sendStatus = true;
-				await axiosInstance
-					.post("/console/add", data, worksConfig)
-					.then((res) => {
-						const d = JSON.parse(LZString.decompressFromUTF16(res.data));
-						this.sendCode = d.Code;
-						this.sendStatus = false;
-						this.infoMsg = d.Msg;
-						this.infoStatus = true;
-						this.isLoaded = false;
-					})
-					.catch((error) => {
-						this.sendCode = 1;
-						this.sendStatus = false;
-						this.infoStatus = true;
-						console.log(`addWorks-1 ${error}`);
-					});
-			} catch (error) {
-				this.sendStatus = false;
-				console.log(`addWorks-2 ${error}`);
-			}
-		},
-		async updateWorks(data: object) {
-			this.sendStatus = true;
-			await axiosInstance
-				.post("/console/update", data, worksConfig)
-				.then((res) => {
-					const d = JSON.parse(LZString.decompressFromUTF16(res.data));
-					this.sendCode = d.Code;
-					this.sendStatus = false;
-					this.infoMsg = d.Msg;
-					this.infoStatus = true;
-					this.watchData = [];
-				})
-				.catch((error) => {
-					this.sendCode = 1;
-					this.sendStatus = false;
-					this.infoStatus = true;
-					console.log(`updateWorks-1 ${error}`);
-				});
-		},
+			}		},
 		async getWatchHistory() {
 			try {
 				await axiosInstance

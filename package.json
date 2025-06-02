@@ -2,7 +2,8 @@
   "name": "anireki",
   "private": true,
   "version": "0.0.0",
-  "type": "module",  "scripts": {
+  "type": "module",
+  "scripts": {
     "dev": "vite --port=3000 --mode development",
     "build": "vue-tsc && vite build",
     "preview": "vite preview",
@@ -20,6 +21,7 @@
     "vue-router": "^4.5.0"
   },
   "devDependencies": {
+    "@types/node": "^22.15.29",
     "@vitejs/plugin-vue": "^5.2.3",
     "@vue/test-utils": "^2.4.6",
     "jsdom": "^26.1.0",

@@ -6,10 +6,12 @@ import Header from '@/components/Header.vue';
 import Loading from '@/components/Loading.vue';
 import ConsoleSidebar from '@/components/ConsoleSidebar.vue';
 import { useAnimeWorks } from '@/stores/animeWorks';
+import { useAnirekiConsole } from '@/stores/anirekiConsole';
 
 const route = useRoute();
 const router = useRouter();
 const animeWorks = useAnimeWorks();
+const anirekiConsole = useAnirekiConsole();
 
 const media = ref<string[]>(['TV', '映画', 'OVA', '其他']);
 const workMedia = ref<string>('');
@@ -74,11 +76,10 @@ const updateWorks = () => {
         Object.assign(data.changeData, { image: { new: imageID } });
         Object.assign(data, { image: worksImages.value });
         changeText += `圖片\n`;
-    }
-    if (changeText != "更新") {
+    }    if (changeText != "更新") {
         changeTextref.value = changeText;
-        animeWorks.updateWorks(data).then(() => {
-            if (animeWorks.sendCode === 0) {
+        anirekiConsole.updateWorks(data).then(() => {
+            if (anirekiConsole.sendCode === 0) {
                 router.push('/console')
             } else {
 
@@ -113,7 +114,7 @@ onMounted(async () => {
 </script>
 
 <template>
-    <Loading :console-show="false" :show="!animeWorks.worksLoaded || animeWorks.sendStatus" />
+    <Loading :console-show="false" :show="!animeWorks.worksLoaded || anirekiConsole.sendStatus" />
     <ConsoleSidebar></ConsoleSidebar>
     <div class="main">
         <Header class="console-header"></Header>
