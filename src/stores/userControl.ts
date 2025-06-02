@@ -1,4 +1,4 @@
-import axiosInstance from "../common/axiosRequest";
+import axiosInstance from "../api";
 import LZString from "lz-string";
 import { defineStore } from "pinia";
 import { useErrorStore } from "./errorStore";

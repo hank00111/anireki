@@ -105,7 +105,7 @@ const service: AxiosInstance = axios.create({
 //           console.error(`連接錯誤 ${response.status}`);
 //       }
 //     } else {
-//
+
 //       if (error.message && error.message.includes('timeout')) {
 //         console.error('請求超時，請檢查網路');
 //       } else {
