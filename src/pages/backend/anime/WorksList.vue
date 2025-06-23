@@ -133,6 +133,11 @@ const handleDeleteRequest = () => {
 
 const confirmDelete = async () => {
 	showDeleteModal.value = false;
+	//   user: {
+	//         name: animeWorks.userControll.name,
+	//         picture: animeWorks.userControll.picture,
+	//     },
+
 	await anirekiConsole.deleteWorks(selectedWorksId.value);
 	if (anirekiConsole.sendCode === 0) {
 		await animeWorks.getAnimeData();
