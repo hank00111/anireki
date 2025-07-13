@@ -68,9 +68,10 @@ const relativeTime = (date: string) => {
 onMounted(async () => {
     document.title = 'Console - Anireki';
     await anirekiConsole.getLogs();
+    // 將輪詢頻率從30秒調整為2分鐘，減少Firebase讀取
     timer.value = setInterval(async () => {
         await anirekiConsole.getLogs();
-    }, 30 * 1000);
+    }, 120 * 1000);
 })
 onBeforeUnmount(() => {
     clearInterval(timer.value);
