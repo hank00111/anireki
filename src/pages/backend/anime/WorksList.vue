@@ -469,6 +469,8 @@ onMounted(async () => {
 		height: 100%;
 		min-width: 8em;
 		border-radius: 10px 0px 0px 10px;
+		contain: layout style paint;
+		transform: translateZ(0);
 	}
 
 	.works-list-image {
@@ -476,6 +478,8 @@ onMounted(async () => {
 		background-size: cover;
 		height: 100%;
 		border-radius: 10px 0px 0px 10px;
+		contain: layout style paint;
+		transform: translateZ(0);
 	}
 
 	.works-list-context {

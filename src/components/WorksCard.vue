@@ -90,6 +90,7 @@ onMounted(() => {
 		transform: translateZ(0);
 		contain: layout style paint;
 		will-change: transform;
+        
 		.home-works-images {
 			height: 0;
 			overflow: hidden;
