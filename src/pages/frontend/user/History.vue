@@ -19,7 +19,7 @@ onMounted(() => {
 	<Sidebar></Sidebar>
 	<div class="main">
 		<div class="content">
-			<WorksCard :from-Page="2"></WorksCard>
+			<WorksCard :from-Page="'history'"></WorksCard>
 		</div>
 	</div>
 </template>
