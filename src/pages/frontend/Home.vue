@@ -21,7 +21,7 @@ onMounted(() => {
 
 onBeforeMount(() => {
 	animeWorks.SysSeason();
-	animeWorks.getAnimeData();
+	// animeWorks.getAnimeData();
 });
 </script>
 

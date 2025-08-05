@@ -12,7 +12,7 @@
 
 <style scoped lang="scss">
 .footer {
-	padding: 22px 0;
+	padding: 12px 0;
 	margin-top: auto;
 	flex-shrink: 0;
 }

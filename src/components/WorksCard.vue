@@ -75,7 +75,7 @@ onMounted(() => {
 <style lang="scss" scoped>
 .home-card {
 	gap: 12px;
-	padding: 12px 10px 12px 15px;
+	padding: 12px 10px 2px 15px;
 	display: grid;
 	grid-auto-rows: auto;
 	grid-template-columns: repeat(var(--grid-container-columns), minmax(0, 1fr));

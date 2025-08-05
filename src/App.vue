@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
+import { useAnimeWorks } from "@/stores/animeWorks";
 import { useDrakModeStore } from '@/stores/drakMode'
 import { useUserControl } from '@/stores/userControl'
 import { useLoginModalStore } from '@/stores/loginModalStore'
@@ -7,6 +8,8 @@ import ErrorNotifications from '@/components/ErrorNotifications.vue'
 import LoginModal from '@/components/LoginModal.vue'
 
 const drakMode = useDrakModeStore();
+
+const animeWorks = useAnimeWorks();
 const userControll = useUserControl();
 const loginModalStore = useLoginModalStore();
 
@@ -18,7 +21,9 @@ onMounted(() => {
   }
   document.title = 'Home - Anireki';
 
+	animeWorks.getAnimeData();
   userControll.getUser(0);
+  
 })
 </script>
 
