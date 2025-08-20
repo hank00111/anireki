@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted } from "vue";
-import { useAnimeWorks } from "@/stores/animeWorks";
+// import { useAnimeWorks } from "@/stores/animeWorks";
 import { useDrakModeStore } from "@/stores/drakMode";
 import { useUserControl } from "@/stores/userControl";
 import { useLoginModalStore } from "@/stores/loginModalStore";
