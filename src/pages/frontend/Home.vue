@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted } from "vue";
+import { ref, onMounted, onBeforeMount } from "vue";
 import Header from "@/components/Header.vue";
 import Sidebar from "@/components/Sidebar.vue";
 import WorksCard from "@/components/WorksCard.vue";
@@ -12,19 +12,21 @@ import { updateSEO, generateWebsiteSchema } from "@/utils/seo";
 const animeWorks = useAnimeWorks();
 const userControll = useUserControl();
 
+const seasonID = ref(animeWorks.seasonID);
+
 const rightEventClose = (e: { preventDefault: () => void }) => {
 	e.preventDefault();
 };
 
 onMounted(() => {
-	animeWorks.SysSeason();
 	updateSEO("home");
 	generateWebsiteSchema();
 });
 
-// onBeforeMount(() => {
-// 	// animeWorks.getAnimeData();
-// });
+onBeforeMount(() => {
+	animeWorks.SysSeason();
+	animeWorks.getAnimeData();
+});
 </script>
 
 <template>
@@ -32,7 +34,7 @@ onMounted(() => {
 	<div class="main" @click.right="rightEventClose($event)">
 		<div class="fixed-header">
 			<Notifications :show="animeWorks.infoStatus" :info="animeWorks.infoMsg"></Notifications>
-			<Header :is-home="true"></Header>
+			<Header :is-home="true" :season-id="seasonID"></Header>
 		</div>
 		<div class="content">
 			<WorksCard :from-Page="'home'" :is-login="userControll.isLogin"></WorksCard>

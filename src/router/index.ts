@@ -5,8 +5,8 @@ import Console from "@/pages/backend/Console.vue";
 import NotFound from "@/pages/NotFound.vue";
 import AddWorks from "@/pages/backend/anime/AddWorks.vue";
 import Works from "@/pages/backend/anime/Works.vue";
-import WorksList from "@/pages/backend/anime/WorksList.vue"; 
-import WatchLater from "@/pages/frontend/user/WatchLater.vue";
+import WorksList from "@/pages/backend/anime/WorksList.vue";
+// import WatchLater from "@/pages/frontend/user/WatchLater.vue";
 import { useUserControl } from "@/stores/userControl";
 import { useLoginModalStore } from "@/stores/loginModalStore";
 import { updateSEO } from "@/utils/seo";
@@ -36,18 +36,18 @@ const routes = [
 			requiresLogin: true,
 		},
 	},
-	{
-		path: "/watchlater",
-		name: "watchlater",
-		component: WatchLater,
-		meta: {
-			title: "待看清單 - Anireki",
-			titleEn: "Watch Later - Anireki",
-			titleJa: "後で見る - Anireki",
-			seoKey: "watchlater",
-			requiresLogin: true,
-		},
-	},
+	// {
+	// 	path: "/watchlater",
+	// 	name: "watchlater",
+	// 	component: WatchLater,
+	// 	meta: {
+	// 		title: "待看清單 - Anireki",
+	// 		titleEn: "Watch Later - Anireki",
+	// 		titleJa: "後で見る - Anireki",
+	// 		seoKey: "watchlater",
+	// 		requiresLogin: true,
+	// 	},
+	// },
 	{
 		path: "/console",
 		name: "console",
@@ -111,8 +111,11 @@ router.beforeEach(async (to) => {
 		if (!userControll.isLogin) {
 			const loginModalStore = useLoginModalStore();
 			const title = to.name === "history" ? "視聴履歴" : "後で見る";
-			const message = to.name === "history" ? "視聴履歴を確認するにはログインが必要です" : "視聴予定リストを確認するにはログインが必要です";
-			
+			const message =
+				to.name === "history"
+					? "視聴履歴を確認するにはログインが必要です"
+					: "視聴予定リストを確認するにはログインが必要です";
+
 			loginModalStore.showModal(title, message);
 			return { name: "home" };
 		}
@@ -127,9 +130,7 @@ router.beforeEach(async (to) => {
 	}
 });
 
-// After each route navigation, update SEO
 router.afterEach((to) => {
-	// Update SEO data if available
 	if (to.meta.seoKey) {
 		updateSEO(to.meta.seoKey as string);
 	}

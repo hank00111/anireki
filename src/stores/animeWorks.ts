@@ -193,7 +193,6 @@ export const useAnimeWorks = defineStore("animeWorks", {
 
 			for (const [_, hValue] of Object.entries(this.originData)) {
 				if (hValue.season === seasonID) {
-					// console.log(hValue);
 					this.animeData.push(hValue);
 				}
 			}
@@ -440,6 +439,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
 			const season = Math.ceil((new Date().getMonth() + 1) / 3);
 			const seasons = ["winter", "spring", "summer", "autumn"];
 			this.seasonID = `${thisYear}-${seasons[season - 1]}`;
+			return this.seasonID;
 		},
 	},
 });

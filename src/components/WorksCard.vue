@@ -21,9 +21,9 @@ const dialogClose = () => {
 };
 
 onMounted(() => {
-	if (props.fromPage === "home" && props.isLogin) {
-		animeWorks.getWatchHistory();
-	}
+	// if (props.fromPage === "home" && props.isLogin) {
+	// 	animeWorks.getWatchHistory();
+	// }
 });
 </script>
 

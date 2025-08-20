@@ -8,6 +8,7 @@ import { useUserControl } from "@/stores/userControl";
 const props = defineProps({
 	isHome: Boolean,
 	isConsole: Boolean,
+	seasonID: String,
 });
 
 const router = useRouter();
@@ -131,10 +132,8 @@ let resizeTimeout: number | null = null;
 // 	}, 250);
 // };
 
-onMounted(() => {
-	checkMobile();
-	window.addEventListener("resize", checkMobile, true);
-	document.addEventListener("click", handleClickOutside);
+const fnCheckCurrentSeason = () => {
+	//props.seasonID
 	if (yearList.value?.length > 0) {
 		const foundIndex = yearList.value.findIndex((year) => year.seasonID === animeWorks.seasonID);
 		if (foundIndex !== -1) {
@@ -142,6 +141,18 @@ onMounted(() => {
 			animeWorks.seasonSel = foundIndex;
 		}
 	}
+};
+
+const fnInit = () => {
+	console.log(animeWorks.seasonID);
+	checkMobile();
+	fnCheckCurrentSeason();
+};
+
+onMounted(() => {
+	fnInit();
+	window.addEventListener("resize", checkMobile, true);
+	document.addEventListener("click", handleClickOutside);
 });
 
 onUnmounted(() => {
