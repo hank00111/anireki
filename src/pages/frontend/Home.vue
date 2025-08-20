@@ -1,28 +1,30 @@
 <script setup lang="ts">
-import { onMounted, onBeforeMount } from "vue";
+import { onMounted } from "vue";
 import Header from "@/components/Header.vue";
 import Sidebar from "@/components/Sidebar.vue";
 import WorksCard from "@/components/WorksCard.vue";
 import Footer from "@/components/Footer.vue";
 import Notifications from "@/components/Notifications.vue";
 import { useAnimeWorks } from "@/stores/animeWorks";
+import { useUserControl } from "@/stores/userControl";
 import { updateSEO, generateWebsiteSchema } from "@/utils/seo";
 
 const animeWorks = useAnimeWorks();
+const userControll = useUserControl();
 
 const rightEventClose = (e: { preventDefault: () => void }) => {
 	e.preventDefault();
 };
 
 onMounted(() => {
+	animeWorks.SysSeason();
 	updateSEO("home");
 	generateWebsiteSchema();
 });
 
-onBeforeMount(() => {
-	animeWorks.SysSeason();
-	// animeWorks.getAnimeData();
-});
+// onBeforeMount(() => {
+// 	// animeWorks.getAnimeData();
+// });
 </script>
 
 <template>
@@ -33,7 +35,7 @@ onBeforeMount(() => {
 			<Header :is-home="true"></Header>
 		</div>
 		<div class="content">
-			<WorksCard :from-Page="'home'"></WorksCard>
+			<WorksCard :from-Page="'home'" :is-login="userControll.isLogin"></WorksCard>
 			<Footer />
 		</div>
 	</div>

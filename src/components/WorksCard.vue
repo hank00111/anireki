@@ -4,6 +4,7 @@ import { useAnimeWorks } from "@/stores/animeWorks";
 import WorksDialog from "@/components/WorksDialog.vue";
 //const props =
 const props = defineProps({
+	isLogin: Boolean,
 	fromPage: String,
 });
 
@@ -20,7 +21,7 @@ const dialogClose = () => {
 };
 
 onMounted(() => {
-	if (props.fromPage === "home") {
+	if (props.fromPage === "home" && props.isLogin) {
 		animeWorks.getWatchHistory();
 	}
 });
@@ -90,7 +91,7 @@ onMounted(() => {
 		transform: translateZ(0);
 		contain: layout style paint;
 		will-change: transform;
-        
+
 		.home-works-images {
 			height: 0;
 			overflow: hidden;
