@@ -9,13 +9,11 @@ import LoginModal from "@/components/LoginModal.vue";
 
 const drakMode = useDrakModeStore();
 
-// const animeWorks = useAnimeWorks();/
+// const animeWorks = useAnimeWorks();
 const userControll = useUserControl();
 const loginModalStore = useLoginModalStore();
 
 const fnInit = () => {
-	console.log("App initialized");
-
 	if (drakMode.drakState) {
 		document.documentElement.setAttribute("data-theme", "dark");
 	} else {

@@ -10,6 +10,8 @@ export const useUserControl = defineStore("login", {
     name: "",
     picture: "",
     consoleAccess: false,
+    isInitialized: false,
+    isInitializing: false,
   }),
   actions: {
     resetUserState() {
@@ -20,6 +22,25 @@ export const useUserControl = defineStore("login", {
       this.checkConsole = false;
     },
     async getUser(src: number) {
+      if (this.isInitialized) {
+        return;
+      }
+      
+      if (this.isInitializing) {
+        return new Promise((resolve) => {
+          const checkInitialized = () => {
+            if (this.isInitialized) {
+              resolve(undefined);
+            } else {
+              setTimeout(checkInitialized, 50);
+            }
+          };
+          checkInitialized();
+        });
+      }
+
+      this.isInitializing = true;
+
       try {
         if (this.name.length === 0) {
           const res = await axiosInstance.get("/auth/user");
@@ -41,6 +62,9 @@ export const useUserControl = defineStore("login", {
         const errorStore = useErrorStore();
         errorStore.addError('無法取得使用者資訊', 'error');
         console.error('Failed to get user info:', error);
+      } finally {
+        this.isInitialized = true;
+        this.isInitializing = false;
       }
     },
     async getConsole() {
