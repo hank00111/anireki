@@ -3,7 +3,7 @@ import { ref, onMounted } from "vue";
 import { useAnimeWorks } from "@/stores/animeWorks";
 import WorksDialog from "@/components/WorksDialog.vue";
 //const props =
-const props = defineProps({
+defineProps({
 	isLogin: Boolean,
 	fromPage: String,
 });
