@@ -58,16 +58,11 @@ export const useUserControl = defineStore("login", {
 					this.picture = data.picture;
 					this.consoleAccess = data.console || false;
 					this.isInitialized = true;
-				} else if (res.status === 204) {
-					this.resetUserState();
-					this.isInitialized = true;
 				}
 			} catch (error: any) {
 				this.resetUserState();
-
 				if (error.response?.status === 401) {
-					this.isInitialized = true;
-
+					this.isInitialized = false;
 					if (src === 1) {
 						console.log("[AUTH] Redirecting to Google OAuth for auto-login");
 						window.location.href = "https://a2.anireki.com/v2/auth/google";
@@ -76,7 +71,6 @@ export const useUserControl = defineStore("login", {
 				} else {
 					console.error("Authentication check failed:", error.response?.status || error.message);
 					this.isInitialized = false;
-
 					const errorStore = useErrorStore();
 					errorStore.addError("無法取得使用者資訊", "error");
 				}
