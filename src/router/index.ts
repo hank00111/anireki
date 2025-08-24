@@ -9,6 +9,7 @@ import WorksList from "@/pages/backend/anime/WorksList.vue";
 // import WatchLater from "@/pages/frontend/user/WatchLater.vue";
 import { useUserControl } from "@/stores/userControl";
 import { useLoginModalStore } from "@/stores/loginModalStore";
+import { useErrorStore } from "@/stores/errorStore";
 import { updateSEO } from "@/utils/seo";
 
 const routes = [
@@ -105,12 +106,8 @@ const router = createRouter({
 });
 
 router.onError(() => {
-	import("@/stores/errorStore")
-		.then(({ useErrorStore }) => {
-			const errorStore = useErrorStore();
-			errorStore.addError("ページの読み込み中にエラーが発生しました", "error");
-		})
-		.catch(console.error);
+	const errorStore = useErrorStore();
+	errorStore.addError("ページの読み込み中にエラーが発生しました", "error");
 });
 
 router.beforeEach(async (to, _from, next) => {
@@ -161,7 +158,7 @@ router.beforeEach(async (to, _from, next) => {
 			if (requiresAuth) {
 				const isAd = await userControll.getConsole();
 				if (!isAd) {
-					const errorStore = (await import("@/stores/errorStore")).useErrorStore();
+					const errorStore = useErrorStore();
 					errorStore.addError("管理者権限が必要です", "warning");
 					next({ name: "home" });
 					return;
@@ -171,7 +168,7 @@ router.beforeEach(async (to, _from, next) => {
 
 		next();
 	} catch (error) {
-		const errorStore = (await import("@/stores/errorStore")).useErrorStore();
+		const errorStore = useErrorStore();
 		errorStore.addError("ページの読み込み中にエラーが発生しました", "error");
 		next({ name: "home" });
 	}

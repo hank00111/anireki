@@ -2,6 +2,7 @@
 import { computed, onMounted, onUnmounted, ref } from "vue";
 import { useUserControl } from "@/stores/userControl";
 import { useLoginModalStore } from "@/stores/loginModalStore";
+import { useErrorStore } from "@/stores/errorStore";
 
 interface Props {
 	isVisible: boolean;
@@ -33,7 +34,7 @@ const handleLogin = async () => {
 		const returnUrl = loginModalStore.pendingRoute?.fullPath;
 		await userControl.getUser(1, returnUrl);
 	} catch (error) {
-		const errorStore = (await import("@/stores/errorStore")).useErrorStore();
+		const errorStore = useErrorStore();
 		errorStore.addError("ログインに失敗しました。再試行してください。", "error");
 	} finally {
 		isLoggingIn.value = false;

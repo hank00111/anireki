@@ -4,6 +4,7 @@ import { ref, onMounted, onUnmounted, computed } from "vue";
 import { useAnimeWorks } from "@/stores/animeWorks";
 import { useAnimeYears } from "@/stores/animeYears";
 import { useUserControl } from "@/stores/userControl";
+import { useErrorStore } from "@/stores/errorStore";
 
 const props = defineProps({
 	isHome: Boolean,
@@ -57,7 +58,7 @@ const handleHeaderLogin = async () => {
 	try {
 		await userControl.getUser(1, router.currentRoute.value.fullPath);
 	} catch (error) {
-		const errorStore = (await import("@/stores/errorStore")).useErrorStore();
+		const errorStore = useErrorStore();
 		errorStore.addError("ログインに失敗しました。再試行してください。", "error");
 	} finally {
 		isLoggingIn.value = false;
