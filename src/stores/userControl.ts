@@ -22,18 +22,15 @@ export const useUserControl = defineStore("login", {
 			this.checkConsole = false;
 		},
 		async getUser(src?: number) {
-			// 如果已初始化，直接返回
 			if (this.isInitialized) {
 				return;
 			}
 
-			// 如果正在初始化，返回等待 Promise - Context7 最佳實踐
 			if (this.isInitializing) {
 				return new Promise<void>((resolve, reject) => {
 					const timeout = setTimeout(() => {
 						reject(new Error("User initialization timeout"));
-					}, 10000); // 10秒超時
-
+					}, 10000);
 					const checkInitialized = () => {
 						if (this.isInitialized) {
 							clearTimeout(timeout);
@@ -41,7 +38,6 @@ export const useUserControl = defineStore("login", {
 						} else if (this.isInitializing) {
 							setTimeout(checkInitialized, 100);
 						} else {
-							// 初始化被中斷（失敗情況）
 							clearTimeout(timeout);
 							reject(new Error("User initialization interrupted"));
 						}
@@ -61,27 +57,31 @@ export const useUserControl = defineStore("login", {
 					this.name = data.name;
 					this.picture = data.picture;
 					this.consoleAccess = data.console || false;
-					this.isInitialized = true; // 成功後才標記為已初始化
+					this.isInitialized = true;
 				} else if (res.status === 204) {
 					this.resetUserState();
-					this.isInitialized = true; // 無用戶狀態也是有效的初始化結果
-
-					// 只有明確要求自動登入時才跳轉
-					if (src === 1) {
-						window.location.href = "https://a2.anireki.com/v2/auth/google";
-						return; // 跳轉後不繼續執行
-					}
+					this.isInitialized = true;
 				}
-			} catch (error) {
+			} catch (error: any) {
 				this.resetUserState();
-				// 錯誤情況下不標記為已初始化，允許重試
-				this.isInitialized = false;
 
-				const errorStore = useErrorStore();
-				errorStore.addError("無法取得使用者資訊", "error");
-				console.error("Failed to get user info:", error);
+				if (error.response?.status === 401) {
+					this.isInitialized = true;
 
-				throw error; // 重新拋出錯誤供調用者處理
+					if (src === 1) {
+						console.log("[AUTH] Redirecting to Google OAuth for auto-login");
+						window.location.href = "https://a2.anireki.com/v2/auth/google";
+						return;
+					}
+				} else {
+					console.error("Authentication check failed:", error.response?.status || error.message);
+					this.isInitialized = false;
+
+					const errorStore = useErrorStore();
+					errorStore.addError("無法取得使用者資訊", "error");
+				}
+
+				throw error;
 			} finally {
 				this.isInitializing = false;
 			}
