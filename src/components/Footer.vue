@@ -15,6 +15,10 @@
 	padding: 12px 0;
 	margin-top: auto;
 	flex-shrink: 0;
+	
+	@media (max-width: 768px) {
+		padding: 16px 0 20px 0;
+	}
 }
 
 .footer-content {

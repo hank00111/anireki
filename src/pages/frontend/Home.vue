@@ -63,6 +63,12 @@ onBeforeMount(() => {
 @media (max-width: 768px) {
 	.main {
 		height: calc(100vh - 72px);
+		overflow: hidden;
+	}
+
+	.content {
+		height: calc(100vh - 72px - 52px);
+		padding-bottom: env(safe-area-inset-bottom, 0);
 	}
 }
 </style>
