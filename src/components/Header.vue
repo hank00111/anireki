@@ -144,7 +144,7 @@ const fnCheckCurrentSeason = () => {
 };
 
 const fnInit = () => {
-	console.log(animeWorks.seasonID);
+	// console.log(animeWorks.seasonID);
 	checkMobile();
 	fnCheckCurrentSeason();
 };
