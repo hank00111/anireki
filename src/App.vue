@@ -1,17 +1,27 @@
 <script setup lang="ts">
-import { onMounted } from "vue";
+import { onMounted, onErrorCaptured } from "vue";
 // import { useAnimeWorks } from "@/stores/animeWorks";
 import { useDrakModeStore } from "@/stores/drakMode";
 // import { useUserControl } from "@/stores/userControl";
 import { useLoginModalStore } from "@/stores/loginModalStore";
+import { useErrorStore } from "@/stores/errorStore";
 import ErrorNotifications from "@/components/ErrorNotifications.vue";
 import LoginModal from "@/components/LoginModal.vue";
 
 const drakMode = useDrakModeStore();
+const errorStore = useErrorStore();
 
 // const animeWorks = useAnimeWorks();
 // const userControll = useUserControl();
 const loginModalStore = useLoginModalStore();
+
+// Context7 best practice: Global error boundary
+onErrorCaptured((error, _instance, info) => {
+	console.error("[ERROR] [App] Uncaught error:", error, info);
+	errorStore.addError("アプリケーションエラーが発生しました", 'error');
+	// Return false to stop error propagation
+	return false;
+});
 
 const fnInit = () => {
 	if (drakMode.drakState) {

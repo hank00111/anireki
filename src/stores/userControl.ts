@@ -31,21 +31,62 @@ export const useUserControl = defineStore("login", {
 			this.isLogin = false;
 			this.consoleAccess = false;
 			this.checkConsole = false;
-			// Context7 best practice: Don't reset isInitialized on logout to prevent re-initialization
+			// Context7 best practice: Reset all state flags for clean logout
+			this.isInitialized = false;
+			this.isInitializing = false;
+			console.log("[INFO] [UserControl] User state reset completely");
 		},
+		// Context7 best practice: Extract OAuth redirect logic into separate method
+		redirectToOAuth(returnUrl?: string) {
+			// Context7 security improvement: Validate and sanitize return URL
+			let safeReturnUrl = returnUrl || (window.location.pathname + window.location.search);
+			
+			// Context7 security: Ensure return URL is relative and safe
+			if (safeReturnUrl.startsWith('http://') || safeReturnUrl.startsWith('https://')) {
+				// If absolute URL, only allow same origin
+				try {
+					const url = new URL(safeReturnUrl);
+					if (url.origin !== window.location.origin) {
+						console.warn("[SECURITY] [UserControl] External return URL blocked:", safeReturnUrl);
+						safeReturnUrl = '/';
+					} else {
+						safeReturnUrl = url.pathname + url.search + url.hash;
+					}
+				} catch {
+					console.warn("[SECURITY] [UserControl] Invalid return URL blocked:", safeReturnUrl);
+					safeReturnUrl = '/';
+				}
+			}
+			
+			// Context7 security: Remove any potentially dangerous characters
+			safeReturnUrl = safeReturnUrl.replace(/[<>"']/g, '');
+			
+			const encodedReturnUrl = encodeURIComponent(safeReturnUrl);
+			const oauthUrl = `https://a2.anireki.com/v2/auth/google?returnUrl=${encodedReturnUrl}`;
+			
+			console.log(`[INFO] [UserControl] Redirecting to Google OAuth with return URL: ${safeReturnUrl}`);
+			window.location.href = oauthUrl;
+		},
+
 		async getUser(src?: number, returnUrl?: string) {
+			// Context7 fix: Handle OAuth redirect even when initialized
+			if (src === 1) {
+				// Force OAuth redirect regardless of initialization state
+				console.log("[INFO] [UserControl] Initiating OAuth login");
+				this.redirectToOAuth(returnUrl);
+				return;
+			}
+
 			// Context7 fix: Prevent race conditions with proper state management
 			if (this.isInitialized) {
 				return;
 			}
 
 			if (this.isInitializing) {
-				// Context7 improvement: Use Promise-based waiting with proper timeout
 				return new Promise<void>((resolve, reject) => {
 					const timeout = setTimeout(() => {
 						reject(new Error("User initialization timeout"));
 					}, 10000);
-					
 					const checkInitialized = () => {
 						if (this.isInitialized) {
 							clearTimeout(timeout);
@@ -77,7 +118,6 @@ export const useUserControl = defineStore("login", {
 					console.log("[SUCCESS] [UserControl] User authenticated successfully");
 				}
 			} catch (error: any) {
-				// Context7 best practice: Consistent error handling with proper classification
 				this.resetUserState();
 				
 				const errorStatus = error.response?.status;
@@ -86,13 +126,7 @@ export const useUserControl = defineStore("login", {
 				if (errorStatus === 401) {
 					// Context7 fix: Handle unauthorized consistently
 					if (src === 1) {
-						// Context7 best practice: Use provided returnUrl or current path
-						const currentPath = returnUrl || (window.location.pathname + window.location.search);
-						const encodedReturnUrl = encodeURIComponent(currentPath);
-						const oauthUrl = `https://a2.anireki.com/v2/auth/google?returnUrl=${encodedReturnUrl}`;
-						
-						console.log(`[INFO] [UserControl] Redirecting to Google OAuth with return URL: ${currentPath}`);
-						window.location.href = oauthUrl;
+						this.redirectToOAuth(returnUrl);
 						return;
 					}
 				} else if (errorStatus === 503) {

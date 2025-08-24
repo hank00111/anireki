@@ -78,15 +78,21 @@ const handleLogin = async () => {
   try {
     // Context7 best practice: Pass pending route for return URL
     const returnUrl = loginModalStore.pendingRoute?.fullPath
+    
+    console.log("[INFO] [LoginModal] Initiating login process");
+    
+    // Context7 fix: OAuth redirect will leave the page, so we don't need to check login status
+    // The check will happen after redirect when user returns
     await userControl.getUser(1, returnUrl)
     
-    // Check if login was successful
-    if (userControl.isLogin) {
-      console.log("[SUCCESS] [LoginModal] Login successful, handling navigation");
-      await loginModalStore.handleSuccessfulLogin();
-    }
+    // Note: This code may not execute if OAuth redirect occurs
+    console.log("[INFO] [LoginModal] Login process completed");
+    
   } catch (error) {
     console.error("[ERROR] [LoginModal] Login failed:", error);
+    // Context7 improvement: Show error message to user
+    const errorStore = (await import('@/stores/errorStore')).useErrorStore();
+    errorStore.addError("ログインに失敗しました。再試行してください。", 'error');
   } finally {
     isLoggingIn.value = false
   }
@@ -102,12 +108,15 @@ const handleEscapeKey = (event: KeyboardEvent) => {
   }
 }
 
+// Context7 best practice: Properly handle event listener cleanup
 onMounted(() => {
   document.addEventListener('keydown', handleEscapeKey)
 })
 
 onUnmounted(() => {
   document.removeEventListener('keydown', handleEscapeKey)
+  // Context7 best practice: Reset loading state to prevent stale state
+  isLoggingIn.value = false
 })
 </script>
 

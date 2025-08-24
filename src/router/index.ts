@@ -116,17 +116,21 @@ router.onError((error) => {
 });
 
 router.beforeEach(async (to, _from, next) => {
+	// Context7 best practice: Call stores before any await operations
 	const userControll = useUserControl();
 	const loginModalStore = useLoginModalStore();
 
 	try {
-		// Context7 best practice: Initialize user state if needed
-		if (!userControll.isInitialized) {
+		// Context7 CRITICAL FIX: Avoid infinite loops - only initialize if not already in progress
+		// and not from OAuth callback to prevent redirect loops
+		const isOAuthCallback = to.path.includes('/auth/') || to.query.code;
+		
+		if (!userControll.isInitialized && !userControll.isInitializing && !isOAuthCallback) {
+			console.log("[INFO] [Router] Initializing user state");
 			await userControll.getUser(0);
 		}
 
-		// Context7 fix: Unified authentication check - avoid double checking
-		// First check if route requires any form of authentication
+		// Context7 fix: Check authentication only for routes that require it
 		const requiresLogin = to.matched.some(record => record.meta.requiresLogin);
 		const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
 

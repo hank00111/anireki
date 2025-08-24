@@ -25,6 +25,7 @@ const nextEnd = ref<boolean>(false);
 const prevEnd = ref<boolean>(false);
 const yearTextOpacity = ref<number>(1);
 const yearListShow = ref<boolean>(false);
+const isLoggingIn = ref<boolean>(false);
 
 const yearList = ref(animeYears.animeYearsObj);
 
@@ -44,6 +45,27 @@ const userLogout = () => {
 	showMenu.value = false;
 	yearListShow.value = false;
 	userControl.logout();
+};
+
+const handleHeaderLogin = async () => {
+	if (isLoggingIn.value) return;
+	
+	isLoggingIn.value = true;
+	showMenu.value = false;
+	yearListShow.value = false;
+	
+	try {
+		console.log("[INFO] [Header] Initiating login from header");
+		// Context7 best practice: Use current route for return URL
+		await userControl.getUser(1, router.currentRoute.value.fullPath);
+	} catch (error) {
+		console.error("[ERROR] [Header] Login failed:", error);
+		// Context7 improvement: Show error feedback to user
+		const errorStore = (await import('@/stores/errorStore')).useErrorStore();
+		errorStore.addError("ログインに失敗しました。再試行してください。", 'error');
+	} finally {
+		isLoggingIn.value = false;
+	}
 };
 
 const goToSeason = (index: number) => {
@@ -161,6 +183,10 @@ onUnmounted(() => {
 	if (resizeTimeout) {
 		window.clearTimeout(resizeTimeout);
 	}
+	// Context7 best practice: Clean up component state
+	isLoggingIn.value = false;
+	showMenu.value = false;
+	yearListShow.value = false;
 });
 </script>
 
@@ -258,8 +284,9 @@ onUnmounted(() => {
 				</div>
 			</div>
 			<div v-else class="userLogin">
-				<button @click="userControl.getUser(1)">
-					<span>登入</span>
+				<button @click="handleHeaderLogin" :disabled="isLoggingIn">
+					<span v-if="isLoggingIn">登入中...</span>
+					<span v-else>登入</span>
 				</button>
 			</div>
 		</div>
