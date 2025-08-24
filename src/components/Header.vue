@@ -223,7 +223,7 @@ onUnmounted(() => {
 		<div v-else></div>
 
 		<div class="userPanel" ref="userPanel">
-			<div v-if="userControl.name.length != 0 ? true : false" class="userLoggedin">
+			<div v-if="userControl.isLogin" class="userLoggedin">
 				<button
 					@click="
 						showMenu = !showMenu;

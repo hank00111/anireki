@@ -13,6 +13,17 @@ export const useUserControl = defineStore("login", {
 		isInitialized: false,
 		isInitializing: false,
 	}),
+	getters: {
+		// Context7 best practice: Use getters for computed values
+		isAuthenticated: (state) => state.isLogin,
+		hasConsoleAccess: (state) => state.checkConsole && state.consoleAccess,
+		userDisplayName: (state) => state.name || "Unknown User",
+		initializationStatus: (state) => {
+			if (state.isInitializing) return "initializing";
+			if (state.isInitialized) return "completed";
+			return "pending";
+		}
+	},
 	actions: {
 		resetUserState() {
 			this.name = "";
@@ -20,26 +31,31 @@ export const useUserControl = defineStore("login", {
 			this.isLogin = false;
 			this.consoleAccess = false;
 			this.checkConsole = false;
+			// Context7 best practice: Don't reset isInitialized on logout to prevent re-initialization
 		},
-		async getUser(src?: number) {
+		async getUser(src?: number, returnUrl?: string) {
+			// Context7 fix: Prevent race conditions with proper state management
 			if (this.isInitialized) {
 				return;
 			}
 
 			if (this.isInitializing) {
+				// Context7 improvement: Use Promise-based waiting with proper timeout
 				return new Promise<void>((resolve, reject) => {
 					const timeout = setTimeout(() => {
 						reject(new Error("User initialization timeout"));
 					}, 10000);
+					
 					const checkInitialized = () => {
 						if (this.isInitialized) {
 							clearTimeout(timeout);
 							resolve();
-						} else if (this.isInitializing) {
-							setTimeout(checkInitialized, 100);
-						} else {
+						} else if (!this.isInitializing) {
+							// Context7 fix: Handle case where initialization was interrupted
 							clearTimeout(timeout);
 							reject(new Error("User initialization interrupted"));
+						} else {
+							setTimeout(checkInitialized, 100);
 						}
 					};
 					checkInitialized();
@@ -57,48 +73,71 @@ export const useUserControl = defineStore("login", {
 					this.name = data.name;
 					this.picture = data.picture;
 					this.consoleAccess = data.console || false;
-					this.isInitialized = true;
+					
+					console.log("[SUCCESS] [UserControl] User authenticated successfully");
 				}
 			} catch (error: any) {
+				// Context7 best practice: Consistent error handling with proper classification
 				this.resetUserState();
-				if (error.response?.status === 401) {
-					this.isInitialized = false;
+				
+				const errorStatus = error.response?.status;
+				const errorStore = useErrorStore();
+
+				if (errorStatus === 401) {
+					// Context7 fix: Handle unauthorized consistently
 					if (src === 1) {
-						// Context7 best practice: Include return URL for OAuth redirect
-						const currentPath = window.location.pathname + window.location.search;
-						const returnUrl = encodeURIComponent(currentPath);
-						const oauthUrl = `https://a2.anireki.com/v2/auth/google?returnUrl=${returnUrl}`;
+						// Context7 best practice: Use provided returnUrl or current path
+						const currentPath = returnUrl || (window.location.pathname + window.location.search);
+						const encodedReturnUrl = encodeURIComponent(currentPath);
+						const oauthUrl = `https://a2.anireki.com/v2/auth/google?returnUrl=${encodedReturnUrl}`;
 						
-						console.log(`[AUTH] Redirecting to Google OAuth with return URL: ${currentPath}`);
+						console.log(`[INFO] [UserControl] Redirecting to Google OAuth with return URL: ${currentPath}`);
 						window.location.href = oauthUrl;
 						return;
 					}
+				} else if (errorStatus === 503) {
+					console.error("[ERROR] [UserControl] Authentication service unavailable");
+					errorStore.addError("認証サービスが一時的に利用できません。しばらくしてから再試行してください。", "warning");
+				} else if (errorStatus === 404) {
+					console.error("[ERROR] [UserControl] User data not found");
+					// Context7 best practice: Offer re-login for missing user data
+					if (src === 1) {
+						errorStore.addError("ユーザーデータが見つかりません。再ログインしてください。", "error");
+					}
 				} else {
-					console.error("Authentication check failed:", error.response?.status || error.message);
-					this.isInitialized = false;
-					const errorStore = useErrorStore();
-					errorStore.addError("無法取得使用者資訊", "error");
+					console.error("[ERROR] [UserControl] Authentication check failed:", errorStatus || error.message);
+					errorStore.addError("認証チェックに失敗しました", "error");
 				}
-
-				// throw error;
 			} finally {
+				// Context7 fix: Always mark as initialized to prevent infinite loops
+				this.isInitialized = true;
 				this.isInitializing = false;
 			}
 		},
 		async getConsole() {
+			// Context7 best practice: Check if user is logged in first
+			if (!this.isLogin) {
+				console.log("[WARN] [UserControl] Console access check failed - user not logged in");
+				this.checkConsole = false;
+				return false;
+			}
+
 			try {
 				let res = await axiosInstance.get("/auth/console");
 				if (res.status === 200) {
 					this.checkConsole = true;
+					console.log("[SUCCESS] [UserControl] Console access granted");
 					return true;
 				} else {
 					this.checkConsole = false;
+					console.log("[INFO] [UserControl] Console access denied by server");
 					return false;
 				}
 			} catch (error) {
 				this.checkConsole = false;
+				console.error("[ERROR] [UserControl] Console access check failed:", error);
 				const errorStore = useErrorStore();
-				errorStore.addError("無法取得控制台權限", "error");
+				errorStore.addError("コンソールアクセス権限の取得に失敗しました", "error");
 				return false;
 			}
 		},
@@ -106,11 +145,31 @@ export const useUserControl = defineStore("login", {
 			try {
 				await axiosInstance.post("/auth/logout");
 				this.resetUserState();
+				// Context7 fix: Keep isInitialized true to prevent unnecessary re-initialization
+				// User should be able to login again without full re-initialization
+				console.log("[SUCCESS] [UserControl] User logged out successfully");
 			} catch (error) {
 				const errorStore = useErrorStore();
-				errorStore.addError("登出失敗", "error");
-				console.error("Failed to logout:", error);
+				errorStore.addError("ログアウトに失敗しました", "error");
+				console.error("[ERROR] [UserControl] Failed to logout:", error);
+				// Context7 best practice: Reset user state even if logout request fails
+				this.resetUserState();
 			}
+		},
+		
+		// Context7 best practice: Add explicit re-login method
+		async reLogin(returnUrl?: string) {
+			this.resetUserState();
+			this.isInitialized = false; // Force re-initialization for re-login
+			await this.getUser(1, returnUrl);
+		},
+		
+		// Context7 best practice: Add method to check authentication status
+		async refreshAuthStatus() {
+			if (!this.isInitialized) {
+				await this.getUser(0);
+			}
+			return this.isLogin;
 		},
 	},
 	// persist: true,

@@ -104,37 +104,90 @@ const router = createRouter({
 	routes,
 });
 
-router.beforeEach(async (to) => {
+// Context7 best practice: Add navigation error handler
+router.onError((error) => {
+	console.error('[ERROR] [Router] Navigation error:', error);
+	
+	// Context7 best practice: Import error store dynamically to avoid circular dependencies
+	import('@/stores/errorStore').then(({ useErrorStore }) => {
+		const errorStore = useErrorStore();
+		errorStore.addError("ページの読み込み中にエラーが発生しました", "error");
+	}).catch(console.error);
+});
+
+router.beforeEach(async (to, _from, next) => {
 	const userControll = useUserControl();
 	const loginModalStore = useLoginModalStore();
 
-	// Context7 best practice: Initialize user state if needed
-	if (!userControll.isInitialized) {
-		await userControll.getUser(0);
-	}
-
-	// Check login requirements for user routes
-	if ((to.name === "history" || to.name === "watchlater") && to.meta.requiresLogin) {
-		if (!userControll.isLogin) {
-			const title = to.name === "history" ? "視聴履歴" : "後で見る";
-			const message =
-				to.name === "history"
-					? "視聴履歴を確認するにはログインが必要です"
-					: "視聴予定リストを確認するにはログインが必要です";
-
-			// Context7 best practice: Save pending route before showing modal
-			loginModalStore.showModal(title, message, to);
-			return { name: "home" };
+	try {
+		// Context7 best practice: Initialize user state if needed
+		if (!userControll.isInitialized) {
+			await userControll.getUser(0);
 		}
-	}
 
-	// Check console access for admin routes
-	if (to.name === "console" || to.name === "addworks" || to.name === "works" || to.name === "workslist") {
-		const isAd = await userControll.getConsole();
-		if (!isAd && to.meta.requiresAuth) {
-			console.log("[ROUTER] Console access denied");
-			return { name: "home" };
+		// Context7 fix: Unified authentication check - avoid double checking
+		// First check if route requires any form of authentication
+		const requiresLogin = to.matched.some(record => record.meta.requiresLogin);
+		const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+
+		if (requiresLogin || requiresAuth) {
+			// Context7 best practice: Single login check for all authenticated routes
+			if (!userControll.isLogin) {
+				// Context7 best practice: Dynamic title and message based on route type
+				let routeInfo;
+				
+				if (requiresAuth) {
+					// Admin routes
+					routeInfo = {
+						title: "管理者ログインが必要",
+						message: "管理者コンソールにアクセスするにはログインが必要です"
+					};
+				} else {
+					// User routes
+					const routeNames: Record<string, { title: string; message: string }> = {
+						history: {
+							title: "視聴履歴",
+							message: "視聴履歴を確認するにはログインが必要です"
+						},
+						watchlater: {
+							title: "後で見る",
+							message: "視聴予定リストを確認するにはログインが必要です"
+						}
+					};
+
+					routeInfo = routeNames[to.name as string] || {
+						title: "ログインが必要",
+						message: "このページを表示するにはログインが必要です"
+					};
+				}
+
+				// Context7 best practice: Save pending route before showing modal
+				loginModalStore.showModal(routeInfo.title, routeInfo.message, to);
+				next({ name: "home" });
+				return;
+			}
+
+			// Context7 fix: Only check console access for admin routes (requiresAuth)
+			if (requiresAuth) {
+				const isAd = await userControll.getConsole();
+				if (!isAd) {
+					console.log("[WARN] [Router] Console access denied for user");
+					// Context7 improvement: Better user feedback for denied access
+					const errorStore = (await import('@/stores/errorStore')).useErrorStore();
+					errorStore.addError("管理者権限が必要です", "warning");
+					next({ name: "home" });
+					return;
+				}
+			}
 		}
+
+		next(); // Context7 best practice: Always call next()
+	} catch (error) {
+		console.error('[ERROR] [Router] Navigation guard error:', error);
+		// Context7 improvement: Better error recovery
+		const errorStore = (await import('@/stores/errorStore')).useErrorStore();
+		errorStore.addError("ページの読み込み中にエラーが発生しました", "error");
+		next({ name: "home" }); // Fallback to home on error
 	}
 });
 

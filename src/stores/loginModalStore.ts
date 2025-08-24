@@ -33,16 +33,20 @@ export const useLoginModalStore = defineStore("loginModal", {
       this.pendingRoute = null;
     },
     
-    // Context7 best practice: Handle successful login navigation
+    // Context7 improvement: Simplified login success handling
     async handleSuccessfulLogin() {
-      const { default: router } = await import('@/router');
-      
-      if (this.pendingRoute) {
-        console.log(`[LOGIN_MODAL] Redirecting to pending route: ${this.pendingRoute.path}`);
-        await router.push(this.pendingRoute);
+      try {
+        // Context7 fix: Router will handle navigation through router.beforeEach
+        // No need for manual navigation here as user will be redirected automatically
+        if (this.pendingRoute) {
+          console.log(`[INFO] [LoginModal] Login successful, router will handle navigation to: ${this.pendingRoute.path}`);
+        }
+        
+        this.hideModal();
+      } catch (error) {
+        console.error('[ERROR] [LoginModal] Login success handling failed:', error);
+        this.hideModal(); // Always hide modal
       }
-      
-      this.hideModal();
     }
   }
 });

@@ -76,16 +76,17 @@ const handleLogin = async () => {
   isLoggingIn.value = true
   
   try {
-    // Context7 best practice: Wait for login completion
-    await userControl.getUser(1)
+    // Context7 best practice: Pass pending route for return URL
+    const returnUrl = loginModalStore.pendingRoute?.fullPath
+    await userControl.getUser(1, returnUrl)
     
     // Check if login was successful
     if (userControl.isLogin) {
-      console.log("[LOGIN_MODAL] Login successful, handling navigation");
+      console.log("[SUCCESS] [LoginModal] Login successful, handling navigation");
       await loginModalStore.handleSuccessfulLogin();
     }
   } catch (error) {
-    console.error("[LOGIN_MODAL] Login failed:", error);
+    console.error("[ERROR] [LoginModal] Login failed:", error);
   } finally {
     isLoggingIn.value = false
   }

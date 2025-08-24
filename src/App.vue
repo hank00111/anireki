@@ -21,7 +21,7 @@ const fnInit = () => {
 	}
 	document.title = "Home - Anireki";
 
-	// userControll.getUser(0);
+	// Removed: userControll.getUser(0) - now handled in router
 };
 
 onMounted(() => {
