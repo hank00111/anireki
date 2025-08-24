@@ -105,72 +105,103 @@ const router = createRouter({
 	routes,
 });
 
+// 預定義常量和緩存（避免重複創建對象）
+const ROUTE_AUTH_MESSAGES = {
+	admin: {
+		title: "管理者ログインが必要",
+		message: "管理者コンソールにアクセスするにはログインが必要です",
+	},
+	history: {
+		title: "視聴履歴",
+		message: "視聴履歴を確認するにはログインが必要です",
+	},
+	watchlater: {
+		title: "後で見る",
+		message: "視聴予定リストを確認するにはログインが必要です",
+	},
+	default: {
+		title: "ログインが必要",
+		message: "このページを表示するにはログインが必要です",
+	}
+} as const;
+
+// 類型定義
+type RouteAuthMessageKey = keyof typeof ROUTE_AUTH_MESSAGES;
+
+// 簡單的緩存機制
+let consoleAccessCache: boolean | null = null;
+let cacheTimestamp = 0;
+const CACHE_DURATION = 30000; // 30秒
+
 router.onError(() => {
 	const errorStore = useErrorStore();
 	errorStore.addError("ページの読み込み中にエラーが発生しました", "error");
 });
 
-router.beforeEach(async (to, _from, next) => {
-	const userControll = useUserControl();
-	const loginModalStore = useLoginModalStore();
-
+// 使用現代 Vue Router 4 語法（移除廢棄的 next）
+router.beforeEach(async (to) => {
 	try {
-		const isOAuthCallback = to.path.includes("/auth/") || to.query.code;
+		// 🚀 最早返回：OAuth 回調快速通道
+		if (to.path.includes("/auth/") || to.query.code) {
+			return true;
+		}
 
-		if (!userControll.isInitialized && !userControll.isInitializing && !isOAuthCallback) {
+		// 🚀 提前檢查：路由權限需求
+		const requiresLogin = to.matched.some((record) => record.meta.requiresLogin);
+		const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
+		
+		// 🚀 最早返回：不需要認證的路由
+		if (!requiresLogin && !requiresAuth) {
+			return true;
+		}
+
+		// 延遲初始化 Store（只在需要時）
+		const userControll = useUserControl();
+		const loginModalStore = useLoginModalStore();
+
+		// 🚀 條件式用戶初始化
+		if (!userControll.isInitialized && !userControll.isInitializing) {
 			await userControll.getUser(0);
 		}
 
-		const requiresLogin = to.matched.some((record) => record.meta.requiresLogin);
-		const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
+		// 🚀 檢查登入狀態
+		if (!userControll.isLogin) {
+			const routeKey = to.name as string;
+			const routeInfo = requiresAuth 
+				? ROUTE_AUTH_MESSAGES.admin
+				: (routeKey in ROUTE_AUTH_MESSAGES 
+					? ROUTE_AUTH_MESSAGES[routeKey as RouteAuthMessageKey] 
+					: ROUTE_AUTH_MESSAGES.default);
+				
+			loginModalStore.showModal(routeInfo.title, routeInfo.message, to);
+			return { name: "home" }; // 使用現代語法返回重定向
+		}
 
-		if (requiresLogin || requiresAuth) {
-			if (!userControll.isLogin) {
-				let routeInfo;
-
-				if (requiresAuth) {
-					routeInfo = {
-						title: "管理者ログインが必要",
-						message: "管理者コンソールにアクセスするにはログインが必要です",
-					};
-				} else {
-					const routeNames: Record<string, { title: string; message: string }> = {
-						history: {
-							title: "視聴履歴",
-							message: "視聴履歴を確認するにはログインが必要です",
-						},
-						watchlater: {
-							title: "後で見る",
-							message: "視聴予定リストを確認するにはログインが必要です",
-						},
-					};
-
-					routeInfo = routeNames[to.name as string] || {
-						title: "ログインが必要",
-						message: "このページを表示するにはログインが必要です",
-					};
-				}
-				loginModalStore.showModal(routeInfo.title, routeInfo.message, to);
-				next({ name: "home" });
-				return;
+		// 🚀 緩存的管理員權限檢查
+		if (requiresAuth) {
+			const now = Date.now();
+			
+			let hasConsoleAccess: boolean;
+			if (consoleAccessCache !== null && (now - cacheTimestamp) < CACHE_DURATION) {
+				hasConsoleAccess = consoleAccessCache;
+			} else {
+				hasConsoleAccess = await userControll.getConsole();
+				consoleAccessCache = hasConsoleAccess;
+				cacheTimestamp = now;
 			}
 
-			if (requiresAuth) {
-				const isAd = await userControll.getConsole();
-				if (!isAd) {
-					const errorStore = useErrorStore();
-					errorStore.addError("管理者権限が必要です", "warning");
-					next({ name: "home" });
-					return;
-				}
+			if (!hasConsoleAccess) {
+				const errorStore = useErrorStore();
+				errorStore.addError("管理者権限が必要です", "warning");
+				return { name: "home" }; // 使用現代語法返回重定向
 			}
 		}
 
-		next();
+		return true; // 允許導航
 	} catch (error) {
 		const errorStore = useErrorStore();
 		errorStore.addError("ページの読み込み中にエラーが発生しました", "error");
-		next({ name: "home" });
+		return { name: "home" }; // 發生錯誤時重定向到首頁
 	}
 });
 
