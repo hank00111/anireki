@@ -15,11 +15,8 @@ const errorStore = useErrorStore();
 // const userControll = useUserControl();
 const loginModalStore = useLoginModalStore();
 
-// Context7 best practice: Global error boundary
-onErrorCaptured((error, _instance, info) => {
-	console.error("[ERROR] [App] Uncaught error:", error, info);
-	errorStore.addError("アプリケーションエラーが発生しました", 'error');
-	// Return false to stop error propagation
+onErrorCaptured((_instance) => {
+	errorStore.addError("アプリケーションエラーが発生しました", "error");
 	return false;
 });
 
@@ -30,8 +27,6 @@ const fnInit = () => {
 		document.documentElement.setAttribute("data-theme", "dark");
 	}
 	document.title = "Home - Anireki";
-
-	// Removed: userControll.getUser(0) - now handled in router
 };
 
 onMounted(() => {

@@ -49,20 +49,16 @@ const userLogout = () => {
 
 const handleHeaderLogin = async () => {
 	if (isLoggingIn.value) return;
-	
+
 	isLoggingIn.value = true;
 	showMenu.value = false;
 	yearListShow.value = false;
-	
+
 	try {
-		console.log("[INFO] [Header] Initiating login from header");
-		// Context7 best practice: Use current route for return URL
 		await userControl.getUser(1, router.currentRoute.value.fullPath);
 	} catch (error) {
-		console.error("[ERROR] [Header] Login failed:", error);
-		// Context7 improvement: Show error feedback to user
-		const errorStore = (await import('@/stores/errorStore')).useErrorStore();
-		errorStore.addError("ログインに失敗しました。再試行してください。", 'error');
+		const errorStore = (await import("@/stores/errorStore")).useErrorStore();
+		errorStore.addError("ログインに失敗しました。再試行してください。", "error");
 	} finally {
 		isLoggingIn.value = false;
 	}
@@ -166,7 +162,6 @@ const fnCheckCurrentSeason = () => {
 };
 
 const fnInit = () => {
-	// console.log(animeWorks.seasonID);
 	checkMobile();
 	fnCheckCurrentSeason();
 };
@@ -183,7 +178,6 @@ onUnmounted(() => {
 	if (resizeTimeout) {
 		window.clearTimeout(resizeTimeout);
 	}
-	// Context7 best practice: Clean up component state
 	isLoggingIn.value = false;
 	showMenu.value = false;
 	yearListShow.value = false;
