@@ -64,8 +64,13 @@ export const useUserControl = defineStore("login", {
 				if (error.response?.status === 401) {
 					this.isInitialized = false;
 					if (src === 1) {
-						console.log("[AUTH] Redirecting to Google OAuth for auto-login");
-						window.location.href = "https://a2.anireki.com/v2/auth/google";
+						// Context7 best practice: Include return URL for OAuth redirect
+						const currentPath = window.location.pathname + window.location.search;
+						const returnUrl = encodeURIComponent(currentPath);
+						const oauthUrl = `https://a2.anireki.com/v2/auth/google?returnUrl=${returnUrl}`;
+						
+						console.log(`[AUTH] Redirecting to Google OAuth with return URL: ${currentPath}`);
+						window.location.href = oauthUrl;
 						return;
 					}
 				} else {

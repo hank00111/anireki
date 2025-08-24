@@ -106,29 +106,33 @@ const router = createRouter({
 
 router.beforeEach(async (to) => {
 	const userControll = useUserControl();
+	const loginModalStore = useLoginModalStore();
 
-	// if (!userControll.isInitialized) {
-	// 	await userControll.getUser(0);
-	// }
+	// Context7 best practice: Initialize user state if needed
+	if (!userControll.isInitialized) {
+		await userControll.getUser(0);
+	}
 
+	// Check login requirements for user routes
 	if ((to.name === "history" || to.name === "watchlater") && to.meta.requiresLogin) {
 		if (!userControll.isLogin) {
-			const loginModalStore = useLoginModalStore();
 			const title = to.name === "history" ? "視聴履歴" : "後で見る";
 			const message =
 				to.name === "history"
 					? "視聴履歴を確認するにはログインが必要です"
 					: "視聴予定リストを確認するにはログインが必要です";
 
-			loginModalStore.showModal(title, message);
+			// Context7 best practice: Save pending route before showing modal
+			loginModalStore.showModal(title, message, to);
 			return { name: "home" };
 		}
 	}
 
+	// Check console access for admin routes
 	if (to.name === "console" || to.name === "addworks" || to.name === "works" || to.name === "workslist") {
 		const isAd = await userControll.getConsole();
 		if (!isAd && to.meta.requiresAuth) {
-			console.log("error");
+			console.log("[ROUTER] Console access denied");
 			return { name: "home" };
 		}
 	}

@@ -29,8 +29,13 @@
             <p v-else class="login-modal-message">ログインが必要です</p>
           </div>
             <div class="login-modal-footer">
-            <button class="login-button" @click="handleLogin">
-              ログイン
+            <button 
+              class="login-button" 
+              @click="handleLogin"
+              :disabled="isLoggingIn"
+            >
+              <span v-if="isLoggingIn">ログイン中...</span>
+              <span v-else>ログイン</span>
             </button>
           </div>
         </div>
@@ -40,8 +45,9 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted } from 'vue'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { useUserControl } from '@/stores/userControl'
+import { useLoginModalStore } from '@/stores/loginModalStore'
 
 interface Props {
   isVisible: boolean
@@ -59,12 +65,30 @@ const emit = defineEmits<{
 }>()
 
 const userControl = useUserControl()
+const loginModalStore = useLoginModalStore()
+const isLoggingIn = ref(false)
 
 const titleId = computed(() => `login-modal-title-${Math.random().toString(36).substr(2, 9)}`)
 
-const handleLogin = () => {
-  userControl.getUser(1)
-  emit('close')
+const handleLogin = async () => {
+  if (isLoggingIn.value) return
+  
+  isLoggingIn.value = true
+  
+  try {
+    // Context7 best practice: Wait for login completion
+    await userControl.getUser(1)
+    
+    // Check if login was successful
+    if (userControl.isLogin) {
+      console.log("[LOGIN_MODAL] Login successful, handling navigation");
+      await loginModalStore.handleSuccessfulLogin();
+    }
+  } catch (error) {
+    console.error("[LOGIN_MODAL] Login failed:", error);
+  } finally {
+    isLoggingIn.value = false
+  }
 }
 
 const handleOverlayClick = () => {
@@ -179,8 +203,14 @@ onUnmounted(() => {
     background: #4f46e5;
     color: white;
     
-    &:hover {
+    &:hover:not(:disabled) {
       background: #4338ca;
+    }
+    
+    &:disabled {
+      background: #9ca3af;
+      cursor: not-allowed;
+      opacity: 0.6;
     }
   }
 }
