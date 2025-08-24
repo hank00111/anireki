@@ -107,9 +107,9 @@ const router = createRouter({
 router.beforeEach(async (to) => {
 	const userControll = useUserControl();
 
-	if (!userControll.isInitialized) {
-		await userControll.getUser(0);
-	}
+	// if (!userControll.isInitialized) {
+	// 	await userControll.getUser(0);
+	// }
 
 	if ((to.name === "history" || to.name === "watchlater") && to.meta.requiresLogin) {
 		if (!userControll.isLogin) {

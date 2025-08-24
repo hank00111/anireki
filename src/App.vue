@@ -21,7 +21,7 @@ const fnInit = () => {
 	}
 	document.title = "Home - Anireki";
 
-	userControll.getUser(0);
+	// userControll.getUser(0);
 };
 
 onMounted(() => {

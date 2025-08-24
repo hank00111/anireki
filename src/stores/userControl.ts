@@ -75,7 +75,7 @@ export const useUserControl = defineStore("login", {
 					errorStore.addError("無法取得使用者資訊", "error");
 				}
 
-				throw error;
+				// throw error;
 			} finally {
 				this.isInitializing = false;
 			}
