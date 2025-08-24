@@ -107,19 +107,25 @@ export const useUserControl = defineStore("login", {
 				const errorStatus = error.response?.status;
 				const errorStore = useErrorStore();
 
+				const isAppStartup = src === 0;
+
 				if (errorStatus === 401) {
 					if (src === 1) {
 						this.redirectToOAuth(returnUrl);
 						return;
 					}
 				} else if (errorStatus === 503) {
-					errorStore.addError("認証サービスが一時的に利用できません。しばらくしてから再試行してください。", "warning");
+					if (!isAppStartup) {
+						errorStore.addError("認証サービスが一時的に利用できません。しばらくしてから再試行してください。", "warning");
+					}
 				} else if (errorStatus === 404) {
 					if (src === 1) {
 						errorStore.addError("ユーザーデータが見つかりません。再ログインしてください。", "error");
 					}
 				} else {
-					errorStore.addError("認証チェックに失敗しました", "error");
+					if (!isAppStartup) {
+						errorStore.addError("認証チェックに失敗しました", "error");
+					}
 				}
 			} finally {
 				this.isInitialized = true;

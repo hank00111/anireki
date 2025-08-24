@@ -105,7 +105,6 @@ const router = createRouter({
 	routes,
 });
 
-// 預定義常量和緩存（避免重複創建對象）
 const ROUTE_AUTH_MESSAGES = {
 	admin: {
 		title: "管理者ログインが必要",
@@ -125,10 +124,8 @@ const ROUTE_AUTH_MESSAGES = {
 	}
 } as const;
 
-// 類型定義
 type RouteAuthMessageKey = keyof typeof ROUTE_AUTH_MESSAGES;
 
-// 簡單的緩存機制
 let consoleAccessCache: boolean | null = null;
 let cacheTimestamp = 0;
 const CACHE_DURATION = 30000; // 30秒
@@ -138,33 +135,34 @@ router.onError(() => {
 	errorStore.addError("ページの読み込み中にエラーが発生しました", "error");
 });
 
-// 使用現代 Vue Router 4 語法（移除廢棄的 next）
 router.beforeEach(async (to) => {
 	try {
-		// 🚀 最早返回：OAuth 回調快速通道
 		if (to.path.includes("/auth/") || to.query.code) {
 			return true;
 		}
 
-		// 🚀 提前檢查：路由權限需求
 		const requiresLogin = to.matched.some((record) => record.meta.requiresLogin);
 		const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
 		
-		// 🚀 最早返回：不需要認證的路由
 		if (!requiresLogin && !requiresAuth) {
 			return true;
 		}
 
-		// 延遲初始化 Store（只在需要時）
 		const userControll = useUserControl();
 		const loginModalStore = useLoginModalStore();
 
-		// 🚀 條件式用戶初始化
-		if (!userControll.isInitialized && !userControll.isInitializing) {
+		if (userControll.isInitializing) {
+			try {
+				await userControll.getUser(0); 
+			} catch (error) {
+				//
+			}
+		}
+
+		if (!userControll.isInitialized) {
 			await userControll.getUser(0);
 		}
 
-		// 🚀 檢查登入狀態
 		if (!userControll.isLogin) {
 			const routeKey = to.name as string;
 			const routeInfo = requiresAuth 
@@ -174,10 +172,9 @@ router.beforeEach(async (to) => {
 					: ROUTE_AUTH_MESSAGES.default);
 				
 			loginModalStore.showModal(routeInfo.title, routeInfo.message, to);
-			return { name: "home" }; // 使用現代語法返回重定向
+			return { name: "home" }; 
 		}
 
-		// 🚀 緩存的管理員權限檢查
 		if (requiresAuth) {
 			const now = Date.now();
 			
@@ -193,7 +190,7 @@ router.beforeEach(async (to) => {
 			if (!hasConsoleAccess) {
 				const errorStore = useErrorStore();
 				errorStore.addError("管理者権限が必要です", "warning");
-				return { name: "home" }; // 使用現代語法返回重定向
+				return { name: "home" };
 			}
 		}
 
@@ -201,7 +198,7 @@ router.beforeEach(async (to) => {
 	} catch (error) {
 		const errorStore = useErrorStore();
 		errorStore.addError("ページの読み込み中にエラーが発生しました", "error");
-		return { name: "home" }; // 發生錯誤時重定向到首頁
+		return { name: "home" };
 	}
 });
 

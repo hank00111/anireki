@@ -2,7 +2,7 @@
 import { onMounted, onErrorCaptured } from "vue";
 // import { useAnimeWorks } from "@/stores/animeWorks";
 import { useDrakModeStore } from "@/stores/drakMode";
-// import { useUserControl } from "@/stores/userControl";
+import { useUserControl } from "@/stores/userControl";
 import { useLoginModalStore } from "@/stores/loginModalStore";
 import { useErrorStore } from "@/stores/errorStore";
 import ErrorNotifications from "@/components/ErrorNotifications.vue";
@@ -10,9 +10,9 @@ import LoginModal from "@/components/LoginModal.vue";
 
 const drakMode = useDrakModeStore();
 const errorStore = useErrorStore();
+const userControl = useUserControl();
 
 // const animeWorks = useAnimeWorks();
-// const userControll = useUserControl();
 const loginModalStore = useLoginModalStore();
 
 onErrorCaptured((_instance) => {
@@ -20,13 +20,18 @@ onErrorCaptured((_instance) => {
 	return false;
 });
 
-const fnInit = () => {
+const fnInit = async () => {
 	if (drakMode.drakState) {
 		document.documentElement.setAttribute("data-theme", "dark");
 	} else {
 		document.documentElement.setAttribute("data-theme", "dark");
 	}
 	document.title = "Home - Anireki";
+	try {
+		await userControl.getUser(0);
+	} catch (error) {
+		console.warn("[App] User initialization failed during app startup:", error);
+	}
 };
 
 onMounted(() => {
