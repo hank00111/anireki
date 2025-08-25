@@ -24,7 +24,7 @@ body {
   --console-text-default-color: #111927;
   --grid-container-columns: 6;
   --card-columns: calc(33.3% - 16px);
-  --sidebar-min-width: 220px;
+  --sidebar-min-width: 210px;
 }
 
 //dark
@@ -122,7 +122,7 @@ li {
 
         >span {
           box-sizing: border-box;
-          font-size: 18px;
+          font-size: 16px;
           font-weight: 700;
         }
       }
@@ -436,7 +436,7 @@ li {
 
 @media only screen and (min-width: 768px) {
   :root {
-    --sidebar-min-width: 180px;
+    --sidebar-min-width: 170px;
   }
 
   .main {
@@ -493,7 +493,7 @@ li {
 
           >span {
             box-sizing: border-box;
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 700;
           }
         }
@@ -505,12 +505,12 @@ li {
 
 @media only screen and (min-width: 992px) {
   :root {
-    --sidebar-min-width: 180px;
+    --sidebar-min-width: 170px;
   }
 }
 
 @media only screen and (min-width: 1200px) {
   :root {
-    --sidebar-min-width: 216px;
+    --sidebar-min-width: 206px;
   }
 }
