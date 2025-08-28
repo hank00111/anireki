@@ -7,10 +7,10 @@
     "dev": "vite --port=3000 --mode development",
     "build": "vue-tsc && vite build",
     "preview": "vite preview",
-    "test": "vitest --config tests/vitest.config.ts",
-    "test:run": "vitest run --config tests/vitest.config.ts",
-    "test:watch": "vitest --config tests/vitest.config.ts --watch",
-    "test:coverage": "vitest run --config tests/vitest.config.ts --coverage"
+    "test": "vitest",
+    "test:run": "vitest run",
+    "test:watch": "vitest --watch",
+    "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
     "axios": "^1.11.0",
