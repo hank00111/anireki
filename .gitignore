@@ -38,3 +38,6 @@ coverage/
 .nyc_output/
 test-results/
 /coverage
+
+# Personal Copilot Instructions (Private)
+copilot-instructions/
