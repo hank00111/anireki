@@ -1,15 +1,15 @@
-import { createRouter, createWebHistory } from "vue-router";
-import Home from "@/pages/frontend/Home.vue";
-import History from "@/pages/frontend/user/History.vue";
-import Console from "@/pages/backend/Console.vue";
-import NotFound from "@/pages/NotFound.vue";
 import AddWorks from "@/pages/backend/anime/AddWorks.vue";
 import Works from "@/pages/backend/anime/Works.vue";
 import WorksList from "@/pages/backend/anime/WorksList.vue";
+import Console from "@/pages/backend/Console.vue";
+import Home from "@/pages/frontend/Home.vue";
+import History from "@/pages/frontend/user/History.vue";
+import NotFound from "@/pages/NotFound.vue";
+import { createRouter, createWebHistory } from "vue-router";
 // import WatchLater from "@/pages/frontend/user/WatchLater.vue";
-import { useUserControl } from "@/stores/userControl";
-import { useLoginModalStore } from "@/stores/loginModalStore";
 import { useErrorStore } from "@/stores/errorStore";
+import { useLoginModalStore } from "@/stores/loginModalStore";
+import { useUserControl } from "@/stores/userControl";
 import { updateSEO } from "@/utils/seo";
 
 const routes = [
@@ -121,14 +121,14 @@ const ROUTE_AUTH_MESSAGES = {
 	default: {
 		title: "ログインが必要",
 		message: "このページを表示するにはログインが必要です",
-	}
+	},
 } as const;
 
 type RouteAuthMessageKey = keyof typeof ROUTE_AUTH_MESSAGES;
 
 let consoleAccessCache: boolean | null = null;
 let cacheTimestamp = 0;
-const CACHE_DURATION = 30000; // 30秒
+const CACHE_DURATION = 30000; // 30 seconds
 
 router.onError(() => {
 	const errorStore = useErrorStore();
@@ -143,7 +143,7 @@ router.beforeEach(async (to) => {
 
 		const requiresLogin = to.matched.some((record) => record.meta.requiresLogin);
 		const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
-		
+
 		if (!requiresLogin && !requiresAuth) {
 			return true;
 		}
@@ -153,7 +153,7 @@ router.beforeEach(async (to) => {
 
 		if (userControll.isInitializing) {
 			try {
-				await userControll.getUser(0); 
+				await userControll.getUser(0);
 			} catch (error) {
 				//
 			}
@@ -165,21 +165,21 @@ router.beforeEach(async (to) => {
 
 		if (!userControll.isLogin) {
 			const routeKey = to.name as string;
-			const routeInfo = requiresAuth 
+			const routeInfo = requiresAuth
 				? ROUTE_AUTH_MESSAGES.admin
-				: (routeKey in ROUTE_AUTH_MESSAGES 
-					? ROUTE_AUTH_MESSAGES[routeKey as RouteAuthMessageKey] 
-					: ROUTE_AUTH_MESSAGES.default);
-				
+				: routeKey in ROUTE_AUTH_MESSAGES
+				? ROUTE_AUTH_MESSAGES[routeKey as RouteAuthMessageKey]
+				: ROUTE_AUTH_MESSAGES.default;
+
 			loginModalStore.showModal(routeInfo.title, routeInfo.message, to);
-			return { name: "home" }; 
+			return { name: "home" };
 		}
 
 		if (requiresAuth) {
 			const now = Date.now();
-			
+
 			let hasConsoleAccess: boolean;
-			if (consoleAccessCache !== null && (now - cacheTimestamp) < CACHE_DURATION) {
+			if (consoleAccessCache !== null && now - cacheTimestamp < CACHE_DURATION) {
 				hasConsoleAccess = consoleAccessCache;
 			} else {
 				hasConsoleAccess = await userControll.getConsole();
@@ -194,7 +194,7 @@ router.beforeEach(async (to) => {
 			}
 		}
 
-		return true; // 允許導航
+		return true; // Allow navigation
 	} catch (error) {
 		const errorStore = useErrorStore();
 		errorStore.addError("ページの読み込み中にエラーが発生しました", "error");

@@ -1,9 +1,9 @@
 import { defineStore } from "pinia";
 
 interface AnimeSeason {
-	name: string; // 例：2024年10月新番
-	name_jp: string; // 例：2024 秋
-	seasonID: string; // 例：2024-autumn
+	name: string; // Example: 2024年10月新番
+	name_jp: string; // Example: 2024 秋
+	seasonID: string; // Example: 2024-autumn
 }
 
 const SEASONS = [

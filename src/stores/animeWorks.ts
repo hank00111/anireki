@@ -1,7 +1,7 @@
 import axiosInstance from "@/api";
+import { useUserControl } from "@/stores/userControl";
 import LZString from "lz-string";
 import { defineStore } from "pinia";
-import { useUserControl } from "@/stores/userControl";
 
 // const jsonConfig = {
 //   headers: {
@@ -233,7 +233,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
 		},
 		async addWatchHistory(worksId: string) {
 			if (this.userControll.name.length < 1) {
-				//請先登入
+				// Please login first
 				console.log("error");
 			} else {
 				const addData = {
@@ -406,23 +406,23 @@ export const useAnimeWorks = defineStore("animeWorks", {
 					return;
 				}
 
-				console.log(`發送檢查請求: ${worksTitle_jp}`);
+				console.log(`[INFO] [AnimeWorks] Sending check request: ${worksTitle_jp}`);
 				const response = await axiosInstance.post("/console/checkWorks", { WorksTitle_jp: worksTitle_jp });
 				const data = JSON.parse(LZString.decompressFromUTF16(response.data));
 
 				data.Code === 10 ? (this.worksCheck = false) : (this.worksCheck = true);
 
 				if (data.annictWorks && data.annictWorks.length > 0) {
-					console.log(`接收到 ${data.annictWorks.length} 個結果`);
+					console.log(`[INFO] [AnimeWorks] Received ${data.annictWorks.length} results`);
 					this.annictWorks = data.annictWorks;
 				} else {
-					console.log("沒有找到結果");
+					console.log("[INFO] [AnimeWorks] No results found");
 					this.annictWorks = [];
 				}
 
 				return data;
 			} catch (error) {
-				console.error(`檢查作品錯誤: ${error}`);
+				console.error(`[ERROR] [AnimeWorks] Check works error: ${error}`);
 				this.annictWorks = [];
 				throw error;
 			}

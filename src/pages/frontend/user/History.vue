@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { onMounted } from "vue";
 import Sidebar from "@/components/Sidebar.vue";
 import WorksCard from "@/components/WorksCard.vue";
 import { useAnimeWorks } from "@/stores/animeWorks";
 import { updateSEO } from "@/utils/seo";
+import { onMounted } from "vue";
 
 const animeWorks = useAnimeWorks();
 
@@ -166,7 +166,7 @@ onMounted(() => {
 	}
 }
 
-// 響應式設計
+// Responsive design
 @media (max-width: 768px) {
 	.history-login-prompt {
 		padding: 16px;
@@ -202,7 +202,7 @@ onMounted(() => {
 	}
 }
 
-// 深色模式適配
+// Dark mode adaptation
 html[data-theme="dark"] {
 	.history-login-prompt .login-card {
 		background: var(--sidebar-background-color);

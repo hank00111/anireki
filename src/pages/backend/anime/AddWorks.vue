@@ -1,13 +1,13 @@
 <script setup lang="ts">
+import ConsoleSidebar from "@/components/ConsoleSidebar.vue";
 import Header from "@/components/Header.vue";
 import Loading from "@/components/Loading.vue";
 import SelBar from "@/components/SelBar.vue";
-import ConsoleSidebar from "@/components/ConsoleSidebar.vue";
-import { ref, reactive, onMounted, onBeforeMount, watchEffect, watch } from "vue";
 import { useAnimeWorks } from "@/stores/animeWorks";
 import { useAnirekiConsole } from "@/stores/anirekiConsole";
-import { useRouter } from "vue-router";
 import { useErrorStore } from "@/stores/errorStore";
+import { onBeforeMount, onMounted, reactive, ref, watch, watchEffect } from "vue";
+import { useRouter } from "vue-router";
 
 const animeWorks = useAnimeWorks();
 const anirekiConsole = useAnirekiConsole();
@@ -94,7 +94,7 @@ const selControl = (e: string) => {
 };
 
 const titleCheck = () => {
-	console.log("輸入檢查中");
+	console.log("[INFO] [AddWorks] Input validation in progress");
 };
 
 const handlePaste = async () => {
@@ -104,7 +104,7 @@ const handlePaste = async () => {
 				refSendPrev.value = Date.now();
 				await animeWorks.checkWorks(refTitle_jp.value);
 				showAnnictResults.value = animeWorks.annictWorks.length > 0;
-				console.log(`貼上後搜索結果: ${animeWorks.annictWorks.length} 個結果`);
+				console.log(`[INFO] [AddWorks] Search results after paste: ${animeWorks.annictWorks.length} results`);
 			} catch (error: any) {
 				errorStore.addError(`貼上後搜尋失敗: ${error.message || error}`, "error");
 			}
@@ -195,7 +195,7 @@ watch(thisSeason, (thisSeason) => {
 
 watch(refTitle_jp, async (newValue, oldValue) => {
 	if (newValue && newValue.length > 5 && (!oldValue || newValue.length - oldValue.length > 3)) {
-		console.log("檢測到可能的貼上操作");
+		console.log("[INFO] [AddWorks] Possible paste operation detected");
 		refSendPrev.value = Date.now();
 		try {
 			await animeWorks.checkWorks(newValue);

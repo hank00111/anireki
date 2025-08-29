@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, ref } from "vue";
-import { useUserControl } from "@/stores/userControl";
-import { useLoginModalStore } from "@/stores/loginModalStore";
 import { useErrorStore } from "@/stores/errorStore";
+import { useLoginModalStore } from "@/stores/loginModalStore";
+import { useUserControl } from "@/stores/userControl";
+import { computed, onMounted, onUnmounted, ref } from "vue";
 
 interface Props {
 	isVisible: boolean;
@@ -197,7 +197,7 @@ onUnmounted(() => {
 	}
 }
 
-// 動畫效果
+// Animation effects
 .modal-enter-active,
 .modal-leave-active {
 	transition: opacity 0.3s ease;
@@ -216,7 +216,7 @@ onUnmounted(() => {
 	}
 }
 
-// 響應式設計
+// Responsive design
 @media (max-width: 640px) {
 	.login-modal {
 		margin: 20px;
@@ -246,7 +246,7 @@ onUnmounted(() => {
 	}
 }
 
-// 深色模式適配
+// Dark mode adaptation
 html[data-theme="dark"] {
 	.login-modal {
 		border-color: rgba(255, 255, 255, 0.1);

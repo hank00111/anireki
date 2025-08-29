@@ -11,9 +11,10 @@ import axios, { AxiosInstance } from "axios";
 const service: AxiosInstance = axios.create({
 	baseURL: import.meta.env.VITE_API_BASE_URL,
 	timeout: 30000,
-	withCredentials: true,	headers: {
+	withCredentials: true,
+	headers: {
 		"Content-Type": "application/json",
-		"Accept": "application/json",
+		Accept: "application/json",
 		"Referrer-Policy": "strict-origin-when-cross-origin",
 		"X-Content-Type-Options": "nosniff",
 		"X-Frame-Options": "DENY",
@@ -22,10 +23,10 @@ const service: AxiosInstance = axios.create({
 
 // service.interceptors.request.use(
 //   (config: AxiosRequestConfig) => {
-//     // 從 localStorage 獲取 token
+//     // Get token from localStorage
 //     const token = localStorage.getItem('token');
 //     if (token) {
-//       // 在請求頭中添加 token
+//       // Add token to request headers
 //       config.headers = {
 //         ...config.headers,
 //         'Authorization': `Bearer ${token}`,
@@ -43,20 +44,20 @@ const service: AxiosInstance = axios.create({
 //   (response: AxiosResponse): AxiosResponse['data'] => {
 //     const res = response.data;
 
-//     // 如果 API 回傳的是自訂的成功/失敗結構
+//     // If API returns custom success/failure structure
 //     if (res && typeof res.success !== 'undefined') {
 //       if (res.success) {
 //         return res;
 //       } else {
-//         // 業務邏輯錯誤
-//         console.error('API error:', res.message || '未知錯誤');
-//         // 可以在此處理特定錯誤碼，例如：
+//         // Business logic error
+//         console.error('API error:', res.message || 'Unknown error');
+//         // Handle specific error codes here, for example:
 //         if (res.code === 401) {
-//           // 登入過期，清除用戶資料
+//           // Login expired, clear user data
 //           localStorage.removeItem('token');
-//           window.location.href = '/login'; // 導向登入頁面
+//           window.location.href = '/login'; // Redirect to login page
 //         }
-//         return Promise.reject(new Error(res.message || '未知錯誤'));
+//         return Promise.reject(new Error(res.message || 'Unknown error'));
 //       }
 //     }
 
@@ -67,49 +68,48 @@ const service: AxiosInstance = axios.create({
 //     const { response } = error;
 
 //     if (response) {
-//       // 處理 HTTP 狀態碼錯誤
+//       // Handle HTTP status code errors
 //       switch (response.status) {
 //         case 400:
-//           console.error('請求錯誤');
+//           console.error('Bad request');
 //           break;
 //         case 401:
-//           console.error('未授權，請重新登入');
+//           console.error('Unauthorized, please login again');
 //           localStorage.removeItem('token');
 //           window.location.href = '/login';
 //           break;
 //         case 403:
-//           console.error('拒絕訪問');
+//           console.error('Access denied');
 //           break;
 //         case 404:
-//           console.error('請求地址出錯');
+//           console.error('Request address error');
 //           break;
 //         case 408:
-//           console.error('請求超時');
+//           console.error('Request timeout');
 //           break;
 //         case 500:
-//           console.error('伺服器內部錯誤');
+//           console.error('Internal server error');
 //           break;
 //         case 501:
-//           console.error('服務未實現');
+//           console.error('Service not implemented');
 //           break;
 //         case 502:
-//           console.error('網關錯誤');
+//           console.error('Gateway error');
 //           break;
 //         case 503:
-//           console.error('服務不可用');
+//           console.error('Service unavailable');
 //           break;
 //         case 504:
-//           console.error('網關超時');
+//           console.error('Gateway timeout');
 //           break;
 //         default:
-//           console.error(`連接錯誤 ${response.status}`);
+//           console.error(`Connection error ${response.status}`);
 //       }
 //     } else {
-
 //       if (error.message && error.message.includes('timeout')) {
-//         console.error('請求超時，請檢查網路');
+//         console.error('Request timeout, please check network');
 //       } else {
-//         console.error('網路異常，請檢查網路連接');
+//         console.error('Network error, please check network connection');
 //       }
 //     }
 
