@@ -1,3 +1,27 @@
 {
-  "recommendations": ["Vue.volar", "Vue.vscode-typescript-vue-plugin"]
+  "recommendations": [
+    // Vue.js 開發核心
+    "Vue.volar",
+    "Vue.vscode-typescript-vue-plugin",
+    // TDD 測試支援
+    "vitest.explorer",
+    "ms-vscode.vscode-typescript-next",
+    // TypeScript 增強
+    "ms-vscode.vscode-typescript-next",
+    "usernamehw.errorlens",
+    // 程式碼品質
+    "bradlc.vscode-tailwindcss",
+    "formulahendry.auto-rename-tag",
+    "christian-kohler.path-intellisense",
+    // Git 工作流程
+    "eamodio.gitlens",
+    "github.vscode-github-actions",
+    // 開發效率
+    "ms-vscode.vscode-json",
+    "redhat.vscode-yaml",
+    "ms-ceintl.vscode-language-pack-zh-hant",
+    // AI 程式設計助手 (必備)
+    "github.copilot",
+    "github.copilot-chat"
+  ]
 }
