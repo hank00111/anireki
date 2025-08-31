@@ -15,9 +15,6 @@ const service: AxiosInstance = axios.create({
 	headers: {
 		"Content-Type": "application/json",
 		Accept: "application/json",
-		"Referrer-Policy": "strict-origin-when-cross-origin",
-		"X-Content-Type-Options": "nosniff",
-		"X-Frame-Options": "DENY",
 	},
 });
 
