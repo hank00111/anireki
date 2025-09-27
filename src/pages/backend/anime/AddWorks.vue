@@ -124,6 +124,8 @@ const selectAnnictWork = (work: any) => {
 		refMedia.value = "映画";
 	} else if (mediaType === "OVA") {
 		refMedia.value = "OVA";
+	} else if (mediaType === "WEB") {
+		refMedia.value = "Web";
 	} else {
 		refMedia.value = "其他";
 	}
