@@ -38,7 +38,7 @@ const seaSon = reactive<seasonModel>({ 1: "冬季", 2: "春季", 3: "夏季", 4:
 const thisSeason = ref<string>(seaSon[Math.ceil((new Date().getMonth() + 1) / 3)]);
 const refSeason = ref<number>(Math.ceil((new Date().getMonth() + 1) / 3));
 
-const media = ref<string[]>(["TV", "映画", "OVA", "其他"]);
+const media = ref<string[]>(["TV", "映画", "OVA", "Web", "其他"]);
 const refMedia = ref<string>("TV");
 const refCopyRight = ref<string>("");
 
