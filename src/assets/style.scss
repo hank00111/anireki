@@ -229,9 +229,11 @@ li {
   display: flex;
   align-items: center;
   padding: 8px 16px 0px 16px;
+  gap: 8px;
 
   .userPanel {
     margin-left: auto;
+    flex-shrink: 0;
 
     .userLogin {
 

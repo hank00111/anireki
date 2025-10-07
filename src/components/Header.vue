@@ -30,6 +30,11 @@ const isLoggingIn = ref<boolean>(false);
 
 const yearList = ref(animeYears.animeYearsObj);
 
+const searchInput = computed({
+	get: () => animeWorks.searchQuery,
+	set: (value: string) => animeWorks.setSearchQuery(value)
+});
+
 const yearNavLeft = computed(() => {
 	if (selectItem.value <= 1) return 0;
 	return (selectItem.value - 1) * -148;
@@ -66,6 +71,7 @@ const handleHeaderLogin = async () => {
 };
 
 const goToSeason = (index: number) => {
+	animeWorks.searchQuery = '';
 	selectItem.value = index;
 	animeWorks.seasonSel = index;
 	animeWorks.seasonID = yearList.value[index].seasonID;
@@ -74,7 +80,9 @@ const goToSeason = (index: number) => {
 };
 
 const getAllAnime = () => {
+	animeWorks.searchQuery = '';
 	selectItem.value = -1;
+	animeWorks.seasonID = "all";
 	animeWorks.getSeason("all");
 };
 
@@ -187,61 +195,73 @@ onUnmounted(() => {
 
 <template>
 	<div class="header">
-		<div v-if="props.isHome" class="anime-panel">
-			<div v-if="!isMobile" class="anime-panel-container">
-				<div class="all-anime" @click="getAllAnime" :class="{ selectedH: selectItem === -1 }">所有動畫</div>
-				<div class="year-nav" @wheel="yearWheel">
-					<div
-						v-for="(year, index) in yearList"
-						class="year-items"
-						:style="{ transform: `translate(${yearNavLeft}px,0)` }"
-						:class="{ selected: selectItem === index }"
-						@click="goToSeason(index)"
-					>
-						{{ year.name }}
-					</div>
-				</div>
-			</div>
-			<div v-else class="anime-panel-container">
-				<div class="mobile-year-nav" :style="{ marginLeft: `${navCenter}px` }">
-					<div class="year-next">
-						<svg
-							v-if="!navigationState.nextEnd"
-							@click="yearControl('next')"
-							width="32"
-							height="32"
-							viewBox="0 -960 960 800"
-							fill="#5c9291"
-						>
-							<path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z" />
-						</svg>
-					</div>
-					<div class="mobile-year" :style="{ opacity: `${yearTextOpacity}` }" @click="yearListOpen">
-						{{ yearList[selectItem].name_jp }}
-					</div>
-					<div v-show="yearListShow" class="mobile-year-nav-list">
-						<ul>
-							<li v-for="(year, index) in yearList" @click="yearControl('prev', index)">
-								{{ year.name_jp }}
-							</li>
-						</ul>
-					</div>
-					<div class="year-prev">
-						<svg
-							v-if="!navigationState.prevEnd"
-							@click="yearControl('prev')"
-							width="32"
-							height="32"
-							viewBox="0 -960 960 800"
-							fill="#5c9291"
-						>
-							<path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z" />
-						</svg>
-					</div>
+		<div v-if="props.isHome && !isMobile" class="anime-panel-container">
+			<div class="all-anime" @click="getAllAnime" :class="{ selectedH: selectItem === -1 }">所有動畫</div>
+			<div class="year-nav" @wheel="yearWheel">
+				<div
+					v-for="(year, index) in yearList"
+					class="year-items"
+					:style="{ transform: `translate(${yearNavLeft}px,0)` }"
+					:class="{ selected: selectItem === index }"
+					@click="goToSeason(index)"
+				>
+					{{ year.name }}
 				</div>
 			</div>
 		</div>
-		<div v-else></div>
+		<div v-if="props.isHome && !isMobile" class="header-search-wrapper">
+			<input 
+				v-model="searchInput" 
+				type="text" 
+				id="header-search-input"
+				name="animeSearch"
+				placeholder="タイトルを検索" 
+				class="header-search-input" 
+			/>
+			<svg class="header-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+				<circle cx="11" cy="11" r="8"/>
+				<path d="m21 21-4.35-4.35"/>
+			</svg>
+		</div>
+		<div v-if="props.isHome && isMobile" class="anime-panel-container mobile">
+			<div class="mobile-year-nav" :style="{ marginLeft: `${navCenter}px` }">
+				<div class="year-next">
+					<svg
+						v-if="!navigationState.nextEnd"
+						@click="yearControl('next')"
+						width="32"
+						height="32"
+						viewBox="0 -960 960 800"
+						fill="#5c9291"
+					>
+						<path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z" />
+					</svg>
+				</div>
+				<div class="mobile-year" :style="{ opacity: `${yearTextOpacity}` }" @click="yearListOpen">
+					{{ yearList[selectItem].name_jp }}
+				</div>
+				<div v-show="yearListShow" class="mobile-year-nav-list">
+					<ul>
+						<li v-for="(year, index) in yearList" @click="yearControl('prev', index)">
+							{{ year.name_jp }}
+						</li>
+					</ul>
+				</div>
+				<div class="year-prev">
+					<svg
+						v-if="!navigationState.prevEnd"
+						@click="yearControl('prev')"
+						width="32"
+						height="32"
+						viewBox="0 -960 960 800"
+						fill="#5c9291"
+					>
+						<path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z" />
+					</svg>
+				</div>
+			</div>
+		</div>
+		<div v-else-if="!props.isHome"></div>
 
 		<div class="userPanel" ref="userPanel">
 			<div v-if="userControl.isLogin" class="userLoggedin">
@@ -289,15 +309,9 @@ onUnmounted(() => {
 </template>
 
 <style lang="scss">
-.anime-panel {
-	width: calc(100% - 70px);
-	display: flex;
-	align-items: center;
-}
-
 .anime-panel-container {
+	flex: 1;
 	display: flex;
-	width: 100%;
 	gap: 4px;
 	overflow: hidden;
 }
@@ -313,6 +327,57 @@ onUnmounted(() => {
 	&:hover {
 		color: #fff;
 	}
+}
+
+.header-search-wrapper {
+	position: relative;
+	width: 200px;
+	min-width: 200px;
+	flex-shrink: 0;
+	margin-right: 8px;
+}
+
+.header-search-input {
+	width: 100%;
+	padding: 8px 36px 8px 12px;
+	border: 1px solid #4a4a4a;
+	border-radius: 6px;
+	background: #1a1a1a;
+	color: #fff;
+	font-size: 14px;
+	outline: none;
+	transition: all 0.2s ease;
+
+	&:hover {
+		border-color: #5a5a5a;
+		color: #fff;
+	}
+
+	&:focus {
+		border-color: #6b9bd2;
+		box-shadow: 0 0 0 2px rgba(107, 155, 210, 0.2);
+		color: #fff;
+	}
+
+	&:focus:hover {
+		border-color: #6b9bd2;
+		color: #fff;
+	}
+
+	&::placeholder {
+		color: #999;
+	}
+}
+
+.header-search-icon {
+	position: absolute;
+	right: 12px;
+	top: 50%;
+	transform: translateY(-50%);
+	width: 18px;
+	height: 18px;
+	color: #888;
+	pointer-events: none;
 }
 
 .selectedH {

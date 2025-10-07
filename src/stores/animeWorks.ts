@@ -140,6 +140,7 @@ export const useAnimeWorks = defineStore("animeWorks", {
 		selectedAnnictWork: null as AnnictWork | null,
 		watchLater: [] as watchLaterModel[],
 		watchLaterData: [] as watchLaterDataModel[],
+		searchQuery: '',
 	}),
 	actions: {
 		async getAnimeData() {
@@ -440,6 +441,23 @@ export const useAnimeWorks = defineStore("animeWorks", {
 			const seasons = ["winter", "spring", "summer", "autumn"];
 			this.seasonID = `${thisYear}-${seasons[season - 1]}`;
 			return this.seasonID;
+		},
+		setSearchQuery(query: string) {
+			this.searchQuery = query;
+			this.applyFilters();
+		},
+		applyFilters() {
+			if (this.searchQuery.trim() === '') {
+				// 清除搜尋,回到當前季度
+				this.getSeason(this.seasonID);
+			} else {
+				// 從 originData 全域搜尋
+				const keyword = this.searchQuery.toLowerCase();
+				this.animeData = this.originData.filter(anime => 
+					anime.title.toLowerCase().includes(keyword) || 
+					anime.title_jp.toLowerCase().includes(keyword)
+				);
+			}
 		},
 	},
 });
