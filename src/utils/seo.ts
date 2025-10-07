@@ -14,18 +14,18 @@ export interface MultiLangSEO {
 export const seoData: Record<string, MultiLangSEO> = {
 	home: {
 		zh: {
-			title: "首頁 - Anireki | 動畫追蹤記錄",
+			title: "首頁 | Anireki",
 			description: "追蹤每季新番動畫，記錄你觀看過的所有動畫作品。輕鬆管理動畫觀看清單和歷史記錄。",
 			keywords: "動畫,新番,追蹤,記錄,觀看清單,anime tracker",
 		},
 		en: {
-			title: "Home - Anireki | Anime Tracker",
+			title: "Home | Anireki",
 			description:
 				"Track seasonal anime and record all your watched anime. Easily manage your anime watchlist and viewing history.",
 			keywords: "anime,tracker,seasonal,watchlist,viewing history,collection",
 		},
 		ja: {
-			title: "ホーム - Anireki | アニメトラッカー",
+			title: "ホーム | Anireki",
 			description:
 				"季節のアニメを追跡し、視聴したすべてのアニメを記録します。アニメのウォッチリストと視聴履歴を簡単に管理できます。",
 			keywords: "アニメ,トラッカー,季節,ウォッチリスト,視聴履歴,コレクション",
@@ -33,7 +33,7 @@ export const seoData: Record<string, MultiLangSEO> = {
 	},
 	history: {
 		zh: {
-			title: "觀看紀錄 - Anireki",
+			title: "觀看紀錄 | Anireki",
 			description: "查看你的動畫觀看歷史記錄，回顧過去看過的所有動畫作品。",
 			keywords: "觀看記錄,歷史,動畫記錄,viewing history",
 		},
